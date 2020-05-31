@@ -1,0 +1,22 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/scansubmit/scansubmit",
+    "pages/scanentry/scanentry",
+    "pages/boots/boots",
+    "pages/home/home",
+    "pages/scandetail/scandetail",
+    "pages/scaning/scaning"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#041B1e",
+    "navigationBarTextStyle": "white"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "为了给您提供更好的服务，需要使用您的位置信息."
+    }
+  },
+  "sitemapLocation": "sitemap.json"
+}

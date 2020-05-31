@@ -1,0 +1,28 @@
+<view class="mainscanDetail">
+	<view class="scanDetail">
+		<view>
+			<text>编号:  {{objDta.id}}</text>
+		</view>
+		<view>
+			<text>构件:   {{objDta.component}}</text>
+		</view>
+		<view>
+			<text>子构件:  {{objDta.componentChild}}</text>
+		</view>
+		<view>
+			<text>临近桥墩:   {{objDta.pierNoRange}}</text>
+		</view>
+		<view>
+			<text>坐标:  {{objDta.diseaseCoordinate}}</text>
+		</view>
+		<view>
+			<text>病害描述:   {{objDta.diseaseDesc}}</text>
+		</view>
+		<view>
+			<text class="fontdesc">病害描述:</text>
+			<view class="video" wx:for="{{objDta.picUrls}}">
+				<image src="{{item}}"></image>
+			</view>
+		</view>
+	</view>
+</view>

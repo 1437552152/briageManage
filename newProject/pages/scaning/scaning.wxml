@@ -1,0 +1,9 @@
+<view class="scaning">
+<view class="code"></view>
+<view class="warning">对准蹲身二维码扫描</view>
+<view class="linkBtn">
+<view class="btn">
+<button bindtap="cancelScan">取消扫描</button>
+</view>
+</view>
+</view>

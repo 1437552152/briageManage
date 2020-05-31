@@ -1,0 +1,67 @@
+<view class="container">
+  <view class="page-body">
+
+    <form bindsubmit='formSubmit'>
+      <view class="page-section page-section-gap">
+       <view class="page-section-title">墩号范围</view>
+       <input class="weui-input" name="pierNoRange"  placeholder="请输入墩号范围" />
+      </view>
+
+      <view class="page-section1">
+        <view class="page-section-title" bindtap="component">构件   <input class="weui-input" value="{{component}}"  disabled name="component" placeholder="请输入所属构件" /></view>
+        <view class="page-section-title childComponent" bindtap="componentType">构件类型  <input disabled class="weui-input"  name="componentType" value="{{componentType}}" placeholder="请输入构件类型" /></view>
+      </view>
+
+      <view class="page-section page-section-gap">
+        <view class="page-section-title">病害描述</view>
+        <textarea class="weui-input"   name="diseaseDesc"  placeholder="请输入病害描述" style="width: 100%;"></textarea>
+      </view>
+
+
+       <view class="page-section page-section-gap"  bindtap="diseaseSeverity">
+        <view class="page-section-title">严重程度</view>
+        <input class="weui-input" disabled  name="diseaseSeverity"   value="{{diseaseSeverity}}"  placeholder="请输入严重程度"></input>
+      </view>
+
+       <view class="page-section page-section-gap" bindtap="dealStatue">
+        <view class="page-section-title">处理状态</view>
+        <input class="weui-input"  disabled name="dealStatue"   value="{{dealStatue}}"  placeholder="请输入处理状态"></input>
+      </view>
+
+       <view class="page-section page-section-gap" bindtap="urgentType">
+        <view class="page-section-title">紧迫度</view>
+        <input class="weui-input" disabled  name="urgentType"  value="{{urgentType}}"  placeholder="请输入紧迫度"></input>
+      </view>
+
+      <view class="page-section page-section-gap">
+        <view class="page-section-title">坐标信息</view>
+         <input class="weui-input"  name="diseaseCoordinate" placeholder="请输入坐标信息" />
+        <!-- <image bindtap="clickPhoto" src="../../static/image/position.png" class="iconInfo"></image> -->
+      </view>
+
+      <view class="page-section page-section-gap">
+        <view class="page-section-title">上传照片</view>  
+        <image bindtap="chooseImage" src="../../static/image/photo.png" class="iconInfo"></image>    
+      </view>
+
+      <view class="question-images clearFloat">
+          <block wx:for="{{images}}" wx:key="*this">
+            <view class="q-image-wrap">
+              <!-- 图片缩略图  -->
+              <image class="q-image" src="{{item}}" style="width:100%;height:100%" mode="aspectFill" data-idx="{{index}}" bindtap="handleImagePreview"></image>
+              <!-- 移除图片的按钮  -->
+              <view class="q-image-remover" data-idx="{{index}}" bindtap="removeImage">
+                   <image src="../../static/image/close.png" style="width:30px;height:30px"></image>
+              </view>
+            </view>
+          </block>
+          <view class="clearfix"></view>
+      </view>
+
+      <view class="linkBtn">
+        <button style="margin: 30rpx 0" type="primary" formType="submit">提交记录</button>
+      </view>
+
+    </form>
+  </view>
+</view>

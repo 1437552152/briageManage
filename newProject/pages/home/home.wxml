@@ -1,0 +1,26 @@
+<!--pages/home/home.wxml-->
+<view class="main">
+  <image src="../../static/image/total.png" class="positPic"></image>
+	<view class="textShow">
+	<view class="partOne">
+		<view class="name">欢迎巡检工程师： <text>{{objUserInfo.nickName}}</text></view>
+		<view class="location">当前位置： <text>{{location}}</text></view>
+	</view>
+	<view class="parttwo parttwoE">
+		<view>累计巡检次数</view>
+		<view><text>{{totalNum}}</text>次</view>
+	</view>
+	<view class="parttwo">
+		<view>当月巡检次数</view>
+		<view><text>{{MonthNum}}</text>次</view>
+	</view>
+	</view>
+</view>
+<view class="linkBtn">
+	<view class="btn">
+		<button bindtap="gotoScanentry">手动录入</button>
+	</view>
+	<view class="btn">
+		<button bindtap='gotoCheckRecord'>巡检记录</button>
+	</view>
+</view>

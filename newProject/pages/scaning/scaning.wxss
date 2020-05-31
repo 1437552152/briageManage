@@ -1,0 +1,27 @@
+/* pages/scaning/scaning.wxss */
+.scaning .linkBtn .btn button{
+  background-image: linear-gradient(128deg, #27DB94 0%, #14D2B8 100%);
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+  color: #fff;
+  border-radius: 50rpx;
+  border: 1px solid #5BE6A7;
+  
+}
+.scaning .linkBtn .btn{
+  margin: 90rpx 40rpx;
+}
+.scaning .code{
+  width: 94%;
+  height: 800rpx;
+  margin: auto;
+  background: #fff;
+}
+.scaning .warning{
+  font-size: 40rpx;
+  color: #44D7B6;
+  margin-top: 40rpx;
+  text-align: center;
+
+}

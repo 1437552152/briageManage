@@ -1,0 +1,13 @@
+<!--pages/boots/boots.wxml-->
+<view style='margin-top:20%;'>
+  <view class="haha-center"><image src="../../static/image/bridge.png"  style="width:200rpx;height:200rpx"/>
+    <view class="taoli">城市集群桥梁监测</view>
+  </view>
+  <view class="caozuo">申请获得以下授权</view>
+  <view class="caozuo2">·获取您的微信昵称、头像信息</view>
+  <view class='styleAuth'>
+    <button  style='background-color: #21d8a2;padding-left: 10px;padding-right: 10px;' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">
+      确认登录
+    </button>
+  </view>
+</view>

@@ -1,0 +1,4 @@
+<!--pages/index/index.wxml-->
+<view class="launchPage">
+    <image src="../../static/image/LaunchPage.png" style="height:{{pageHeight}}px"/>
+</view>

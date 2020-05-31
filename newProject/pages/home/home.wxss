@@ -1,0 +1,77 @@
+/* pages/home/home.wxss */
+.main {
+  width: 90%;
+  height: 680rpx;
+  margin: auto;
+  border-radius: 50rpx;
+  padding: 60rpx;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.main .parttwo.parttwoE {
+  margin-top: 120rpx;
+}
+
+.main .parttwo:last-child {
+  margin-top: 60rpx;
+}
+
+.main .parttwo view {
+  font-size: 24rpx;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.main .parttwo text {
+  color: #fff;
+  font-size: 80rpx;
+}
+
+.main .name,
+.location text {
+  font-size: 26rpx;
+  color: #333;
+  font-weight: bold;
+}
+
+.main .location {
+  font-size: 26rpx;
+  color: rgba(0, 0, 0, 0.65);
+  margin-top: 20rpx;
+}
+
+.linkBtn .btn button {
+  background: none;
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+  color: #5BE6A7;
+  border-radius: 50rpx;
+  border: 1px solid #5BE6A7;
+
+}
+
+.linkBtn .btn {
+  margin: 90rpx 60rpx;
+}
+
+.positPic {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 340px;
+  width: 100%;
+  z-index: 9;
+
+}
+
+.textShow {
+  position: absolute;
+  left: 30px;
+  right: 0;
+  top: 27px;
+  height: 330px;
+  width: 100%;
+  z-index: 999;  
+}

@@ -1,0 +1,11 @@
+.pagePosition {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+.tableBox .ivu-table-row-highlight td,
+.tableBox .ivu-table-row-highlight:hover td {
+  background-color: #0d3541;
+  color: #fff;
+}
+

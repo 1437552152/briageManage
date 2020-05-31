@@ -1,0 +1,65 @@
+.scanDetail{
+  width: 94%;
+height: auto;
+margin: auto;
+border-radius: 16rpx;
+padding: 30rpx;
+box-sizing: border-box;
+background-color: #023941;
+}
+.scanDetail view{
+  margin-bottom: 24rpx;
+  font-size: 28rpx;
+  color: #ffffff;
+  opacity: 0.65;
+}
+.linkBtn .btn button{
+  background: none;
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+  color: #44D7B6;
+  border-radius: 50rpx;
+  border: 1px solid #5BE6A7;
+  
+}
+.linkBtn{
+  margin:40rpx 40rpx 0 40rpx;
+}
+.linkBtn .btn{
+  display: inline-block;
+width: calc((100% - 40rpx) / 2);
+}
+.linkBtn .btn:last-child{
+  margin-left: 40rpx;
+}
+.scanDetail .video{
+margin-top: 30rpx;
+}
+.scanDetail .video view{
+  display: inline-block;
+width: calc((50% - 20rpx) / 2);
+height: 200rpx;
+border: 1px solid #fff;
+
+}
+.scanDetail .video .oddvideo{
+  margin-left: 20rpx;
+}
+.scanDetail .video{
+  border-radius: 10rpx;
+  margin: 10rpx;
+  width: calc((100% - 24px) / 2);
+  height: 200rpx;
+  display: inline-block;
+}
+.scanDetail .video image{
+  width: 100%;
+  height: 100%;
+}
+.scanDetail .fontdesc{
+  display: flex;
+}
+.mainscanDetail{
+  padding-bottom: 30rpx;
+}

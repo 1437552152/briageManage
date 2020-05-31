@@ -1,0 +1,39 @@
+  <view class="swiper-tab">
+  	<view class="swiper-tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="clickTab">未完成</view>
+  	<view class="swiper-tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="clickTab">已完成</view>
+  </view>
+
+	<view class="nav-son" bindtap="listqy">
+      <view class="content">{{desc}}</view>
+      <view class="icon"><image src="../../static/image/la.png" class="shuaxuan"/></view>
+	</view>
+	<view class="clearfix"></view>
+
+  <view class="{{currentTab == 0 ? 'show':'hidden'}}">
+  	<scroll-view>
+  		<view class="reordList" bindtap="gotoDetail" data-status="已完成"    wx:for="{{Compet}}" wx:for-index="index" wx:key="{{index}}">
+  			<view class="left">
+  				<view class="name">编号：{{item.id}}</view>
+  				<view class="bridge">武汉长江大桥</view>
+  				<view class="time">{{item.inspectTime}}</view>
+  			</view>
+  			<view class="right">
+  				<view class="resonal">{{item.component}}{{item.diseaseDesc}}</view>
+  			</view>
+  		</view>
+  	</scroll-view>
+  </view>
+  <view class="{{currentTab == 1 ? 'show':'hidden'}}">
+  		<scroll-view>
+  		<view class="reordList" bindtap="gotoDetail"  data-status="未完成"  wx:for="{{noCompet}}" wx:for-index="index" wx:key="{{index}}">
+  			<view class="left">
+  				<view class="name">编号：{{item.id}}</view>
+  				<view class="bridge">武汉长江大桥</view>
+  				<view class="time">{{item.inspectTime}}</view>
+  			</view>
+  			<view class="right">
+  				<view class="resonal">{{item.component}}{{item.diseaseDesc}}</view>
+  			</view>
+  		</view>
+  	</scroll-view>
+  </view>

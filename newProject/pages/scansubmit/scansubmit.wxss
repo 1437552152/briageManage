@@ -1,0 +1,116 @@
+.about_page {
+  margin: 0 10px;
+}
+
+.swiper-tab {
+  width: 100%;
+  /* border-bottom: 2rpx solid #ccc; */
+  text-align: center;
+  height: 70rpx;
+  line-height: 70rpx;
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  color: #ccc;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.swiper-tab-item {
+  width: 25%;
+  color: #434343;
+  border-radius: 25px;
+}
+
+.active {
+  color: #fff;
+  /* border-bottom: 4rpx solid #F65959; */
+  font-size: 16px;
+  background: linear-gradient(128deg, #27DB94 0%, #14D2B8 100%);
+}
+
+.juzhong {
+  margin: 0 auto;
+}
+
+.domain {
+  background-color: #fff;
+  height: 100%;
+  margin: 0 10px;
+}
+
+.show {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+
+.reordList {
+  background: #023941;
+  box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.30);
+  border-radius: 8px;
+  border-radius: 8px;
+}
+
+.reordList {
+  display: flex;
+  justify-content: space-between;
+  padding: 30rpx;
+  margin-top: 30px;
+}
+
+.resonal {
+  margin-top: 30px;
+  color: #C43924;
+}
+
+
+.reordList .left {
+  flex: 3;
+  overflow: hidden;
+}
+
+.reordList .right {
+  flex: 2;
+  text-align: right;
+}
+
+.reordList .name {
+  color: #FFFFFF;
+  font-size: 16px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.reordList .bridge {
+  margin-top: 5px;
+  color: #000;
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+
+.reordList .time {
+  color: #000;
+  font-size: 14px;
+}
+.shuaxuan{
+  width: 32px;
+  height: 32px;
+}
+.nav-son{
+  display: flex;
+  width: 247rpx;
+  background-color: #37B298;
+  border-radius: 12px;
+  line-height: 30px;
+  height: 30px;
+  float: right;
+  margin-top: 20px;
+  margin-right: 10px;
+  }
+  .clearfix{
+    clear: both;
+  }
