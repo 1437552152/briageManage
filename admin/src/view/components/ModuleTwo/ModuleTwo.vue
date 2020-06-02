@@ -248,7 +248,7 @@ export default {
     this.$nextTick(() => {
       setInterval(() => {
         that.initCharts();
-      }, 6000);
+      }, 1000);
     });
   },
   props: {

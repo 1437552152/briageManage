@@ -5,8 +5,11 @@
             <div style="text-align: center;color: white;height: 100px;padding-top: 80px;margin-top: 180px;font-size:16px">正在努力加载中...</div>
         </div>
     </div> -->
-    <div id="container" style="height:500px"></div>
-    <div class="boxStyle"></div>
+    <div id="container" style="height:500px">
+       
+    </div>
+    <div>
+     <div class="boxStyle"></div>
     <div class="titleTotal">
       <div class="title">
         构件信息<img src="../../../../assets/images/dashed.png" />
@@ -51,12 +54,15 @@
         </Row>
       </Form>
     </div>
+    </div>
+
 
     <Table
       :columns="columns"
       :data="data"
       highlight-row
       @on-row-click="rowClick"
+      id="tableone"
     ></Table>
   </div>
 </template>
@@ -158,9 +164,31 @@ setTimeout(()=>{
     viewer.initialize().then(function() {
       that.drawProject(projectId, true, false);
     });
-},3000)
+},3000);
+
+
+
+
+   window.addEventListener('scroll', this.load)
+
   },
   methods: {
+    load(){
+             var oDiv =document.getElementById('tableone').getElementsByTagName('table')[0],
+          H = 0,
+          Y = oDiv        
+          while (Y) {
+          H += Y.offsetTop; 
+          Y = Y.offsetParent;
+          }
+      var s = document.body.scrollTop || document.documentElement.scrollTop
+      if(s>H-500) {
+         console.log(oDiv)
+          oDiv.style = "position:fixed;top:500px;z-index:99"
+      } else {
+           oDiv.style = ""
+      }
+  },
     drawProject(projectId, isInSubScene, aBd) {
       let that=this;
       this.project

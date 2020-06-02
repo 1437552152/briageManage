@@ -139,6 +139,7 @@
       :data="data"
       highlight-row
       @on-row-click="rowClick"
+      id="tableeight"
     ></Table>
   </div>
 </template>
@@ -301,8 +302,27 @@ setTimeout(()=>{
       that.drawProject(projectId, true, false);
     });
 },3000)
+window.addEventListener('scroll', this.load)
+
   },
   methods: {
+    load(){
+             var oDiv =document.getElementById('tableeight').getElementsByTagName('table')[0],
+          H = 0,
+          Y = oDiv        
+          while (Y) {
+          H += Y.offsetTop; 
+          Y = Y.offsetParent;
+          }
+      var s = document.body.scrollTop || document.documentElement.scrollTop
+      if(s>H-500) {
+         console.log(oDiv)
+          oDiv.style = "position:fixed;top:500px;z-index:99"
+      } else {
+           oDiv.style = ""
+      }
+  },
+
      drawProject(projectId, isInSubScene, aBd) {
        let that=this;
       this.project

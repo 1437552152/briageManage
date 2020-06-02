@@ -132,6 +132,7 @@
         highlight-row
         @on-row-click="rowClick"
         border
+        id="tabletwo"
       ></Table>
     </div>
     <!-- <div class="pagePosition pageStyle">
@@ -285,8 +286,26 @@ export default {
     this.getbridge();
     this.getBriageList();
   },
-  mounted() {},
+  mounted() {
+       window.addEventListener('scroll', this.load)
+  },
   methods: {
+        load(){
+             var oDiv =document.getElementById('tabletwo').getElementsByTagName('table')[0],
+          H = 0,
+          Y = oDiv        
+          while (Y) {
+          H += Y.offsetTop; 
+          Y = Y.offsetParent;
+          }
+      var s = document.body.scrollTop || document.documentElement.scrollTop
+      if(s>H-500) {
+         console.log(oDiv)
+          oDiv.style = "position:fixed;top:500px;z-index:99"
+      } else {
+           oDiv.style = ""
+      }
+  },
     getbridge() {
       let body = {};
       body = filterParams(this.formData);

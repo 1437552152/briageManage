@@ -73,6 +73,7 @@
       :data="data"
       highlight-row
       @on-row-click="rowClick"
+      id="tablethree"
     ></Table>
     <!--   <div class="pagePosition pageStyle">
       <Page
@@ -182,8 +183,26 @@ export default {
   created() {
     this.getbridge();
   },
-  mounted() {},
+  mounted() {
+      window.addEventListener('scroll', this.load)
+  },
   methods: {
+    load(){
+             var oDiv =document.getElementById('tablethree').getElementsByTagName('table')[0],
+          H = 0,
+          Y = oDiv        
+          while (Y) {
+          H += Y.offsetTop; 
+          Y = Y.offsetParent;
+          }
+      var s = document.body.scrollTop || document.documentElement.scrollTop
+      if(s>H-500) {
+         console.log(oDiv)
+          oDiv.style = "position:fixed;top:500px;z-index:99"
+      } else {
+           oDiv.style = ""
+      }
+  },
     getbridge() {
       const that = this;
       getsensorInfo().then(res => {
