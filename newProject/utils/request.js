@@ -1,5 +1,5 @@
 var app = getApp();
-var host = 'https://111.4.119.69:40605/restapi/data/bridge/';
+var host = 'https://mobile.yyf2gml.site/restapi/data/bridge/';
 
 var urlApi = (url, method, data={}) => {
   return new Promise((res, rej) => {

@@ -20,7 +20,9 @@ Page({
     diseaseCoordinate: '',
     diseaseSeverity: '',
     dealStatue: '',
-    urgentType: ''
+    urgentType: '',
+    componentId:"",
+    componentList:[]
   },
 
   /**
@@ -129,9 +131,18 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+     this.getData();
   },
-
+  getData:function(){
+    let that=this;
+    
+    urlApi('component/list','post',{bridgeId:'62924801-9263-4a15-89a3-933563bcdf49'}).then(res=>{
+      that.setData({
+        componentList:res.data.data
+      })
+     
+    })
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */
@@ -139,7 +150,12 @@ Page({
 
   },
   formSubmit(e) {
-    console.log(e);
+     let that=this;
+     let index = Math.floor((Math.random()*this.data.componentList.length)); 
+          that.setData({
+            componentId:this.data.componentList[index].id
+          })
+
    let params={};  
    for(var p in e.detail.value){//遍历json对象的每个key/value对,p为key
     params[p]=e.detail.value[p];
@@ -147,9 +163,69 @@ Page({
    params['inspectStaff']=this.data.inspectStaff
    params['inspectTime']=formatTime(new Date())
    params['bridgeId']='62924801-9263-4a15-89a3-933563bcdf49';
-   params['picUrl']='https://111.4.119.69:40605/total.png'
+   params['picUrl']='https://111.4.119.69:40605/total.png';
+   params['componentId']=this.data.componentId;
+
+if(!e.detail.value.pierNoRange){
+wx.showToast({
+  title: '请输入墩号范围',
+  icon:'none'
+})
+return;
+}
+if(!e.detail.value.component){
+  wx.showToast({
+    title: '请选择构件',
+    icon:'none'
+  })
+  return;
+  }
+  if(!e.detail.value.componentType){
+    wx.showToast({
+      title: '请选择构件类型',
+      icon:'none'
+    })
+    return;
+    }
+    if(!e.detail.value.diseaseDesc){
+      wx.showToast({
+        title: '请输入病害描述',
+        icon:'none'
+      })
+      return;
+      }
+      if(!e.detail.value.diseaseSeverity){
+        wx.showToast({
+          title: '请选择严重程度',
+          icon:'none'
+        })
+        return;
+        }
+        if(!e.detail.value.dealStatue){
+          wx.showToast({
+            title: '请选择处理状态',
+            icon:'none'
+          })
+          return;
+          }
+          if(!e.detail.value.urgentType){
+            wx.showToast({
+              title: '请选择紧迫度',
+              icon:'none'
+            })
+            return;
+            }
+            if(!e.detail.value.diseaseCoordinate){
+              wx.showToast({
+                title: '请输入坐标信息',
+                icon:'none'
+              })
+              return;
+              }
+
+
    urlApi('inspect/add','post',params).then(res=>{
-     console.log(res)
+     
      wx.showToast({
        title: '录入成功',
      })
