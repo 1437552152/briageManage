@@ -68,10 +68,10 @@ Page({
 
   gotoDetail: function (e) {
     const {
-      status
+      status,id
     } = e.currentTarget.dataset
     wx.navigateTo({
-      url: '../../pages/scandetail/scandetail?qq=' + status,
+      url: `../../pages/scandetail/scandetail?qq=${status}&id=${id}`,
     })
   },
   /**

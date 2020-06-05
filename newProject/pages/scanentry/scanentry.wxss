@@ -6,6 +6,7 @@
 .container .linkBtn {
   margin-top: 120rpx;
   margin-bottom: 100px;
+  padding-bottom:100px;
 }
 
 .container .linkBtn button {

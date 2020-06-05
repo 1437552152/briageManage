@@ -151,6 +151,7 @@ export default {
               itemStyle: {
                 color: "#69c860"
               },
+              
               label: {
                 show: false,
                 position: "bottom",
@@ -215,6 +216,7 @@ export default {
                 width: 2,
                 color: "#69c860"
               },
+             
               data: vdata[0]
             },
             {

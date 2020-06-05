@@ -20,18 +20,26 @@
         <img src="../../assets/images/right.png" />
         <ul class="protact brige">
           <Input
+            @on-change="newValue"
             v-model="formLeft.input"
             icon="ios-search"
             class="formSearch"
           />
           <li
             @click="goChildSystem(item.id)"
-            v-for="(item, index) in bridgeList"
+            v-for="(item, index) in arr"
             :key="index"
           >
-            <router-link
+            <!--     <router-link
               :to="
                 `/ChildSystem/brigetotalInfo?bridgeId=${item.id}&bimUrl=${item.bimUrl}`
+              "
+            >
+              {{ item.name }}</router-link
+            > -->
+            <router-link
+              :to="
+                `/ChildSystem/childhome?bridgeId=${item.id}&bimUrl=${item.bimUrl}`
               "
             >
               {{ item.name }}</router-link
@@ -108,7 +116,8 @@ export default {
       formLeft: {
         input: ""
       },
-      bridgeList: []
+      bridgeList: [],
+      arr:[]
     };
   },
   created() {
@@ -116,6 +125,7 @@ export default {
     getbridgeBridgeInfo().then(res => {
       console.log(res.data);
       that.bridgeList = res.data;
+      that.arr=res.data;
     });
   },
   methods: {
@@ -139,6 +149,20 @@ export default {
     },
     goChildSystem(id) {
       window.localStorage.setItem("bridgeId", id);
+    },
+    newValue() {
+      console.log(this.formLeft.input);
+      //字符串方法indexOf
+      var len = this.bridgeList.length;
+      var arr = [];
+      for (var i = 0; i < len; i++) {
+        //如果字符串中不包含目标字符会返回-1
+        if (this.bridgeList[i].name.indexOf(this.formLeft.input) >= 0) {
+          arr.push(this.bridgeList[i]);
+        }
+      }
+
+      this.arr =arr;
     }
   }
 };

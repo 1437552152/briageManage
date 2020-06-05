@@ -60,14 +60,11 @@ export default new Router({
       path: "/ChildSystem",
       component: Main,
       children: [
-        /* {
-          path: 'driveInfo/*',
+        {
+          path: 'driveInfo/',
+          name: "driveInfo",
           component: DriveInfo
         },
-        {
-          path: 'driveInfo',
-          component: DriveInfo
-        }, */
         {
           path: "childhome/",
           name: "childhome",

@@ -1,17 +1,6 @@
 <template>
   <div class="tableBox">
-    <iframe
-      align="center"
-      width="100%"
-      :height="ContentHeight"
-      :src="src"
-      frameborder="no"
-      border="0"
-      marginwidth="0"
-      marginheight="0"
-      scrolling="no"
-    />
-
+    <div id="container" style="height:500px" />
     <div class="boxStyle"></div>
     <div class="titleTotal">
       <div class="title">
@@ -135,18 +124,6 @@
         id="tabletwo"
       ></Table>
     </div>
-    <!-- <div class="pagePosition pageStyle">
-      <Page
-        :total="100"
-        show-elevator
-        show-sizer
-        :current="current"
-        :page-size="pageSize"
-        show-total
-        @on-change="onChange"
-        @on-page-size-change="onSizeChange"
-      />
-    </div> -->
   </div>
 </template>
 
@@ -155,6 +132,11 @@ import { exportFileService } from "@/view/utils/myFetch";
 import { getbridgeStructInfo } from "@/util/api";
 import { filterParams } from "@/util/commonFilter";
 import { getbridgeBridgeInfo } from "@/util/api";
+
+import { config } from "@/view/utils/common";
+import Motor from "../../../../../library/motor";
+Motor.Config.serverUrl = config.bridge.bimServer;
+
 export default {
   data() {
     return {
@@ -175,8 +157,9 @@ export default {
         mainBeamCode: "",
         pierNoRange: ""
       }, // 表单数据
-      bridgeId: this.$route.query.bridgeId, //桥id
-      src: localStorage.getItem("bimUrl"), //缓存的桥bim
+       project: null,
+      projectId:null,
+      bridgeId: this.$route.query.bridgeId,
       briageParams: {}, //桥信息
       columns: [
         {
@@ -287,6 +270,24 @@ export default {
     this.getBriageList();
   },
   mounted() {
+     setTimeout(()=>{
+    const that = this;
+    var projectId = localStorage.getItem("bridgeId");
+    this.projectId=projectId;
+    var viewer = new Motor.Viewer({
+      container: "container",
+      antialias: true,
+      viewerMode: Motor.ViewerMode.BIM,
+      appid: config.bridge.motorAppId,
+      secret: config.bridge.motorSecret,
+      backgroundImageCss: "url('/assets/images/login-bg.jpg')"
+    });
+    let project = viewer.queryProject(projectId);
+    this.project = project;
+    viewer.initialize().then(function() {
+      that.drawProject(projectId, true, false);
+    });
+},3000);
        window.addEventListener('scroll', this.load)
   },
   methods: {
@@ -342,7 +343,17 @@ export default {
         this.formData[key] = "";
       }
       this.getbridge();
-    }
+    },
+    drawProject(projectId, isInSubScene, aBd) {
+      let that=this;
+      this.project
+        .open({
+          drawEdge: isInSubScene
+        })
+        .then(function() {
+        that.flag=false;
+        });
+    },
     /* IconClick() {
     } */
   }

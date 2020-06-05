@@ -1,16 +1,6 @@
 <template>
   <div class="tableBox">
-    <iframe
-      align="center"
-      width="100%"
-      :height="ContentHeight"
-      :src="src"
-      frameborder="no"
-      border="0"
-      marginwidth="0"
-      marginheight="0"
-      scrolling="no"
-    />
+    <div id="container" style="height:500px" />
     <div class="boxStyle"></div>
     <div class="titleTotal">
       <div class="title">
@@ -142,6 +132,9 @@
 <script>
 import { exportFileService } from "@/view/utils/myFetch";
 import Circles from "@/view/components/Circles/Circles";
+import { config } from "@/view/utils/common";
+import Motor from "../../../../../library/motor";
+Motor.Config.serverUrl = config.bridge.bimServer;
 import moment from "moment";
 export default {
   components: {
@@ -149,6 +142,9 @@ export default {
   },
   data() {
     return {
+         project: null,
+      projectId:null,
+      bridgeId: this.$route.query.bridgeId,
       current: 1,
       pageSize: 10,
       ContentHeight: 500,
@@ -268,7 +264,24 @@ export default {
     };
   },
   mounted() {
-
+  setTimeout(()=>{
+    const that = this;
+    var projectId = localStorage.getItem("bridgeId");
+    this.projectId=projectId;
+    var viewer = new Motor.Viewer({
+      container: "container",
+      antialias: true,
+      viewerMode: Motor.ViewerMode.BIM,
+      appid: config.bridge.motorAppId,
+      secret: config.bridge.motorSecret,
+      backgroundImageCss: "url('/assets/images/login-bg.jpg')"
+    });
+    let project = viewer.queryProject(projectId);
+    this.project = project;
+    viewer.initialize().then(function() {
+      that.drawProject(projectId, true, false);
+    });
+},3000);
    window.addEventListener('scroll', this.load) 
   },
   methods: {
@@ -327,7 +340,17 @@ export default {
       getbridgeInspectInfo(body).then(res => {
         this.data = res.data;
       });
-    }
+    },
+     drawProject(projectId, isInSubScene, aBd) {
+      let that=this;
+      this.project
+        .open({
+          drawEdge: isInSubScene
+        })
+        .then(function() {
+        that.flag=false;
+        });
+    },
   }
 };
 </script>

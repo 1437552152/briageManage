@@ -1,6 +1,6 @@
 <template>
   <div class="tableBox">
-     <iframe align="center" width="100%" :height="ContentHeight" :src="src"  frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" />
+    <div id="container" style="height:500px" />
      <div class="boxStyle"></div>
      <div class="titleTotal">
       <div class="title">支座位移分析<img src="../../../../assets/images/dashed.png"></div></div>
@@ -17,7 +17,10 @@
 </template>
 
 <script>
-import { exportFileService } from '@/view/utils/myFetch'
+import { exportFileService } from '@/view/utils/myFetch';
+import { config } from "@/view/utils/common";
+import Motor from "../../../../../library/motor";
+Motor.Config.serverUrl = config.bridge.bimServer;
 export default {
   data () {
     return {
@@ -28,7 +31,9 @@ export default {
         name: ''
       },
 
-      src: localStorage.getItem("bimUrl"),
+    project: null,
+      projectId:null,
+      bridgeId: this.$route.query.bridgeId,
      columns: [
         {
           type: 'index',
@@ -103,6 +108,24 @@ export default {
     }
   },
   mounted () {
+    setTimeout(()=>{
+    const that = this;
+    var projectId = localStorage.getItem("bridgeId");
+    this.projectId=projectId;
+    var viewer = new Motor.Viewer({
+      container: "container",
+      antialias: true,
+      viewerMode: Motor.ViewerMode.BIM,
+      appid: config.bridge.motorAppId,
+      secret: config.bridge.motorSecret,
+      backgroundImageCss: "url('/assets/images/login-bg.jpg')"
+    });
+    let project = viewer.queryProject(projectId);
+    this.project = project;
+    viewer.initialize().then(function() {
+      that.drawProject(projectId, true, false);
+    });
+},3000);
   },
   methods: {
     onChange (page) {
@@ -116,7 +139,17 @@ export default {
     },
     IconClick () {
      
-    }
+    },
+     drawProject(projectId, isInSubScene, aBd) {
+      let that=this;
+      this.project
+        .open({
+          drawEdge: isInSubScene
+        })
+        .then(function() {
+        that.flag=false;
+        });
+    },
   }
 }
 </script>

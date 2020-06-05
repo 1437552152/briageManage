@@ -165,10 +165,6 @@ setTimeout(()=>{
       that.drawProject(projectId, true, false);
     });
 },3000);
-
-
-
-
    window.addEventListener('scroll', this.load)
 
   },

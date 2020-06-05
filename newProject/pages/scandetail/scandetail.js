@@ -14,6 +14,7 @@ Page({
     objDta:null,
     componentChild:85,
     pier:11,
+    id:0,
     coordinate:11,
     description:"因为某种原因受损因为某种原因受损因为某种原因受损因为某种原因受损因为某种原因受损因为某种原因受损因为某种原因受损因为某种原因受损因为某种原因受损因为某种原因受损因为某种原因受损",
     imgData:[{url:'/static/image/demoimg.png'},{url:'/static/image/demoimg.png'},{url:'/static/image/demoimg.png'},{url:'/static/image/demoimg.png'}]
@@ -23,7 +24,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({status:options.qq})
+    this.setData({status:options.qq,id:options.id})
     wx.setNavigationBarTitle({
       title: '上报记录详情'
     })
@@ -47,7 +48,7 @@ Page({
    */
   onShow: function () {
     const that=this;
-    urlApi('inspect/detail','post',{'inspectStatue':this.data.status}).then(res=>{
+    urlApi('inspect/detail','post',{id:this.data.id}).then(res=>{
        that.setData({objDta:res.data})
     })
   },

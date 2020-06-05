@@ -21,8 +21,9 @@ Page({
     diseaseSeverity: '',
     dealStatue: '',
     urgentType: '',
-    componentId:"",
-    componentList:[]
+    componentId: "",
+    componentList: [],
+    inspectStatue:'已完成'
   },
 
   /**
@@ -48,7 +49,7 @@ Page({
   },
   component: function () {
     let that = this;
-    let arr = ['声屏障基础', '声屏障立柱', '屏障板','连接螺栓','栏杆基础'];
+    let arr = ['声屏障基础', '声屏障立柱', '屏障板', '连接螺栓', '栏杆基础'];
     wx.showActionSheet({
       itemList: arr,
       success(res) {
@@ -62,8 +63,25 @@ Page({
       }
     })
   },
-  // 构件类型
-  componentType: function () {
+  // 完成状态
+  inspectStatue: function () {
+    let that = this;
+    let arr = ['已完成', '未完成'];
+    wx.showActionSheet({
+      itemList: arr,
+      success(res) {
+        arr.map((item, index) => {
+          if (index === res.tapIndex) {
+            that.setData({
+              inspectStatue: item
+            })
+          }
+        })
+      }
+    })
+  },
+   // 构件类型
+   componentType: function () {
     let that = this;
     let arr = ['附属结构', '上部结构', '下部结构'];
     wx.showActionSheet({
@@ -113,7 +131,7 @@ Page({
   },
   dealStatue: function () {
     let that = this;
-    let arr = ['待维修', '维修中','已维修'];
+    let arr = ['待维修', '维修中', '已维修'];
     wx.showActionSheet({
       itemList: arr,
       success(res) {
@@ -131,16 +149,18 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-     this.getData();
+    this.getData();
   },
-  getData:function(){
-    let that=this;
-    
-    urlApi('component/list','post',{bridgeId:'62924801-9263-4a15-89a3-933563bcdf49'}).then(res=>{
+  getData: function () {
+    let that = this;
+
+    urlApi('component/list', 'post', {
+      bridgeId: '62924801-9263-4a15-89a3-933563bcdf49'
+    }).then(res => {
       that.setData({
-        componentList:res.data.data
+        componentList: res.data.data
       })
-     
+
     })
   },
   /**
@@ -150,86 +170,96 @@ Page({
 
   },
   formSubmit(e) {
-     let that=this;
-     let index = Math.floor((Math.random()*this.data.componentList.length)); 
-          that.setData({
-            componentId:this.data.componentList[index].id
-          })
-
-   let params={};  
-   for(var p in e.detail.value){//遍历json对象的每个key/value对,p为key
-    params[p]=e.detail.value[p];
-   }
-   params['inspectStaff']=this.data.inspectStaff
-   params['inspectTime']=formatTime(new Date())
-   params['bridgeId']='62924801-9263-4a15-89a3-933563bcdf49';
-   params['picUrl']='https://111.4.119.69:40605/total.png';
-   params['componentId']=this.data.componentId;
-
-if(!e.detail.value.pierNoRange){
-wx.showToast({
-  title: '请输入墩号范围',
-  icon:'none'
-})
-return;
-}
-if(!e.detail.value.component){
-  wx.showToast({
-    title: '请选择构件',
-    icon:'none'
-  })
-  return;
-  }
-  if(!e.detail.value.componentType){
-    wx.showToast({
-      title: '请选择构件类型',
-      icon:'none'
+    let that = this;
+    let index = Math.floor((Math.random() * this.data.componentList.length));
+    that.setData({
+      componentId: this.data.componentList[index].id
     })
-    return;
+
+    let params = {};
+    for (var p in e.detail.value) { //遍历json对象的每个key/value对,p为key
+      params[p] = e.detail.value[p];
     }
-    if(!e.detail.value.diseaseDesc){
+    params['inspectStaff'] = this.data.inspectStaff
+    params['inspectTime'] = formatTime(new Date())
+    params['bridgeId'] = '62924801-9263-4a15-89a3-933563bcdf49';
+    params['picUrl'] = 'https://111.4.119.69:40605/total.png';
+    params['componentId'] = this.data.componentId;
+    params['inspectStatue'] = this.data.inspectStatue;
+
+    if (!e.detail.value.pierNoRange) {
       wx.showToast({
-        title: '请输入病害描述',
-        icon:'none'
+        title: '请输入墩号范围',
+        icon: 'none'
       })
       return;
-      }
-      if(!e.detail.value.diseaseSeverity){
-        wx.showToast({
-          title: '请选择严重程度',
-          icon:'none'
-        })
-        return;
-        }
-        if(!e.detail.value.dealStatue){
-          wx.showToast({
-            title: '请选择处理状态',
-            icon:'none'
-          })
-          return;
-          }
-          if(!e.detail.value.urgentType){
-            wx.showToast({
-              title: '请选择紧迫度',
-              icon:'none'
-            })
-            return;
-            }
-            if(!e.detail.value.diseaseCoordinate){
-              wx.showToast({
-                title: '请输入坐标信息',
-                icon:'none'
-              })
-              return;
-              }
+    }
+    if (!e.detail.value.component) {
+      wx.showToast({
+        title: '请选择构件',
+        icon: 'none'
+      })
+      return;
+    }
+
+    if (!e.detail.value.inspectStatue) {
+      wx.showToast({
+        title: '请选择完成状态',
+        icon: 'none'
+      })
+      return;
+    }
+
+    if (!e.detail.value.componentType) {
+      wx.showToast({
+        title: '请选择构件类型',
+        icon: 'none'
+      })
+      return;
+    }
+    if (!e.detail.value.diseaseDesc) {
+      wx.showToast({
+        title: '请输入病害描述',
+        icon: 'none'
+      })
+      return;
+    }
+    if (!e.detail.value.diseaseSeverity) {
+      wx.showToast({
+        title: '请选择严重程度',
+        icon: 'none'
+      })
+      return;
+    }
+    if (!e.detail.value.dealStatue) {
+      wx.showToast({
+        title: '请选择处理状态',
+        icon: 'none'
+      })
+      return;
+    }
+    if (!e.detail.value.urgentType) {
+      wx.showToast({
+        title: '请选择紧迫度',
+        icon: 'none'
+      })
+      return;
+    }
+    if (!e.detail.value.diseaseCoordinate) {
+      wx.showToast({
+        title: '请输入坐标信息',
+        icon: 'none'
+      })
+      return;
+    }
 
 
-   urlApi('inspect/add','post',params).then(res=>{
-     
-     wx.showToast({
-       title: '录入成功',
-     })
-   })
+    urlApi('inspect/add', 'post', params).then(res => {
+      wx.showToast({
+        title: '录入成功',
+        icon:'none'
+      })
+    })
   },
   /**
    * 生命周期函数--监听页面卸载

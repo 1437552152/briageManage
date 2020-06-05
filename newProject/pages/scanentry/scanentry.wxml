@@ -33,6 +33,13 @@
         <input class="weui-input" disabled  name="urgentType"  value="{{urgentType}}"  placeholder="请输入紧迫度"></input>
       </view>
 
+      <view class="page-section page-section-gap" bindtap="inspectStatue">
+        <view class="page-section-title">修复状态</view>
+        <input class="weui-input" disabled  name="inspectStatue"  value="{{inspectStatue}}"  placeholder="请输入紧迫度"></input>
+      </view>
+
+
+
       <view class="page-section page-section-gap">
         <view class="page-section-title">坐标信息</view>
          <input class="weui-input"  name="diseaseCoordinate" placeholder="请输入坐标信息" />
