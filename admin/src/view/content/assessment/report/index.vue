@@ -134,7 +134,6 @@ columns: [
       this.pageSize = pageSize
     },
     rowClick (params) {
-      this.src =params.bimUrl
     },
     IconClick () {
 

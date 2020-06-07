@@ -30,16 +30,9 @@
             v-for="(item, index) in arr"
             :key="index"
           >
-            <!--     <router-link
-              :to="
-                `/ChildSystem/brigetotalInfo?bridgeId=${item.id}&bimUrl=${item.bimUrl}`
-              "
-            >
-              {{ item.name }}</router-link
-            > -->
             <router-link
               :to="
-                `/ChildSystem/childhome?bridgeId=${item.id}&bimUrl=${item.bimUrl}`
+                `/ChildSystem/childhome?bridgeId=${item.id}`
               "
             >
               {{ item.name }}</router-link

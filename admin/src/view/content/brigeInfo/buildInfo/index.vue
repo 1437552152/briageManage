@@ -5,57 +5,56 @@
             <div style="text-align: center;color: white;height: 100px;padding-top: 80px;margin-top: 180px;font-size:16px">正在努力加载中...</div>
         </div>
     </div> -->
-    <div id="container" style="height:500px">
-       
-    </div>
+    <div id="container" style="height:500px"></div>
     <div>
-     <div class="boxStyle"></div>
-    <div class="titleTotal">
-      <div class="title">
-        构件信息<img src="../../../../assets/images/dashed.png" />
+      <div class="boxStyle"></div>
+      <div class="titleTotal">
+        <div class="title">
+          构件信息<img src="../../../../assets/images/dashed.png" />
+        </div>
+      </div>
+      <div class="inputStyle">
+        <Form
+          :model="formData"
+          label-position="right"
+          class="right-search"
+          inline
+          :label-width="90"
+        >
+          <Row type="flex" justify="start">
+            <Col :xl="5" :xxl="4">
+              <FormItem label="构件类型:">
+                <Select v-model="formData.componentType">
+                  <Option value="附属结构" key="1">附属结构</Option>
+                  <Option value="上部结构" key="2">上部结构</Option>
+                  <Option value="下部结构" key="3">下部结构</Option>
+                </Select>
+              </FormItem>
+            </Col>
+            <Col :xl="5" :xxl="4">
+              <FormItem label="构件名称:">
+                <Input v-model="formData.componentName" placeholder=""></Input>
+              </FormItem>
+            </Col>
+            <Col :xl="5" :xxl="4">
+              <FormItem label="墩号范围:">
+                <Select v-model="formData.pierNoRange">
+                  <Option value="P1-P4" key="1">P1-P4</Option>
+                </Select>
+              </FormItem>
+            </Col>
+            <Col :xl="3" :xxl="3">
+              <Button type="primary" @click="handleSubmit('formValidate')"
+                >查询</Button
+              >
+              <Button @click="handleReset" style="margin-left: 8px"
+                >重置</Button
+              >
+            </Col>
+          </Row>
+        </Form>
       </div>
     </div>
-    <div class="inputStyle">
-      <Form
-        :model="formData"
-        label-position="right"
-        class="right-search"
-        inline
-        :label-width="90"
-      >
-        <Row type="flex" justify="start">
-          <Col :xl="5" :xxl="4">
-            <FormItem label="构件类型:">
-              <Select v-model="formData.componentType">
-                <Option value="附属结构" key="1">附属结构</Option>
-                <Option value="上部结构" key="2">上部结构</Option>
-                <Option value="下部结构" key="3">下部结构</Option>
-              </Select>
-            </FormItem>
-          </Col>
-          <Col :xl="5" :xxl="4">
-            <FormItem label="构件名称:">
-              <Input v-model="formData.componentName" placeholder=""></Input>
-            </FormItem>
-          </Col>
-          <Col :xl="5" :xxl="4">
-            <FormItem label="墩号范围:">
-              <Select v-model="formData.pierNoRange">
-                <Option value="P1-P4" key="1">P1-P4</Option>
-              </Select>
-            </FormItem>
-          </Col>
-          <Col :xl="3" :xxl="3">
-            <Button type="primary" @click="handleSubmit('formValidate')"
-              >查询</Button
-            >
-            <Button @click="handleReset" style="margin-left: 8px">重置</Button>
-          </Col>
-        </Row>
-      </Form>
-    </div>
-    </div>
-
 
     <Table
       :columns="columns"
@@ -73,7 +72,7 @@ import { filterParams } from "@/util/commonFilter";
 import { config } from "@/view/utils/common";
 import Motor from "../../../../../library/motor";
 Motor.Config.serverUrl = config.bridge.bimServer;
-
+debugger;
 export default {
   data() {
     return {
@@ -81,11 +80,11 @@ export default {
       pageSize: 10,
       ContentHeight: 500,
       project: null,
-      projectId:null,
+      projectId: null,
       formInline: {
         name: ""
       },
-      flag:true,
+      flag: true,
       bridgeId: this.$route.query.bridgeId,
       formData: {
         componentType: "",
@@ -101,7 +100,6 @@ export default {
         position: "static",
         backgroundColor: "#04232c"
       },
-      src: localStorage.getItem("bimUrl"),
       columns: [
         {
           title: "构件类型",
@@ -146,53 +144,55 @@ export default {
     this.getbridge();
   },
   mounted() {
-
-setTimeout(()=>{
-    const that = this;
-    var projectId = localStorage.getItem("bridgeId");
-    this.projectId=projectId;
-    var viewer = new Motor.Viewer({
-      container: "container",
-      antialias: true,
-      viewerMode: Motor.ViewerMode.BIM,
-      appid: config.bridge.motorAppId,
-      secret: config.bridge.motorSecret,
-      backgroundImageCss: "url('/assets/images/login-bg.jpg')"
-    });
-    let project = viewer.queryProject(projectId);
-    this.project = project;
-    viewer.initialize().then(function() {
-      that.drawProject(projectId, true, false);
-    });
-},3000);
-   window.addEventListener('scroll', this.load)
-
+    setTimeout(() => {
+      const that = this;
+      var projectId = localStorage.getItem("bridgeId");
+      this.projectId = projectId;
+      var viewer = new Motor.Viewer({
+        container: "container",
+        antialias: true,
+        viewerMode: Motor.ViewerMode.BIM,
+        appid: config.bridge.motorAppId,
+        secret: config.bridge.motorSecret,
+        backgroundImageCss: "url('/assets/images/login-bg.jpg')"
+      });
+      let project = viewer.queryProject(projectId);
+      this.project = project;
+      viewer.initialize().then(function() {
+        that.drawProject(projectId, true, false);
+      });
+    }, 3000);
+    window.addEventListener("scroll", this.load);
   },
   methods: {
-    load(){
-             var oDiv =document.getElementById('tableone').getElementsByTagName('table')[0],
+    load() {
+      if (document.getElementById("tableone")) {
+        var oDiv = document
+            .getElementById("tableone")
+            .getElementsByTagName("table")[0],
           H = 0,
-          Y = oDiv        
-          while (Y) {
-          H += Y.offsetTop; 
+          Y = oDiv;
+        while (Y) {
+          H += Y.offsetTop;
           Y = Y.offsetParent;
-          }
-      var s = document.body.scrollTop || document.documentElement.scrollTop
-      if(s>H-500) {
-         console.log(oDiv)
-          oDiv.style = "position:fixed;top:500px;z-index:99"
-      } else {
-           oDiv.style = ""
+        }
+        var s = document.body.scrollTop || document.documentElement.scrollTop;
+        if (s > H - 500) {
+          console.log(oDiv);
+          oDiv.style = "position:fixed;top:500px;z-index:99";
+        } else {
+          oDiv.style = "";
+        }
       }
-  },
+    },
     drawProject(projectId, isInSubScene, aBd) {
-      let that=this;
+      let that = this;
       this.project
         .open({
           drawEdge: isInSubScene
         })
         .then(function() {
-        that.flag=false;
+          that.flag = false;
         });
     },
     onChange(page) {

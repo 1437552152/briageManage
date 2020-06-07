@@ -146,7 +146,6 @@ export default {
         { id: 1, name: "xls格式下载" },
         { id: 2, name: "txt格式下载" }
       ],
-      src: localStorage.getItem("bimUrl"),
       columns: [
         {
           title: "时刻",
@@ -198,7 +197,6 @@ export default {
                     label: item.name
                   },
                   click: () => {
-                    debugger;
                   }
                 });
               })
@@ -281,7 +279,7 @@ export default {
       this.pageSize = pageSize;
     },
     rowClick(params) {
-      this.src = params.row.bimUrl;
+     
     },
     IconClick() {},
     handleSubmit(name) {

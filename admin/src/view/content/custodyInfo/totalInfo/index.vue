@@ -224,7 +224,6 @@ export default {
         position: "static",
         backgroundColor: "#04232c"
       },
-      src: localStorage.getItem("bimUrl"),
       bridgeId: this.$route.query.bridgeId,
       columns: [
         {
@@ -317,7 +316,6 @@ export default {
       )}-${lastInspectTime.slice(6, 8)}`;
       this.data1.value = res.data.score;
       this.data4.value = Number(res.data.proportion) * 100;
-      this.src = res.data.bimUrl;
     });
   },
   mounted() {
@@ -343,21 +341,24 @@ setTimeout(()=>{
  window.addEventListener('scroll', this.load)
   },
   methods: {
-        load(){
-             var oDiv =document.getElementById('tableseven').getElementsByTagName('table')[0],
-          H = 0,
-          Y = oDiv        
-          while (Y) {
-          H += Y.offsetTop; 
-          Y = Y.offsetParent;
-          }
-      var s = document.body.scrollTop || document.documentElement.scrollTop
-      if(s>H-500) {
-         console.log(oDiv)
-          oDiv.style = "position:fixed;top:500px;z-index:99"
-      } else {
-           oDiv.style = ""
-      }
+
+            load(){
+  if(document.getElementById('tableseven')){
+  var oDiv =document.getElementById('tableseven').getElementsByTagName('table')[0],
+          H = 0,
+          Y = oDiv        
+          while (Y) {
+          H += Y.offsetTop; 
+          Y = Y.offsetParent;
+          }
+      var s = document.body.scrollTop || document.documentElement.scrollTop
+      if(s>H-500) {
+         console.log(oDiv)
+          oDiv.style = "position:fixed;top:500px;z-index:99"
+      } else {
+           oDiv.style = ""
+      }
+    }
   },
      drawProject(projectId, isInSubScene, aBd) {
        let that=this;
@@ -469,6 +470,7 @@ setTimeout(()=>{
     right: 50px;
     top: 30px;
     width: 300px;
+    z-index:999;
     background-color: #0d3541;
     padding: 20px;
     color: #fff;

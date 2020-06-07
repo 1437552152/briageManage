@@ -55,7 +55,6 @@ export default {
       formInline: {
         name: ""
       },
-  src: localStorage.getItem("bimUrl"),
       columns: [
         {
           type: "index",
@@ -142,7 +141,7 @@ export default {
       this.pageSize = pageSize;
     },
     rowClick(params) {
-      this.src = params.row.bimUrl;
+   
     },
     IconClick() {
     }

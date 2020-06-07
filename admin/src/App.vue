@@ -19,7 +19,6 @@ export default {
         if (val.matched[0].path === "/ChildSystem") {
           if (val.query.bridgeId) {
             window.localStorage.setItem("bridgeId", val.query.bridgeId);
-            window.localStorage.setItem("bimUrl", val.query.bimUrl);
           } else {
             this.$router.push({
               path: "/ParentSystem/home",

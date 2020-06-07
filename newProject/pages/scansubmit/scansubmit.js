@@ -36,20 +36,33 @@ Page({
   },
   getData: function () {
     var that = this;
-    urlApi('inspect/list', 'post', {
-      "inspectStatue": "未完成",
-      startTime: that.data.startTime,
-      endTime: that.data.endTime
-    }).then(res => {
+    let params={};
+    params['inspectStatue']='未完成';
+    if(that.data.startTime){
+      params['startTime']=that.data.startTime;
+    }
+    if(that.data.endTime){
+      params['endTime']=that.data.endTime;
+    }
+    urlApi('inspect/list', 'post',params).then(res => {
       that.setData({
         noCompet: res.data.data
       })
-    })
-    urlApi('inspect/list', 'post', {
-      "inspectStatue": "已完成",
-      startTime: that.data.startTime,
-      endTime: that.data.endTime
-    }).then(res => {
+    });
+    this.getWanchegn();
+  },
+
+  getWanchegn:function(){
+    var that = this;
+    let params={};
+    params['inspectStatue']='已完成';
+    if(that.data.startTime){
+      params['startTime']=that.data.startTime;
+    }
+    if(that.data.endTime){
+      params['endTime']=that.data.endTime;
+    }
+    urlApi('inspect/list', 'post',params).then(res => {
       that.setData({
         Compet: res.data.data
       })

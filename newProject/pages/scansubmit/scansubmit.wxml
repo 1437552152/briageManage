@@ -11,10 +11,10 @@
 
   <view class="{{currentTab == 0 ? 'show':'hidden'}}">
   	<scroll-view>
-  		<view class="reordList" bindtap="gotoDetail" data-id="{{item.id}}"  data-status="未完成"    wx:for="{{Compet}}" wx:for-index="index" wx:key="{{index}}">
+  		<view class="reordList" bindtap="gotoDetail" data-id="{{item.id}}"  data-status="未完成"    wx:for="{{noCompet}}" wx:for-index="index" wx:key="{{index}}">
   			<view class="left">
   				<view class="name">编号：{{item.id}}</view>
-  				<view class="bridge">武汉长江大桥</view>
+  				<view class="bridge">{{item.bridgeName}}</view>
   				<view class="time">{{item.inspectTime}}</view>
   			</view>
   			<view class="right">
@@ -25,10 +25,10 @@
   </view>
   <view class="{{currentTab == 1 ? 'show':'hidden'}}">
   		<scroll-view>
-  		<view class="reordList" bindtap="gotoDetail" data-id="{{item.id}}"  data-status="已完成"  wx:for="{{noCompet}}" wx:for-index="index" wx:key="{{index}}">
+  		<view class="reordList" bindtap="gotoDetail" data-id="{{item.id}}"  data-status="已完成"  wx:for="{{Compet}}" wx:for-index="index" wx:key="{{index}}">
   			<view class="left">
   				<view class="name">编号：{{item.id}}</view>
-  				<view class="bridge">武汉长江大桥</view>
+  				<view class="bridge">{{item.bridgeName}}</view>
   				<view class="time">{{item.inspectTime}}</view>
   			</view>
   			<view class="right">

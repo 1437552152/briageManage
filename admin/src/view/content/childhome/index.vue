@@ -171,7 +171,6 @@ export default {
         value:['1','2','3'],
       },
        ContentHeight: 500,
-        src: localStorage.getItem("bimUrl")
     };
   },
   mounted() {

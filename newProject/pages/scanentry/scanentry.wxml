@@ -8,8 +8,8 @@
       </view>
 
       <view class="page-section1">
-        <view class="page-section-title" bindtap="component">构件   <input class="weui-input" value="{{component}}"  disabled name="component" placeholder="请输入所属构件" /></view>
-        <view class="page-section-title childComponent" bindtap="componentType">构件类型  <input disabled class="weui-input"  name="componentType" value="{{componentType}}" placeholder="请输入构件类型" /></view>
+        <view class="page-section-title" bindtap="component">构件   <input class="weui-input" value="{{component}}"  disabled name="component" placeholder="请选择所属构件" /></view>
+        <view class="page-section-title childComponent" bindtap="componentType">构件类型  <input disabled class="weui-input"  name="componentType" value="{{componentType}}" placeholder="请选择构件类型" /></view>
       </view>
 
       <view class="page-section page-section-gap">
@@ -20,25 +20,28 @@
 
        <view class="page-section page-section-gap"  bindtap="diseaseSeverity">
         <view class="page-section-title">严重程度</view>
-        <input class="weui-input" disabled  name="diseaseSeverity"   value="{{diseaseSeverity}}"  placeholder="请输入严重程度"></input>
+        <input class="weui-input" disabled  name="diseaseSeverity"   value="{{diseaseSeverity}}"  placeholder="请选择严重程度"></input>
       </view>
 
        <view class="page-section page-section-gap" bindtap="dealStatue">
         <view class="page-section-title">处理状态</view>
-        <input class="weui-input"  disabled name="dealStatue"   value="{{dealStatue}}"  placeholder="请输入处理状态"></input>
+        <input class="weui-input"  disabled name="dealStatue"   value="{{dealStatue}}"  placeholder="请选择处理状态"></input>
       </view>
 
        <view class="page-section page-section-gap" bindtap="urgentType">
         <view class="page-section-title">紧迫度</view>
-        <input class="weui-input" disabled  name="urgentType"  value="{{urgentType}}"  placeholder="请输入紧迫度"></input>
+        <input class="weui-input" disabled  name="urgentType"  value="{{urgentType}}"  placeholder="请选择紧迫度"></input>
       </view>
 
       <view class="page-section page-section-gap" bindtap="inspectStatue">
         <view class="page-section-title">修复状态</view>
-        <input class="weui-input" disabled  name="inspectStatue"  value="{{inspectStatue}}"  placeholder="请输入紧迫度"></input>
+        <input class="weui-input" disabled  name="inspectStatue"  value="{{inspectStatue}}"  placeholder="请选择紧迫度"></input>
       </view>
 
-
+      <view class="page-section page-section-gap" bindtap="bridgeList">
+        <view class="page-section-title">桥梁选择</view>
+        <input class="weui-input" disabled  name="bridgeList"  value="{{bridgeList}}"  placeholder="请选择桥梁"></input>
+      </view>
 
       <view class="page-section page-section-gap">
         <view class="page-section-title">坐标信息</view>

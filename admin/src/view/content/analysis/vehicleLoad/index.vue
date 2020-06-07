@@ -134,7 +134,7 @@ export default {
       this.pageSize = pageSize
     },
     rowClick (params) {
-      this.src = params.row.bimUrl
+     
     },
     IconClick () {
       

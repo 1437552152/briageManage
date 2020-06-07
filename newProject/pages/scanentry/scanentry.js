@@ -22,8 +22,11 @@ Page({
     dealStatue: '',
     urgentType: '',
     componentId: "",
+    componentIdY:'',
     componentList: [],
-    inspectStatue:'已完成'
+    componentListY:[],
+    inspectStatue:'已完成',
+    bridgeList:'香港路模型2'
   },
 
   /**
@@ -80,6 +83,25 @@ Page({
       }
     })
   },
+
+// 桥梁选择
+bridgeList: function () {
+  let that = this;
+  let arr = ['香港路模型2', '杨泗港大桥健康监测'];
+  wx.showActionSheet({
+    itemList: arr,
+    success(res) {
+      arr.map((item, index) => {
+        if (index === res.tapIndex) {
+          that.setData({
+            bridgeList: item
+          })
+        }
+      })
+    }
+  })
+},
+
    // 构件类型
    componentType: function () {
     let that = this;
@@ -149,11 +171,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+  // 先请求出桥梁的列表，然后再得到其对应的构件列表
+  let that = this;
     this.getData();
   },
   getData: function () {
     let that = this;
-
+    // 香港路模型
     urlApi('component/list', 'post', {
       bridgeId: '62924801-9263-4a15-89a3-933563bcdf49'
     }).then(res => {
@@ -162,6 +186,15 @@ Page({
       })
 
     })
+// 杨四港大桥健康模型
+urlApi('component/list', 'post', {
+  bridgeId: 'dc110962-86da-4012-afe1-b2ba9a4366bf'
+}).then(res => {
+  that.setData({
+    componentListY: res.data.data
+  })
+
+})
   },
   /**
    * 生命周期函数--监听页面隐藏
@@ -173,18 +206,20 @@ Page({
     let that = this;
     let index = Math.floor((Math.random() * this.data.componentList.length));
     that.setData({
-      componentId: this.data.componentList[index].id
+      componentId: this.data.componentList[index].id,
+      componentIdY: this.data.componentListY[index].id,
     })
 
     let params = {};
     for (var p in e.detail.value) { //遍历json对象的每个key/value对,p为key
       params[p] = e.detail.value[p];
     }
+    delete params.bridgeList;
     params['inspectStaff'] = this.data.inspectStaff
-    params['inspectTime'] = formatTime(new Date())
-    params['bridgeId'] = '62924801-9263-4a15-89a3-933563bcdf49';
+    params['inspectTime'] = formatTime(new Date());
+    params['bridgeId'] =this.data.bridgeList=='杨泗港大桥健康监测'?'dc110962-86da-4012-afe1-b2ba9a4366bf':'62924801-9263-4a15-89a3-933563bcdf49';
     params['picUrl'] = 'https://111.4.119.69:40605/total.png';
-    params['componentId'] = this.data.componentId;
+    params['componentId'] =this.data.bridgeList=='杨泗港大桥健康监测'? this.data.componentIdY:this.data.componentId;
     params['inspectStatue'] = this.data.inspectStatue;
 
     if (!e.detail.value.pierNoRange) {

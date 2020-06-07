@@ -292,20 +292,22 @@ export default {
   },
   methods: {
         load(){
-             var oDiv =document.getElementById('tabletwo').getElementsByTagName('table')[0],
-          H = 0,
-          Y = oDiv        
-          while (Y) {
-          H += Y.offsetTop; 
-          Y = Y.offsetParent;
-          }
-      var s = document.body.scrollTop || document.documentElement.scrollTop
-      if(s>H-500) {
-         console.log(oDiv)
-          oDiv.style = "position:fixed;top:500px;z-index:99"
-      } else {
-           oDiv.style = ""
-      }
+  if(document.getElementById('tabletwo')){
+  var oDiv =document.getElementById('tabletwo').getElementsByTagName('table')[0],
+          H = 0,
+          Y = oDiv        
+          while (Y) {
+          H += Y.offsetTop; 
+          Y = Y.offsetParent;
+          }
+      var s = document.body.scrollTop || document.documentElement.scrollTop
+      if(s>H-500) {
+         console.log(oDiv)
+          oDiv.style = "position:fixed;top:500px;z-index:99"
+      } else {
+           oDiv.style = ""
+      }
+    }
   },
     getbridge() {
       let body = {};
@@ -333,7 +335,6 @@ export default {
       this.pageSize = pageSize;
     },
     rowClick(params) {
-      this.src = params.bimUrl;
     },
     handleSubmit(name) {
       this.getbridge();

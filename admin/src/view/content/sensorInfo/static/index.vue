@@ -86,7 +86,6 @@ export default {
       data4: {
         title: "最大车重实时监测图"
       },
-      src: localStorage.getItem("bimUrl"),
       columns: [
         {
           title: "时刻",
@@ -192,20 +191,22 @@ export default {
   },
   methods: {
      load(){
-             var oDiv =document.getElementById('tablefour').getElementsByTagName('table')[0],
-          H = 0,
-          Y = oDiv        
-          while (Y) {
-          H += Y.offsetTop; 
-          Y = Y.offsetParent;
-          }
-      var s = document.body.scrollTop || document.documentElement.scrollTop
-      if(s>H-500) {
-         console.log(oDiv)
-          oDiv.style = "position:fixed;top:500px;z-index:99"
-      } else {
-           oDiv.style = ""
-      }
+  if(document.getElementById('tablefour')){
+  var oDiv =document.getElementById('tablefour').getElementsByTagName('table')[0],
+          H = 0,
+          Y = oDiv        
+          while (Y) {
+          H += Y.offsetTop; 
+          Y = Y.offsetParent;
+          }
+      var s = document.body.scrollTop || document.documentElement.scrollTop
+      if(s>H-500) {
+         console.log(oDiv)
+          oDiv.style = "position:fixed;top:500px;z-index:99"
+      } else {
+           oDiv.style = ""
+      }
+    }
   },
     onChange(page) {
       this.current = page;
@@ -214,7 +215,7 @@ export default {
       this.pageSize = pageSize;
     },
     rowClick(params) {
-      this.src = params.row.bimUrl;
+     
     },
     IconClick() {},
           drawProject(projectId, isInSubScene, aBd) {

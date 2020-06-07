@@ -266,7 +266,6 @@ export default {
                   },
                   on: {
                     click: () => {
-                      debugger;
                       exportFileService(params.row.picUrl);
                     }
                   }
@@ -306,23 +305,24 @@ window.addEventListener('scroll', this.load)
 
   },
   methods: {
-    load(){
-             var oDiv =document.getElementById('tableeight').getElementsByTagName('table')[0],
-          H = 0,
-          Y = oDiv        
-          while (Y) {
-          H += Y.offsetTop; 
-          Y = Y.offsetParent;
-          }
-      var s = document.body.scrollTop || document.documentElement.scrollTop
-      if(s>H-500) {
-         console.log(oDiv)
-          oDiv.style = "position:fixed;top:500px;z-index:99"
-      } else {
-           oDiv.style = ""
-      }
+        load(){
+  if(document.getElementById('tableeight')){
+  var oDiv =document.getElementById('tableeight').getElementsByTagName('table')[0],
+          H = 0,
+          Y = oDiv        
+          while (Y) {
+          H += Y.offsetTop; 
+          Y = Y.offsetParent;
+          }
+      var s = document.body.scrollTop || document.documentElement.scrollTop
+      if(s>H-500) {
+         console.log(oDiv)
+          oDiv.style = "position:fixed;top:500px;z-index:99"
+      } else {
+           oDiv.style = ""
+      }
+    }
   },
-
      drawProject(projectId, isInSubScene, aBd) {
        let that=this;
       this.project
@@ -415,6 +415,7 @@ window.addEventListener('scroll', this.load)
  position: fixed;
     right: 50px;
     top: 30px;
+      z-index:999;
     width: 300px;
     background-color: #0d3541;
     padding: 20px;

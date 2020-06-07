@@ -32,7 +32,7 @@ Page({
         const latitude = res.latitude;
         const longitude = res.longitude;
         that.setData({
-          location: "武汉长江大桥"
+          location: "湖北省武汉市"
         })
 
       }
