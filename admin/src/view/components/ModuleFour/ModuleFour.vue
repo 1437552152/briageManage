@@ -27,7 +27,10 @@ export default {
 x:'center',
         y:10,
         textAlign:'left'
-                },  
+                }, 
+                grid: {
+        right: '15%',
+    }, 
         xAxis: {
         type: 'category',
         boundaryGap: false,
@@ -96,6 +99,38 @@ x:'center',
         itemStyle: {
             borderWidth: 2,
             borderColor: '#f00'
+        },
+               markLine : {
+               symbol:'none',
+               data : [
+                { 
+                  silent:false,//鼠标悬停事件  true没有，false有
+                  yAxis:55,
+                  lineStyle:{
+                        type:'solid',
+                        color:'red'
+                            },
+                  label:{
+                        position:'end',
+                        formatter:"预警值55KN",
+                        color:'rgba(255,255,255,0.65)'
+                        }
+                },
+                { 
+                  silent:false,
+                  yAxis:29,
+                  type:"average",
+                  lineStyle:{
+                        type:'dashed',
+                        color:'red'
+                            },
+                  label:{
+                        position:'end',
+                        formatter:"平均值29KN",
+                        color:'rgba(255,255,255,0.65)'
+                        }
+                }
+            ]
         },
         areaStyle: {
             normal: {

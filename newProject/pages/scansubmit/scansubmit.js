@@ -44,7 +44,11 @@ Page({
     if(that.data.endTime){
       params['endTime']=that.data.endTime;
     }
+    wx.showLoading({
+      title: '加载中...'
+    })
     urlApi('inspect/list', 'post',params).then(res => {
+      wx.hideLoading()
       that.setData({
         noCompet: res.data.data
       })

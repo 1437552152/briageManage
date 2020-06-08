@@ -16,7 +16,7 @@ Page({
     pier:11,
     id:0,
     coordinate:11,
-    description:"因为某种原因受损因为某种原因受损因为某种原因受损因为某种原因受损因为某种原因受损因为某种原因受损因为某种原因受损因为某种原因受损因为某种原因受损因为某种原因受损因为某种原因受损",
+    description:"",
     imgData:[{url:'/static/image/demoimg.png'},{url:'/static/image/demoimg.png'},{url:'/static/image/demoimg.png'},{url:'/static/image/demoimg.png'}]
   },
 
@@ -48,7 +48,11 @@ Page({
    */
   onShow: function () {
     const that=this;
+    wx.showLoading({
+      title: '加载中...'
+    })
     urlApi('inspect/detail','post',{id:this.data.id}).then(res=>{
+      wx.hideLoading();
        that.setData({objDta:res.data})
     })
   },

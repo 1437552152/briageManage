@@ -48,7 +48,7 @@ for(var i=0;i<labelData.length;++i){
         text: this.dataObj.title,
         left: '47%',  
         textAlign: 'center',
-        top: '45%',
+        top: '40%',
         textStyle:{
             fontSize:26,
             color:'#fff'

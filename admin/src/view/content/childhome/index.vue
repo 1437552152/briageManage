@@ -50,7 +50,7 @@
              </div>
            </div>
          </div>
-         <div class="partTop">
+         <div class="partBot">
     
            <div style="width:calc((100% - 20px) / 3 );height:100%;float:left">
            <div style="color:#4EECEE;font-size:26px;height:30px;padding:30px 0;box-sizing:border-box;text-align:center">结构状态</div>
@@ -170,11 +170,10 @@ export default {
         title:"无",
         value:['1','2','3'],
       },
-       ContentHeight: 500,
+       ContentHeight: '100%',
     };
   },
   mounted() {
-  setTimeout(()=>{
     const that = this;
     var projectId = localStorage.getItem("bridgeId");
     this.projectId=projectId;
@@ -191,7 +190,6 @@ export default {
     viewer.initialize().then(function() {
       that.drawProject(projectId, true, false);
     });
-},3000);
   },
   methods: {
         drawProject(projectId, isInSubScene, aBd) {
@@ -226,18 +224,22 @@ export default {
 }
 .module{
   width:100%;
-  height:calc(((100% - 50px) / 3) * 2);
+  height:calc(((100% - 52px) / 3) * 2);
 }
 .moduleB{
   width:100%;
-  height:calc((100% - 50px) / 3);
+  height:calc((100% - 52px) / 3);
   margin-top: 50px;
   border:1px solid #4EECEE;
   border-radius: 10px;
 }
 .partTop{
   width:100%;
-  height:50%;
+  height:60%;
+}
+.partBot{
+  width:100%;
+  height:40%;
 }
 /* #toolbar {
   position: absolute;

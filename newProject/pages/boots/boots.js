@@ -6,6 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    path: '',
+    type:1
   },
   onPageScroll:function(e){
     if(e.scrollTop<0){
@@ -18,6 +20,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({
+      path: options.path,
+      type:options.type||1
+    })
+
+
     wx.setNavigationBarColor({
       backgroundColor:"#041B1e",
       frontColor:'#ffffff'
@@ -33,29 +41,15 @@ Page({
           wx.getUserInfo({
             success: function (e) { 
               wx.setStorageSync("userInfo", e.userInfo);    
-              wx.navigateTo({
-                url:"/pages/home/home",
-              })
-             
-              // let params={};
-              // params['signature'] = e.signature;
-              // params['raw_data'] = e.rawData;
-              // params['iv'] = e.iv;
-              // params['encrypted_data'] = e.encryptedData;
-              // params['code'] = a.code;
-              // urlApi("/user/Login/wechatLogin","post",params).then((res)=>{
-              //   if(res.data.code){
-              //     console.log(res.data.data)
-               
-              //     wx.navigateTo({
-              //       url:"/pages/home/home",
-              //     })
-              //   }else{
-              //     wx.showToast({
-              //       title: res.data.msg
-              //     })
-              //   }            
-              // })
+              if(that.data.type==1||!that.data.type){
+                wx.navigateTo({
+                  url: that.data.path,
+                })
+              }else{
+               wx.switchTab({
+                 url: that.data.path
+               }) 
+              }
             }
           })
         }
@@ -67,6 +61,9 @@ Page({
    */
   onReady: function () {
 
+  },
+  refuse: function() {
+    wx.navigateBack({})
   },
 
   /**

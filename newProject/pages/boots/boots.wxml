@@ -5,7 +5,9 @@
   </view>
   <view class="caozuo">申请获得以下授权</view>
   <view class="caozuo2">·获取您的微信昵称、头像信息</view>
+  <view class="notice"><image src="/static/image/notice.png" />该小程序只用于内部员工使用</view>
   <view class='styleAuth'>
+    <button class='refuse' bindtap='refuse'>拒绝</button>
     <button  style='background-color: #21d8a2;padding-left: 10px;padding-right: 10px;' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">
       确认登录
     </button>

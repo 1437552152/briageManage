@@ -72,7 +72,6 @@ import { filterParams } from "@/util/commonFilter";
 import { config } from "@/view/utils/common";
 import Motor from "../../../../../library/motor";
 Motor.Config.serverUrl = config.bridge.bimServer;
-debugger;
 export default {
   data() {
     return {

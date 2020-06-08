@@ -35,6 +35,9 @@ export default {
             y: 10,
             textAlign: "left"
           },
+          grid: {
+        right: '20%',
+    },
           xAxis: {
             type: "category",
             boundaryGap: false,
@@ -114,6 +117,53 @@ export default {
                 borderWidth: 2,
                 borderColor: "#f00"
               },
+               markLine : {
+               symbol:'none',
+               data : [
+                { 
+                  silent:false,//鼠标悬停事件  true没有，false有
+                  yAxis:50,
+                  type:"max",
+                  lineStyle:{
+                        type:'solid',
+                        color:'red'
+                            },
+                  label:{
+                        position:'end',
+                        formatter:"最大限值50.00",
+                        color:'rgba(255,255,255,0.65)'
+                        }
+                },
+                { 
+                  silent:false,
+                  yAxis:-0.87,
+                  type:"average",
+                  lineStyle:{
+                        type:'dashed',
+                        color:'red'
+                            },
+                  label:{
+                        position:'end',
+                        formatter:"平均值-0.87",
+                        color:'rgba(255,255,255,0.65)'
+                        }
+                },
+                { 
+                  silent:false,//鼠标悬停事件  true没有，false有
+                  yAxis:-50,
+                  type:"min",
+                  lineStyle:{
+                        type:'solid',
+                        color:'red'
+                            },
+                  label:{
+                        position:'end',
+                        formatter:"最小限值-50.00",
+                        color:'rgba(255,255,255,0.65)'
+                        }
+                }
+            ]
+        },
               areaStyle: {
                 normal: {
                   color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [

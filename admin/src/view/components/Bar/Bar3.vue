@@ -75,7 +75,7 @@ export default {
                 }
             },
         data: this.dataObj.value,
-        barWidth: '12px',
+        barWidth: '8px',
         barCategoryGap: '50%',
         itemStyle: {
             normal: {

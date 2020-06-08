@@ -16,16 +16,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    const that = this;
     wx.setNavigationBarTitle({
       title: '首页'
     })
-
-
-    const that = this;
-    this.setData({
-      objUserInfo: wx.getStorageSync('userInfo')
-    })
-
     wx.getLocation({
       type: 'wgs84',
       success(res) {
@@ -51,7 +45,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    const that = this;
+    this.setData({
+      objUserInfo: wx.getStorageSync('userInfo')
+    })
   },
 
   /**
@@ -96,13 +93,45 @@ Page({
   },
   // 页面跳转(需带巡检记录参数)
   gotoScanentry: function() {
-    wx.navigateTo({
-      url: '../scanentry/scanentry'
-    })
+        let userInfo = wx.getStorageSync("userInfo");
+        wx.getSetting({
+          success: function (respon) {
+            if (respon.authSetting['scope.userInfo'] && userInfo) {
+              wx.navigateTo({
+                url: '../scanentry/scanentry'
+              })
+            }else{
+              wx.navigateTo({
+                url: `/pages/boots/boots?path=/pages/scanentry/scanentry&type=1`
+              })
+            }
+          },
+          fail: function () {
+            wx.navigateTo({
+              url: `/pages/boots/boots?path=/pages/scanentry/scanentry&type=1`
+            })
+          }
+        })  
   },
   gotoCheckRecord: function() {
-    wx.navigateTo({
-      url: '../scansubmit/scansubmit'
-    })
+    let userInfo = wx.getStorageSync("userInfo");
+    wx.getSetting({
+      success: function (respon) {
+        if (respon.authSetting['scope.userInfo'] && userInfo) {
+          wx.navigateTo({
+            url: '../scansubmit/scansubmit'
+          })
+        }else{
+          wx.navigateTo({
+            url: `/pages/boots/boots?path=/scansubmit/scansubmit&type=1`
+          })
+        }
+      },
+      fail: function () {
+        wx.navigateTo({
+          url: `/pages/boots/boots?path=/scansubmit/scansubmit&type=1`
+        })
+      }
+    }) 
   }
 })

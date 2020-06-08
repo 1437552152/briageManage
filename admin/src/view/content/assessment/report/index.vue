@@ -71,7 +71,7 @@ columns: [
           align: 'center'
         },
         {
-          title: '图纸下载',
+          title: '图片下载',
           key: 'action',
           width: 150,
           align: 'center',

@@ -31,28 +31,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
     onShow: function () {
-      const that = this
-      setTimeout(() => {
-        let userInfo = wx.getStorageSync("userInfo");
-        wx.getSetting({
-          success: function (respon) {
-            if (respon.authSetting['scope.userInfo'] && userInfo) {
-              wx.navigateTo({
-                url: "/pages/home/home"
-              })
-            }else{
-              wx.navigateTo({
-                url: "/pages/boots/boots"
-              })
-            }
-          },
-          fail: function () {
-            wx.navigateTo({
-              url: "/pages/boots/boots"
-            })
-          }
-        })
-      }, 3000)
+      const that = this;
+      wx.navigateTo({
+        url: "/pages/home/home"
+       })
   },
 
   /**

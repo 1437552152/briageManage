@@ -288,12 +288,23 @@ urlApi('component/list', 'post', {
       return;
     }
 
+    wx.showLoading({
+      title:"正在提交..."
+    })
 
     urlApi('inspect/add', 'post', params).then(res => {
+      wx.hideLoading();
       wx.showToast({
         title: '录入成功',
         icon:'none'
-      })
+      });
+ 
+      setTimeout(()=>{
+        wx.navigateTo({
+          url: '/pages/home/home',
+        })
+      },3000)
+ 
     })
   },
   /**

@@ -119,7 +119,7 @@ export default {
         name: ""
       },
       data2: {
-        title: "动扰度实时监测"
+        title: "动扰度实时监测图"
       },
       data3: {
         title: "传感器A动挠度实时监测图"
@@ -168,7 +168,7 @@ export default {
           align: "center"
         },
         {
-          title: "图纸下载",
+          title: "图片下载",
           key: "action",
           width: 150,
           align: "center",
@@ -342,13 +342,13 @@ export default {
         width:50%;
       }
 .line1{
-  background-color: #AA41FF;
+  background-color: #ba72bf;
 }
 .line2{
-  background-color: #32C5FF;
+  background-color:  #ba72bf;
 }
 .line3{
-   background-color: #69c860;
+   background-color: #ba72bf;
  
 }
 

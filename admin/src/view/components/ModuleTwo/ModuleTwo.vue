@@ -164,6 +164,7 @@ export default {
                   backgroundColor: "transparent"
                 }
               },
+        
               data: vdata[0]
             },
             {
@@ -216,7 +217,6 @@ export default {
                 width: 2,
                 color: "#69c860"
               },
-             
               data: vdata[0]
             },
             {
