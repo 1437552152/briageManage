@@ -85,8 +85,8 @@ x:'center',
         }
     },
     series: [{
-        name: '网点数',
-        data: this.getValue(),
+        name: '最大车重实时监测',
+        data: [20,25,30,25,38,28,18,30,25],
         type: 'line',
         smooth: 0.4,
         symbolSize: 6,
@@ -96,6 +96,12 @@ x:'center',
           borderWidth: 2
           
         },
+                   markPoint:{
+　　data:[
+　　　　{type:'max',name:'最大值',symbol:'triangle',symbolSize:15,label:{position:'end',formatter:"max=38",color:'rgba(255,255,255,0.65)'}},
+　　　　{type:'min',name:'最小值',symbol:'triangle',symbolSize:15,label:{position:'end',formatter:"max=18",color:'rgba(255,255,255,0.65)'}} 
+　　] 
+},
         itemStyle: {
             borderWidth: 2,
             borderColor: '#f00'

@@ -6,9 +6,9 @@
 		<view>
 			<text>构件:   {{objDta.component}}</text>
 		</view>
-		<view>
+		<!-- <view>
 			<text>子构件:  {{objDta.componentChild}}</text>
-		</view>
+		</view> -->
 		<view>
 			<text>临近桥墩:   {{objDta.pierNoRange}}</text>
 		</view>

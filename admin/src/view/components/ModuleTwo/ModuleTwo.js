@@ -4,7 +4,7 @@ export function dataX1(){
         return arr1;
  }
  export function dataY1(){
-    let arr2=["传感器A","传感器B","传感器C"]
+    let arr2=["P1","P2","P3","P4","P5"]
      return arr2;
  }
  

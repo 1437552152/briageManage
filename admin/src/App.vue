@@ -34,6 +34,7 @@ export default {
 </script>
 <style lang="less">
 @import "./index.less";
+@import "./common.less";
 html,
 body,
 #app {

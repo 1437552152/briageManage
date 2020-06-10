@@ -315,7 +315,6 @@ var asm2wasmImports = { // special asm2wasm imports
         return x % y;
     },
     "debugger": function() {
-        debugger;
     }
 };
 

@@ -67,7 +67,7 @@ export default {
           },
           color:['#69c860','#32C5FF','#AA41FF'],
           legend: {
-            data: ["传感器A", "传感器B", "传感器C"],
+            data: ["传感器1", "传感器2", "传感器3"],
             orient: "vertical",
             top: "center",
             left: "80%",
@@ -147,7 +147,7 @@ export default {
             {
               symbol: "none",
               type: "scatter3D",
-              name: "传感器A",
+              name: "传感器1",
               itemStyle: {
                 color: "#69c860"
               },
@@ -170,7 +170,7 @@ export default {
             {
               symbol: "none",
               type: "scatter3D",
-              name: "传感器B",
+              name: "传感器2",
               itemStyle: {
                 color: "#32C5FF"
               },
@@ -191,7 +191,7 @@ export default {
             {
               symbol: "none",
               type: "scatter3D",
-              name: "传感器C",
+              name: "传感器3",
               itemStyle: {
                 color: "#AA41FF"
               },
@@ -212,7 +212,7 @@ export default {
             {
               symbol: "none",
               type: "line3D",
-              name: "传感器A",
+              name: "传感器1",
               lineStyle: {
                 width: 2,
                 color: "#69c860"
@@ -222,7 +222,7 @@ export default {
             {
               symbol: "none",
               type: "line3D",
-              name: "传感器B",
+              name: "传感器2",
               lineStyle: {
                 color: "#32C5FF",
                 width: 2
@@ -232,7 +232,7 @@ export default {
             {
               symbol: "none",
               type: "line3D",
-              name: "传感器C",
+              name: "传感器3",
               lineStyle: {
                 color: "#AA41FF",
                 width: 2

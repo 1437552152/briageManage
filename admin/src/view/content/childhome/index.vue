@@ -189,6 +189,7 @@ export default {
     this.project = project;
     viewer.initialize().then(function() {
       that.drawProject(projectId, true, false);
+      
     });
   },
   methods: {

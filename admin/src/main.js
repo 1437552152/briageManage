@@ -9,6 +9,12 @@ import qs from "qs";
 import Echart from "echarts";
 import "echarts-liquidfill";
 import scroll from "vue-seamless-scroll";
+
+import "../lib/jquery.min.js";
+import "../lib/jquery.ztree.all.min.js"
+import "../lib/zTreeStyle.css"
+
+
 Vue.use(scroll);
 axios.defaults.baseURL = Host;
 Vue.prototype.$http = axios;

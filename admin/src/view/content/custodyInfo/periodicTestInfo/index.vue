@@ -1,6 +1,9 @@
 <template>
   <div class="tableBox">
     <div id="container" style="height:500px" />
+      <div class="tree_container">
+        <ul id="treeDemo" class="ztree"></ul>
+    </div>
     <div class="boxStyle"></div>
     <div class="titleTotal">
       <div class="title">
@@ -342,16 +345,106 @@ export default {
         this.data = res.data;
       });
     },
-     drawProject(projectId, isInSubScene, aBd) {
-      let that=this;
+       drawProject(projectId, isInSubScene, aBd) {
+      let that = this;
       this.project
         .open({
           drawEdge: isInSubScene
         })
         .then(function() {
-        that.flag=false;
+          that.flag = false;
+                      if(isInSubScene){
+                    that.project.getTreeStructure().then(data=>{
+                        var pTree = data;
+                        if (pTree) {
+                            let zTreeObj;
+                            
+                            // 重新设置数据
+                            function reSetNodes(zTreeObj) {
+                                let node = zTreeObj.getNodes();
+                                let nodes = zTreeObj.transformToArray(node);
+                                if (nodes.length > 0) {
+                                    for (let i = 0; i < nodes.length; i++) {
+                                        if (!nodes[i].children) {
+                                            if (nodes[i].level === 3) {
+                                                nodes[i].isParent = true;
+                                            }
+                                            nodes[i].nocheck = true;
+                                            zTreeObj.updateNode(nodes[i]);
+                                        }
+                                    }
+                                }
+                            }
+                            let setting = {
+                                data: {
+                                    key: {
+                                        checked: "isChecked"
+                                    }
+                                },
+                                view: {
+                                    fontCss: { color: "white" }
+                                },
+                                check: {
+                                    enable: true,       //设置是否显示checkbox复选框
+                                },
+                                callback: {
+                                    onCheck: function (e, id, treeNode) {
+                                        if(that.project.drawEdge){
+                                            that.project.drawEdge = false;
+                                        }
+                                        that.project.setVisiblityFromTree(treeNode);
+                                        let treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+                                        let nodes = treeObj.getCheckedNodes();
+                                        let designIds = [];
+                                        $.each(nodes, function (i, item) {
+                                            designIds.push(item.id);
+                                            item.checkedOld = item.checked;
+                                        })
+                                    },
+                                    onClick: function (e, id, treeNode) {
+                                        that.project.setComponentsColorFromTree(treeNode,Motor.Color.CYAN);
+                                        $('#infobox').hide();
+                                    },
+                                    onDblClick: function (e, id, treeNode) {
+                                        if (!treeNode.children && treeNode.level === 4) {
+                                            let component = that.project.getComponentFromTree(treeNode);
+                                            let innerHTML = '';
+                                            for (var key in component.infos) {
+                                                innerHTML += '<div title=' + component.infos[key] + '>' + key + ': ' + component.infos[key] + '</div>';
+                                            }
+                                            $('#infobox').html('<div title=' + component.guid + '>' + component.guid + '</div>' + innerHTML);
+                                            $('#infobox').show();
+                                            that.viewer.flyTo(component);
+                                        }
+                                        else {
+                                            $('#infobox').hide();
+                                        }
+                                    },
+                                    onExpand: function (event, treeId, treeNode) {
+                                        if (treeNode.level === 3 && (!treeNode.children||tree.children.length)) {
+                                            that.dynamicloadNodes(treeNode).then(function (data) {
+                                                treeNode.children = [];
+                                                zTreeObj.addNodes(treeNode, data)
+                                                reSetNodes(zTreeObj)
+                                            })
+                                        }
+                                    }
+                                },
+                            };
+                            zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, pTree);
+                            zTreeObj.checkAllNodes(true);
+                            reSetNodes(zTreeObj);
+                            $('.tree_container').show();
+                        }
+                    });
+                    
+                } 
         });
     },
+    // 动态加载数据
+      dynamicloadNodes(treeNode) {
+            return Motor.Project.getChildNodesFromTree(treeNode);
+        },
   }
 };
 </script>

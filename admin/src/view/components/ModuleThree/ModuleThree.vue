@@ -103,8 +103,8 @@ export default {
           },
           series: [
             {
-              name: "网点数",
-              data: this.getValue(),
+              name: "传感器1动挠度实时监测",
+              data: [10.22,8.35,6.65,-10.23,16.44,-28.11,14.26,-12.59,-8.36],
               type: "line",
               smooth: 0.4,
               symbolSize: 6,
@@ -117,6 +117,12 @@ export default {
                 borderWidth: 2,
                 borderColor: "#f00"
               },
+              markPoint:{
+　　data:[
+　　　　{type:'max',name:'最大值',symbol:'triangle',symbolSize:15,label:{position:'end',formatter:"max=16.44",color:'rgba(255,255,255,0.65)'}},
+　　　　{type:'min',name:'最小值',symbol:'triangle',symbolSize:15,label:{position:'end',formatter:"max=-28.11",color:'rgba(255,255,255,0.65)'}} 
+　　] 
+},
                markLine : {
                symbol:'none',
                data : [
