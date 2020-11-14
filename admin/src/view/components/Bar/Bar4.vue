@@ -50,7 +50,7 @@ for(var i=0;i<labelData.length;++i){
         textAlign: 'center',
         top: '40%',
         textStyle:{
-            fontSize:26,
+            fontSize:20,
             color:'#fff'
         }
     },

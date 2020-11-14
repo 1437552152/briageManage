@@ -36,7 +36,8 @@ export default {
             }
           ],
           tooltip: {
-            trigger: "item"
+            trigger: "item",
+            formatter: "{a} : <br>{b}({d}%)",
           },
           legend: {
             type: "scroll",
@@ -67,9 +68,10 @@ export default {
               let text = "";
               that.dataObj.data.map((item, index) => {
                 if (item.name == params) {
-                  text = params + ":" + item.value + "%";
+                  text = params + ":" + item.value.toFixed(2)+ "%";
                 }
               });
+              console.log(text)
               return text;
             }
           },
@@ -99,6 +101,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.dataObj.data);
     const that = this;
     this.$nextTick(() => {
       that.initCharts();

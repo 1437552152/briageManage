@@ -1,6 +1,6 @@
 // pages/home/home.js
 import {
-  urlApi
+  urlApi,host
 } from '../../utils/request';
 import {
   formatTime
@@ -26,7 +26,8 @@ Page({
     componentList: [],
     componentListY:[],
     inspectStatue:'已完成',
-    bridgeList:'香港路模型2'
+    bridgeList:'香港路模型2',
+    uploadimages:[],
   },
 
   /**
@@ -218,7 +219,7 @@ urlApi('component/list', 'post', {
     params['inspectStaff'] = this.data.inspectStaff
     params['inspectTime'] = formatTime(new Date());
     params['bridgeId'] =this.data.bridgeList=='杨泗港大桥健康监测'?'dc110962-86da-4012-afe1-b2ba9a4366bf':'62924801-9263-4a15-89a3-933563bcdf49';
-    params['picUrl'] = 'https://111.4.119.69:40605/total.png';
+    params['picUrlList'] = this.data.uploadimages;
     params['componentId'] =this.data.bridgeList=='杨泗港大桥健康监测'? this.data.componentIdY:this.data.componentId;
     params['inspectStatue'] = this.data.inspectStatue;
 
@@ -339,13 +340,55 @@ urlApi('component/list', 'post', {
 
   },
   chooseImage(e) {
+    const that=this;
     wx.chooseImage({
+      count: 1,
       sizeType: ['original', 'compressed'], //可选择原图或压缩后的图片
       sourceType: ['album', 'camera'], //可选择性开放访问相册、相机
       success: res => {
+        wx.showLoading({
+          title: '上传中...'
+        })
+
         const images = this.data.images.concat(res.tempFilePaths)
         // 限制最多只能留下3张照片
-        const images1 = images.length <= 3 ? images : images.slice(0, 3)
+        if(images.length>4){
+          wx.showToast({
+            title: '最多只能上传4张图片',
+            icon:'none'
+          })
+          return;
+        };
+        var filep = res.tempFilePaths[0];
+        wx.uploadFile({
+          url: host +"manager/uploads",
+          filePath:filep,
+          name: 'files',
+          header: {       
+            'token':'MjAyMTEwMTAxMDEwMTA=',
+            "Content-Type": "multipart/form-data"
+          },
+          formData: {
+            'user': 'test'
+          },
+          success: (val) => {
+           
+            let data = JSON.parse(val.data);
+           let {uploadimages} =that.data;
+           uploadimages.push(data.data[0])
+            that.setData({
+              uploadimages:uploadimages
+            })
+             wx.hideLoading();
+          },
+          fail: function (err) {
+            console.log(err)
+          }
+        });
+
+
+
+        const images1 = images.length <= 4 ? images : images.slice(0,4);
         this.setData({
           images: images1
         })
@@ -355,12 +398,15 @@ urlApi('component/list', 'post', {
   removeImage(e) {
     var that = this;
     var images = that.data.images;
+    var uploadimages=that.data.uploadimages;
     // 获取要删除的第几张图片的下标
     const idx = e.currentTarget.dataset.idx
     // splice  第一个参数是下表值  第二个参数是删除的数量
-    images.splice(idx, 1)
+    images.splice(idx, 1);
+    uploadimages.splice(idx, 1)
     this.setData({
-      images: images
+      images: images,
+      uploadimages:uploadimages
     })
   },
 

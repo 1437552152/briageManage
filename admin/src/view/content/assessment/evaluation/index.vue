@@ -1,5 +1,12 @@
 <template>
   <div class="tableBox">
+        <div class="moduleRe">
+       <div id="loading">
+          <div class="loading-image" style="background-image:url('http://47.107.180.202:40605/ezgif.com-crop.gif');">
+              <div class="loadingNuliLoading">正在努力加载中...</div>
+          </div>
+        </div>
+    </div>
     <div id="container" style="height:500px" />
     <div class="boxStyle"></div>
     <div class="titleTotal">
@@ -145,6 +152,7 @@ columns: [
         })
         .then(function() {
         that.flag=false;
+           $('#loading').hide();
         });
     },
   }

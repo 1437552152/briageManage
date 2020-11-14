@@ -18,8 +18,6 @@ import {
   dataZ1,
   dataZ2,
   dataZ3,
-  dataZ4,
-  dataZ5
 } from "./ModuleTwo.js";
 export default {
   data() {
@@ -28,7 +26,7 @@ export default {
   methods: {
     initCharts() {
       let myChart = this.$echarts.init(this.$refs[this.className]);
-      const data = [dataZ1(), dataZ2(), dataZ3(), dataZ4(), dataZ5()];
+      const data = [dataZ1(), dataZ2(), dataZ3()];
       const dataX = dataX1();
       const dataY = dataY1();
       // vdata里面存放的是处理之后的数据
@@ -48,6 +46,91 @@ export default {
           break;
         }
       }
+
+    vdata.push(JSON.parse(JSON.stringify(vdata[1])));
+    vdata.push(JSON.parse(JSON.stringify(vdata[1])));
+    vdata.push(JSON.parse(JSON.stringify(vdata[1])));
+    vdata.push(JSON.parse(JSON.stringify(vdata[1])));
+    vdata.push(JSON.parse(JSON.stringify(vdata[1])));
+    vdata.push(JSON.parse(JSON.stringify(vdata[1])));
+  vdata[3]=[["0:00", "P1", 1],
+    ["2:00", "P1",1],
+    ["4:00", "P1", 1],
+    ["6:00", "P1",1],
+    ["8:00", "P1", 1],
+    ["10:00", "P1",1],
+    ["12:00", "P1",1],
+    ["14:00", "P1",1],
+    ["16:00", "P1",1],
+    ["18:00", "P1",1],
+    ["20:00", "P1",1],
+    ["22:00", "P1",1]]
+
+   vdata[6]=[["0:00", "P1", 40],
+    ["2:00", "P1",40],
+    ["4:00", "P1", 40],
+    ["6:00", "P1",40],
+    ["8:00", "P1", 40],
+    ["10:00", "P1",40],
+    ["12:00", "P1",40],
+    ["14:00", "P1",40],
+    ["16:00", "P1",40],
+    ["18:00", "P1",40],
+    ["20:00", "P1",40],
+    ["22:00", "P1",40]]
+
+ vdata[4]=[["0:00", "P2", 1],
+    ["2:00", "P2",1],
+    ["4:00", "P2", 1],
+    ["6:00", "P2",1],
+    ["8:00", "P2", 1],
+    ["10:00", "P2",1],
+    ["12:00", "P2",1],
+    ["14:00", "P2",1],
+    ["16:00", "P2",1],
+    ["18:00", "P2",1],
+    ["20:00", "P2",1],
+    ["22:00", "P2",1]]
+
+   vdata[7]=[["0:00","P2",30],
+    ["2:00","P2",30],
+    ["4:00", "P2", 30],
+    ["6:00", "P2",30],
+    ["8:00", "P2", 30],
+    ["10:00","P2",30],
+    ["12:00", "P2",30],
+    ["14:00","P2",30],
+    ["16:00", "P2",30],
+    ["18:00", "P2",30],
+    ["20:00", "P2",30],
+    ["22:00", "P2",30]]
+
+     vdata[5]=[["0:00", "P3",7],
+    ["2:00", "P3",7],
+    ["4:00", "P3", 7],
+    ["6:00", "P3",7],
+    ["8:00", "P3",7],
+    ["10:00", "P3",7],
+    ["12:00", "P3",7],
+    ["14:00", "P3",7],
+    ["16:00", "P3",7],
+    ["18:00", "P3",7],
+    ["20:00", "P3",7],
+    ["22:00", "P3",7]]
+
+   vdata[8]=[["0:00", "P3", 70],
+    ["2:00", "P3",70],
+    ["4:00", "P3", 70],
+    ["6:00", "P3",70],
+    ["8:00", "P3", 70],
+    ["10:00", "P3",70],
+    ["12:00", "P3",70],
+    ["14:00", "P3",70],
+    ["16:00", "P3",70],
+    ["18:00", "P3",70],
+    ["20:00", "P3",70],
+    ["22:00", "P3",70]]
+
       let colors = ["#69c860", "#32C5FF", "#AA41FF"];
       myChart.setOption(
         {
@@ -238,6 +321,60 @@ export default {
                 width: 2
               },
               data: vdata[2]
+            },
+              {
+              type: 'line3D',
+              name: '传感器1上限',
+              lineStyle: {
+                color: 'rgb(241,7,27)',
+                width:2
+              },
+              data: vdata[3]
+            },
+            {
+              type: 'line3D',
+              name: '传感器2上限',
+              lineStyle: {
+                color: 'rgb(241,7,27)',
+                width: 2
+              },
+              data: vdata[4]
+            },
+            {
+              type: 'line3D',
+              name: '传感器3上限',
+              lineStyle: {
+                color: 'rgb(241,7,27)',
+                width: 2
+              },
+              data: vdata[5]
+            },
+            {
+              type: 'line3D',
+              name: '传感器1下限',
+              lineStyle: {
+                color: 'rgb(241,7,27)',
+                width: 2
+              },
+              data: vdata[6]
+            },
+            {
+              type: 'line3D',
+              name: '传感器2下限',
+              lineStyle: {
+                color: 'rgb(241,7,27)',
+                width:2
+              },
+              data: vdata[7]
+            }
+            ,         {
+              type: 'line3D',
+              name: '传感器3下限',
+              lineStyle: {
+                color: 'rgb(241,7,27)',
+                width: 2
+              },
+              data: vdata[8]
             }
           ]
         },

@@ -30,19 +30,17 @@ export default {
       value.username = userName;
       value.password = password;
       login(value).then(res => {
-        if(res.responseMessage&&res.responseMessage.resultFlag){
+         if(res){
           that.$router.push({
             path:'/ParentSystem/home',
           });
-        }else{
-           that.$router.push({
-            path:'/ParentSystem/home',
-          });
-         /*  that.$message.error(res.responseMessage.errorMessage) */
-        }
-        });
-    }
-  }
+          localStorage.setItem("token",res);
+         }
+      }
+    ).catch(err => {
+        that.$Message.error("账号密码不正确");
+      });
+  }}
 };
 </script>
 

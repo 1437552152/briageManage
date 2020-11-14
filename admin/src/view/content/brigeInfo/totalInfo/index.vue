@@ -1,5 +1,6 @@
 <template>
   <div class="tableBox">
+    <img src="../../../../assets/images/big.png" class="fullscreenButton">
     <div id="infoBox" style="display: none;z-index:9999"></div>
     <div id="contextContainer">
       <ul id="contextmenu">
@@ -12,7 +13,15 @@
         <li class="li">还原所有</li>
       </ul>
     </div>
+    <div class="moduleRe">
+       <div id="loading">
+          <div class="loading-image" style="background-image:url('http://47.107.180.202:40605/ezgif.com-crop.gif');">
+              <div class="loadingNuliLoading">正在努力加载中...</div>
+          </div>
+        </div>
+    </div>
     <div id="container" style="height:500px" />
+ 
     <div class="tree_container">
       <ul id="treeDemo" class="ztree"></ul>
     </div>
@@ -115,9 +124,10 @@
           </Col>
           <Col :xl="5" :xxl="4">
             <FormItem label="墩号范围:">
-              <Select v-model="formData.pierNoRange">
+              <Input v-model="formData.pierNoRange" placeholder=""></Input>
+             <!--  <Select v-model="formData.pierNoRange">
                 <Option value="P1-P4" key="1">P1-P4</Option>
-              </Select>
+              </Select> -->
             </FormItem>
           </Col>
           <Col :xl="3" :xxl="3">
@@ -156,6 +166,7 @@ export default {
   data() {
     return {
       current: 1,
+      isShowFullscreen:true,
       pageSize: 10,
       ContentHeight: 500,
       drawerImg: require("../../../../assets/images/down.png"),
@@ -215,20 +226,22 @@ export default {
             },
             {
               title: "梁体特征",
-              /*         key: "", */
+              key: "",
               align: "center",
-              children: [
+              render:(h,params)=>{return h('div',{},params.row.structStyleFeature1+','+params.row.structStyleFeature2)}
+            /*   children: [
                 {
                   key: "structStyleFeature1",
                   align: "center",
                   title: "属性设置"
+
                 },
                 {
                   key: "structStyleFeature2",
                   align: "center",
                   title: "属性设置"
                 }
-              ]
+              ] */
             },
             {
               title: "桥墩",
@@ -302,6 +315,7 @@ export default {
       var currentSelectedComponent,selectedComponents=[],isolatedComponents=[],hiddenComponents=[],transparentComponents=[];
       this.project = project;
       viewer.initialize().then(function() {
+              $(".cesium-viewer-fullscreenContainer").css('display','none')
         that.drawProject(projectId, true, false);
 
         //设置点选后的回调函数
@@ -545,7 +559,6 @@ export default {
             })
 
       });
-    window.addEventListener("scroll", this.load);
   },
   methods: {
     load() {
@@ -611,6 +624,18 @@ export default {
         })
         .then(function() {
           that.flag = false;
+            $('#loading').hide();
+            window.addEventListener("scroll", that.load);
+            /* 初始化 */
+            $(".fullscreenButton").click(function(){
+              if(that.isShowFullscreen){
+                $("#container").css('height',$(window).height()+'px');
+                that.isShowFullscreen=!that.isShowFullscreen;
+              }else{
+                $("#container").css('height','500px');
+                that.isShowFullscreen=!that.isShowFullscreen;
+              }
+            })
           if (isInSubScene) {
             that.project.getTreeStructure().then(data => {
               var pTree = data;
@@ -783,5 +808,7 @@ export default {
   tr:hover {
     // background: #e0f0f0;
   } /*鼠标悬停后表格背景颜色*/
+  
 }
+
 </style>

@@ -147,6 +147,7 @@ export default {
         })
         .then(function() {
         that.flag=false;
+           $('#loading').hide();
         });
     },
   }

@@ -1,5 +1,6 @@
 <template>
   <div class="tableBox">
+         <img src="../../../../assets/images/big.png" class="fullscreenButton">
      <div id="infoBox" style="display: none;z-index:9999"></div>
     <div id="contextContainer">
       <ul id="contextmenu">
@@ -12,7 +13,14 @@
         <li class="li">还原所有</li>
       </ul>
     </div>
-     <div id="container" style="height:500px" />
+    <div class="moduleRe">
+       <div id="loading">
+          <div class="loading-image" style="background-image:url('http://47.107.180.202:40605/ezgif.com-crop.gif');">
+              <div class="loadingNuliLoading">正在努力加载中...</div>
+          </div>
+        </div>
+    </div>
+    <div id="container" style="height:500px" />
       <div class="tree_container">
         <ul id="treeDemo" class="ztree"></ul>
     </div>
@@ -113,6 +121,7 @@ export default {
       projectId:null,
        viewer:null,
       bridgeId: this.$route.query.bridgeId,
+       isShowFullscreen:true,
       current: 1,
       pageSize: 10,
       ContentHeight: 500,
@@ -210,6 +219,7 @@ export default {
       var currentSelectedComponent,selectedComponents=[],isolatedComponents=[],hiddenComponents=[],transparentComponents=[];
       this.project = project;
       viewer.initialize().then(function() {
+          $(".cesium-viewer-fullscreenContainer").css('display','none')
         that.drawProject(projectId, true, false);
 
         //设置点选后的回调函数
@@ -453,7 +463,6 @@ export default {
             })
 
       });
-    window.addEventListener("scroll", this.load);
   },
   methods: {
     load(){
@@ -523,6 +532,18 @@ export default {
         })
         .then(function() {
           that.flag = false;
+            $('#loading').hide();
+            window.addEventListener("scroll", that.load);
+            /* 初始化 */
+            $(".fullscreenButton").click(function(){
+              if(that.isShowFullscreen){
+                $("#container").css('height',$(window).height()+'px');
+                that.isShowFullscreen=!that.isShowFullscreen;
+              }else{
+                $("#container").css('height','500px');
+                that.isShowFullscreen=!that.isShowFullscreen;
+              }
+            })
                       if(isInSubScene){
                     that.project.getTreeStructure().then(data=>{
                         var pTree = data;

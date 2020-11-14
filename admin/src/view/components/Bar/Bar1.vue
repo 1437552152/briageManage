@@ -43,7 +43,7 @@ grade.forEach(function(item,index){
         x:'left',
         top:'2%',
         textStyle:{
-           fontSize:26,
+           fontSize:18,
            color:'#4EECEE'
         }
     },

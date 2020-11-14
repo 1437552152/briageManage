@@ -20,7 +20,7 @@
 		</view>
 		<view>
 			<text class="fontdesc">病害描述:</text>
-			<view class="video" wx:for="{{objDta.picUrls}}">
+			<view class="video" wx:for="{{objDta.picUrlList}}">
 				<image src="{{item}}"></image>
 			</view>
 		</view>

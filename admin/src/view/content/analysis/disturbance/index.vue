@@ -147,6 +147,7 @@ columns: [
         })
         .then(function() {
         that.flag=false;
+           $('#loading').hide();
         });
     },
   }

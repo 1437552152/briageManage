@@ -4,7 +4,6 @@ module.exports = {
   dev: {
     assetsSubDirectory: "static",
     assetsPublicPath: "/",
-    // proxyTable:null,
     host: "localhost",
     port: 8080, 
     autoOpenBrowser: true,

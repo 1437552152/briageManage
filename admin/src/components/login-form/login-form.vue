@@ -29,7 +29,7 @@
         >登录</Button
       >
     </FormItem>
-    <span class="matter">常见问题</span>
+  <!--   <span class="matter">常见问题</span> -->
   </Form>
 </template>
 <script>
@@ -46,7 +46,7 @@ export default {
     passwordRules: {
       type: Array,
       default: () => {
-        return [{ required: true, message: "密码不能为空", trigger: "blur" },{validator: checkPwd, trigger: 'blur'}];
+        return [{ required: true, message: "密码不能为空", trigger: "blur" }];
       }
     }
   },

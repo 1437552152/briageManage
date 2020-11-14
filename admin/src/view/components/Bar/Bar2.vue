@@ -20,10 +20,10 @@ export default {
             title: {
         text: this.dataObj.title,
         x: "1%",
-        y:"4%",
+        y:"1%",
         textStyle: {
             color: '#4EECEE',
-            fontSize: '26'
+            fontSize: '18'
         },
     },
     tooltip: {

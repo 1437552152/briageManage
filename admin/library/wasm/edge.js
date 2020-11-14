@@ -314,8 +314,8 @@ var asm2wasmImports = { // special asm2wasm imports
     "f64-rem": function(x, y) {
         return x % y;
     },
-    "debugger": function() {
-    }
+    /* "debugger": function() {
+    } */
 };
 
 
