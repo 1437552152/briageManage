@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Login from "@/view/login/login";
+import Register from "@/view/register/register";
 import Home from "@/view/home/index";
 import ChildHome from "@/view/content/childhome/index";
 import DriveInfo from "@/view/content/driveInfo/index";
@@ -53,7 +54,22 @@ export default new Router({
         {
           path: "/login",
           component: Login
-        }
+        },
+        {
+          path: "/register",
+          component: Register
+        }, 
+      ]
+    },
+    {
+      path: "/user",
+      component: Register,
+      children: [
+        {
+          path: "register/",
+          name: "register",
+          component: Register
+        }, 
       ]
     },
     {
