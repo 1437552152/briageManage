@@ -606,7 +606,9 @@ export default {
     onSizeChange(paseSize) {
       this.pageSize = pageSize;
     },
-    rowClick(params) {},
+    rowClick(params) {
+      
+    },
     handleSubmit(name) {
       this.getbridge();
     },
