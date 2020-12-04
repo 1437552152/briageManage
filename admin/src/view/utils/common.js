@@ -1,3 +1,10 @@
+/*
+ * @Description: 
+ * @Author: yfye
+ * @Date: 2020-06-06 02:39:01
+ * @LastEditTime: 2020-12-04 21:22:24
+ * @LastEditors: yfye
+ */
 export const config = {
     out:{
         bimServer:"https://open.lubansoft.com/api",
