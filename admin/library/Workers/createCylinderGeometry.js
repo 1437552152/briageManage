@@ -1,7 +1,7 @@
 /**
- * Cesium - https://github.com/CesiumGS/cesium
+ * Cesium - https://github.com/AnalyticalGraphicsInc/cesium
  *
- * Copyright 2011-2020 Cesium Contributors
+ * Copyright 2011-2017 Cesium Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,19 +18,6 @@
  * Columbus View (Pat. Pend.)
  *
  * Portions licensed separately.
- * See https://github.com/CesiumGS/cesium/blob/master/LICENSE.md for full licensing details.
+ * See https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md for full licensing details.
  */
-
-define(['./when-7ef6387a', './Check-ed6a1804', './Cartesian3-18c04df5', './Ellipsoid-f29f901d', './Transforms-239db6ff', './Matrix4-c68aaa66', './RuntimeError-5b606d78', './Cartesian2-e5f465dc', './WebGLConstants-30fc6f5c', './ComponentDatatype-a863af81', './GeometryAttribute-de79a9c2', './PrimitiveType-4c1d698a', './FeatureDetection-0c56f1be', './GeometryAttributes-cb18da36', './IndexDatatype-571b3b65', './GeometryOffsetAttribute-5cfc2755', './VertexFormat-d75df48f', './CylinderGeometryLibrary-b9974130', './CylinderGeometry-8a1855a0'], function (when, Check, Cartesian3, Ellipsoid, Transforms, Matrix4, RuntimeError, Cartesian2, WebGLConstants, ComponentDatatype, GeometryAttribute, PrimitiveType, FeatureDetection, GeometryAttributes, IndexDatatype, GeometryOffsetAttribute, VertexFormat, CylinderGeometryLibrary, CylinderGeometry) { 'use strict';
-
-    function createCylinderGeometry(cylinderGeometry, offset) {
-            if (when.defined(offset)) {
-                cylinderGeometry = CylinderGeometry.CylinderGeometry.unpack(cylinderGeometry, offset);
-            }
-            return CylinderGeometry.CylinderGeometry.createGeometry(cylinderGeometry);
-        }
-
-    return createCylinderGeometry;
-
-});
-//# sourceMappingURL=createCylinderGeometry.js.map
+define(["./when-4ca4e419","./Check-430b3551","./defineProperties-163ddb68","./Cartesian3-32451e63","./Ellipsoid-d2aa3b12","./Transforms-7b04d7e0","./Matrix4-33464f2b","./RuntimeError-443472b0","./Cartesian2-f49a1383","./FeatureDetection-0d4fee13","./WebGLConstants-2ddfa2f9","./ComponentDatatype-329b9462","./GeometryAttribute-b8faa946","./GeometryAttributes-614c63f8","./IndexDatatype-153fdd7f","./arrayFill-11a46844","./VertexFormat-a4fe3a21","./CylinderGeometryLibrary-5646cdc3","./CylinderGeometry-dd2c7ed3"],(function(e,t,r,a,n,d,i,o,f,y,b,c,m,s,u,C,l,G,p){"use strict";return function(t,r){return e.defined(r)&&(t=p.CylinderGeometry.unpack(t,r)),p.CylinderGeometry.createGeometry(t)}}));

@@ -1,5 +1,6 @@
 .cesium-viewer {
     font-family: sans-serif;
+    font-size: 16px;
     overflow: hidden;
     display: block;
     position: relative;

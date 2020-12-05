@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: yfye
  * @Date: 2020-12-03 22:05:34
- * @LastEditTime: 2020-12-04 21:26:23
+ * @LastEditTime: 2020-12-05 22:20:44
  * @LastEditors: yfye
 -->
 <template>
@@ -47,6 +47,8 @@ export default {
       secret: config.bridge.motorSecret,
       backgroundImageCss: "url('/assets/images/login-bg.jpg')"
     });
+     
+
     let project = viewer.queryProject(projectId);
     var currentSelectedComponent,
       selectedComponents = [],
