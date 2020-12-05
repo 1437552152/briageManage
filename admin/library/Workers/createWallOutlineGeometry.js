@@ -1,7 +1,7 @@
 /**
- * Cesium - https://github.com/AnalyticalGraphicsInc/cesium
+ * Cesium - https://github.com/CesiumGS/cesium
  *
- * Copyright 2011-2017 Cesium Contributors
+ * Copyright 2011-2020 Cesium Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,403 @@
  * Columbus View (Pat. Pend.)
  *
  * Portions licensed separately.
- * See https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md for full licensing details.
+ * See https://github.com/CesiumGS/cesium/blob/master/LICENSE.md for full licensing details.
  */
-define(["./when-4ca4e419","./Check-430b3551","./defineProperties-163ddb68","./Cartesian3-32451e63","./Ellipsoid-d2aa3b12","./Transforms-7b04d7e0","./Matrix4-33464f2b","./RuntimeError-443472b0","./Cartesian2-f49a1383","./FeatureDetection-0d4fee13","./WebGLConstants-2ddfa2f9","./ComponentDatatype-329b9462","./GeometryAttribute-b8faa946","./GeometryAttributes-614c63f8","./IndexDatatype-153fdd7f","./IntersectionTests-15d018f5","./Plane-84b14a0a","./EllipsoidTangentPlane-3967708f","./EllipsoidRhumbLine-c004db91","./PolygonPipeline-d25dad97","./EllipsoidGeodesic-c57b5e5c","./PolylinePipeline-4ac94627","./WallGeometryLibrary-8829821e"],(function(e,i,t,r,n,a,o,s,l,d,m,p,u,f,h,g,c,y,v,E,w,_,b){"use strict";var C=new r.Cartesian3,H=new r.Cartesian3;function A(a){var o=(a=e.defaultValue(a,e.defaultValue.EMPTY_OBJECT)).positions,s=a.maximumHeights,l=a.minimumHeights;if(!e.defined(o))throw new i.DeveloperError("options.positions is required.");if(e.defined(s)&&s.length!==o.length)throw new i.DeveloperError("options.positions and options.maximumHeights must have the same length.");if(e.defined(l)&&l.length!==o.length)throw new i.DeveloperError("options.positions and options.minimumHeights must have the same length.");var d=e.defaultValue(a.granularity,t.CesiumMath.RADIANS_PER_DEGREE),m=e.defaultValue(a.ellipsoid,n.Ellipsoid.WGS84);this._positions=o,this._minimumHeights=l,this._maximumHeights=s,this._granularity=d,this._ellipsoid=n.Ellipsoid.clone(m),this._workerName="createWallOutlineGeometry";var p=1+o.length*r.Cartesian3.packedLength+2;e.defined(l)&&(p+=l.length),e.defined(s)&&(p+=s.length),this.packedLength=p+n.Ellipsoid.packedLength+1}A.pack=function(t,a,o){if(!e.defined(t))throw new i.DeveloperError("value is required");if(!e.defined(a))throw new i.DeveloperError("array is required");var s;o=e.defaultValue(o,0);var l=t._positions,d=l.length;for(a[o++]=d,s=0;s<d;++s,o+=r.Cartesian3.packedLength)r.Cartesian3.pack(l[s],a,o);var m=t._minimumHeights;if(d=e.defined(m)?m.length:0,a[o++]=d,e.defined(m))for(s=0;s<d;++s)a[o++]=m[s];var p=t._maximumHeights;if(d=e.defined(p)?p.length:0,a[o++]=d,e.defined(p))for(s=0;s<d;++s)a[o++]=p[s];return n.Ellipsoid.pack(t._ellipsoid,a,o),a[o+=n.Ellipsoid.packedLength]=t._granularity,a};var P=n.Ellipsoid.clone(n.Ellipsoid.UNIT_SPHERE),k={positions:void 0,minimumHeights:void 0,maximumHeights:void 0,ellipsoid:P,granularity:void 0};return A.unpack=function(t,a,o){if(!e.defined(t))throw new i.DeveloperError("array is required");var s;a=e.defaultValue(a,0);var l,d,m=t[a++],p=new Array(m);for(s=0;s<m;++s,a+=r.Cartesian3.packedLength)p[s]=r.Cartesian3.unpack(t,a);if((m=t[a++])>0)for(l=new Array(m),s=0;s<m;++s)l[s]=t[a++];if((m=t[a++])>0)for(d=new Array(m),s=0;s<m;++s)d[s]=t[a++];var u=n.Ellipsoid.unpack(t,a,P),f=t[a+=n.Ellipsoid.packedLength];return e.defined(o)?(o._positions=p,o._minimumHeights=l,o._maximumHeights=d,o._ellipsoid=n.Ellipsoid.clone(u,o._ellipsoid),o._granularity=f,o):(k.positions=p,k.minimumHeights=l,k.maximumHeights=d,k.granularity=f,new A(k))},A.fromConstantHeights=function(t){var r,n,a=(t=e.defaultValue(t,e.defaultValue.EMPTY_OBJECT)).positions;if(!e.defined(a))throw new i.DeveloperError("options.positions is required.");var o=t.minimumHeight,s=t.maximumHeight,l=e.defined(o),d=e.defined(s);if(l||d){var m=a.length;r=l?new Array(m):void 0,n=d?new Array(m):void 0;for(var p=0;p<m;++p)l&&(r[p]=o),d&&(n[p]=s)}return new A({positions:a,maximumHeights:n,minimumHeights:r,ellipsoid:t.ellipsoid})},A.createGeometry=function(i){var n=i._positions,o=i._minimumHeights,s=i._maximumHeights,l=i._granularity,d=i._ellipsoid,m=b.WallGeometryLibrary.computePositions(d,n,s,o,l,!1);if(e.defined(m)){var g,c=m.bottomPositions,y=m.topPositions,v=y.length,E=2*v,w=new Float64Array(E),_=0;for(v/=3,g=0;g<v;++g){var A=3*g,P=r.Cartesian3.fromArray(y,A,C),k=r.Cartesian3.fromArray(c,A,H);w[_++]=k.x,w[_++]=k.y,w[_++]=k.z,w[_++]=P.x,w[_++]=P.y,w[_++]=P.z}var D=new f.GeometryAttributes({position:new u.GeometryAttribute({componentDatatype:p.ComponentDatatype.DOUBLE,componentsPerAttribute:3,values:w})}),x=E/3;E=2*x-4+x;var G=h.IndexDatatype.createTypedArray(x,E),L=0;for(g=0;g<x-2;g+=2){var T=g,V=g+2,I=r.Cartesian3.fromArray(w,3*T,C),S=r.Cartesian3.fromArray(w,3*V,H);if(!r.Cartesian3.equalsEpsilon(I,S,t.CesiumMath.EPSILON10)){var q=g+1,R=g+3;G[L++]=q,G[L++]=T,G[L++]=q,G[L++]=R,G[L++]=T,G[L++]=V}}return G[L++]=x-2,G[L++]=x-1,new u.Geometry({attributes:D,indices:G,primitiveType:u.PrimitiveType.LINES,boundingSphere:new a.BoundingSphere.fromVertices(w)})}},function(i,t){return e.defined(t)&&(i=A.unpack(i,t)),i._ellipsoid=n.Ellipsoid.clone(i._ellipsoid),A.createGeometry(i)}}));
+
+define(['./when-7ef6387a', './Check-ed6a1804', './Cartesian3-18c04df5', './Ellipsoid-f29f901d', './Transforms-239db6ff', './Matrix4-c68aaa66', './RuntimeError-5b606d78', './Cartesian2-e5f465dc', './WebGLConstants-30fc6f5c', './ComponentDatatype-a863af81', './GeometryAttribute-de79a9c2', './PrimitiveType-4c1d698a', './FeatureDetection-0c56f1be', './GeometryAttributes-cb18da36', './IndexDatatype-571b3b65', './IntersectionTests-927a9102', './Plane-f22e7e98', './EllipsoidTangentPlane-09857d60', './EllipsoidRhumbLine-e9bf1af4', './PolygonPipeline-5f144950', './EllipsoidGeodesic-80195a45', './PolylinePipeline-b60c6e78', './WallGeometryLibrary-786a96f6'], function (when, Check, Cartesian3, Ellipsoid, Transforms, Matrix4, RuntimeError, Cartesian2, WebGLConstants, ComponentDatatype, GeometryAttribute, PrimitiveType, FeatureDetection, GeometryAttributes, IndexDatatype, IntersectionTests, Plane, EllipsoidTangentPlane, EllipsoidRhumbLine, PolygonPipeline, EllipsoidGeodesic, PolylinePipeline, WallGeometryLibrary) { 'use strict';
+
+    var scratchCartesian3Position1 = new Cartesian3.Cartesian3();
+        var scratchCartesian3Position2 = new Cartesian3.Cartesian3();
+
+        /**
+         * A description of a wall outline. A wall is defined by a series of points,
+         * which extrude down to the ground. Optionally, they can extrude downwards to a specified height.
+         *
+         * @alias WallOutlineGeometry
+         * @constructor
+         *
+         * @param {Object} options Object with the following properties:
+         * @param {Cartesian3[]} options.positions An array of Cartesian objects, which are the points of the wall.
+         * @param {Number} [options.granularity=CesiumMath.RADIANS_PER_DEGREE] The distance, in radians, between each latitude and longitude. Determines the number of positions in the buffer.
+         * @param {Number[]} [options.maximumHeights] An array parallel to <code>positions</code> that give the maximum height of the
+         *        wall at <code>positions</code>. If undefined, the height of each position in used.
+         * @param {Number[]} [options.minimumHeights] An array parallel to <code>positions</code> that give the minimum height of the
+         *        wall at <code>positions</code>. If undefined, the height at each position is 0.0.
+         * @param {Ellipsoid} [options.ellipsoid=Ellipsoid.WGS84] The ellipsoid for coordinate manipulation
+         *
+         * @exception {DeveloperError} positions length must be greater than or equal to 2.
+         * @exception {DeveloperError} positions and maximumHeights must have the same length.
+         * @exception {DeveloperError} positions and minimumHeights must have the same length.
+         *
+         * @see WallGeometry#createGeometry
+         * @see WallGeometry#fromConstantHeight
+         *
+         * @example
+         * // create a wall outline that spans from ground level to 10000 meters
+         * var wall = new Cesium.WallOutlineGeometry({
+         *   positions : Cesium.Cartesian3.fromDegreesArrayHeights([
+         *     19.0, 47.0, 10000.0,
+         *     19.0, 48.0, 10000.0,
+         *     20.0, 48.0, 10000.0,
+         *     20.0, 47.0, 10000.0,
+         *     19.0, 47.0, 10000.0
+         *   ])
+         * });
+         * var geometry = Cesium.WallOutlineGeometry.createGeometry(wall);
+         */
+        function WallOutlineGeometry(options) {
+            options = when.defaultValue(options, when.defaultValue.EMPTY_OBJECT);
+
+            var wallPositions = options.positions;
+            var maximumHeights = options.maximumHeights;
+            var minimumHeights = options.minimumHeights;
+
+            //>>includeStart('debug', pragmas.debug);
+            if (!when.defined(wallPositions)) {
+                throw new Check.DeveloperError('options.positions is required.');
+            }
+            if (when.defined(maximumHeights) && maximumHeights.length !== wallPositions.length) {
+                throw new Check.DeveloperError('options.positions and options.maximumHeights must have the same length.');
+            }
+            if (when.defined(minimumHeights) && minimumHeights.length !== wallPositions.length) {
+                throw new Check.DeveloperError('options.positions and options.minimumHeights must have the same length.');
+            }
+            //>>includeEnd('debug');
+
+            var granularity = when.defaultValue(options.granularity, Cartesian3.CesiumMath.RADIANS_PER_DEGREE);
+            var ellipsoid = when.defaultValue(options.ellipsoid, Ellipsoid.Ellipsoid.WGS84);
+
+            this._positions = wallPositions;
+            this._minimumHeights = minimumHeights;
+            this._maximumHeights = maximumHeights;
+            this._granularity = granularity;
+            this._ellipsoid = Ellipsoid.Ellipsoid.clone(ellipsoid);
+            this._workerName = 'createWallOutlineGeometry';
+
+            var numComponents = 1 + wallPositions.length * Cartesian3.Cartesian3.packedLength + 2;
+            if (when.defined(minimumHeights)) {
+                numComponents += minimumHeights.length;
+            }
+            if (when.defined(maximumHeights)) {
+                numComponents += maximumHeights.length;
+            }
+
+            /**
+             * The number of elements used to pack the object into an array.
+             * @type {Number}
+             */
+            this.packedLength = numComponents + Ellipsoid.Ellipsoid.packedLength + 1;
+        }
+
+        /**
+         * Stores the provided instance into the provided array.
+         *
+         * @param {WallOutlineGeometry} value The value to pack.
+         * @param {Number[]} array The array to pack into.
+         * @param {Number} [startingIndex=0] The index into the array at which to start packing the elements.
+         *
+         * @returns {Number[]} The array that was packed into
+         */
+        WallOutlineGeometry.pack = function(value, array, startingIndex) {
+            //>>includeStart('debug', pragmas.debug);
+            if (!when.defined(value)) {
+                throw new Check.DeveloperError('value is required');
+            }
+            if (!when.defined(array)) {
+                throw new Check.DeveloperError('array is required');
+            }
+            //>>includeEnd('debug');
+
+            startingIndex = when.defaultValue(startingIndex, 0);
+
+            var i;
+
+            var positions = value._positions;
+            var length = positions.length;
+            array[startingIndex++] = length;
+
+            for (i = 0; i < length; ++i, startingIndex += Cartesian3.Cartesian3.packedLength) {
+                Cartesian3.Cartesian3.pack(positions[i], array, startingIndex);
+            }
+
+            var minimumHeights = value._minimumHeights;
+            length = when.defined(minimumHeights) ? minimumHeights.length : 0;
+            array[startingIndex++] = length;
+
+            if (when.defined(minimumHeights)) {
+                for (i = 0; i < length; ++i) {
+                    array[startingIndex++] = minimumHeights[i];
+                }
+            }
+
+            var maximumHeights = value._maximumHeights;
+            length = when.defined(maximumHeights) ? maximumHeights.length : 0;
+            array[startingIndex++] = length;
+
+            if (when.defined(maximumHeights)) {
+                for (i = 0; i < length; ++i) {
+                    array[startingIndex++] = maximumHeights[i];
+                }
+            }
+
+            Ellipsoid.Ellipsoid.pack(value._ellipsoid, array, startingIndex);
+            startingIndex += Ellipsoid.Ellipsoid.packedLength;
+
+            array[startingIndex]   = value._granularity;
+
+            return array;
+        };
+
+        var scratchEllipsoid = Ellipsoid.Ellipsoid.clone(Ellipsoid.Ellipsoid.UNIT_SPHERE);
+        var scratchOptions = {
+            positions : undefined,
+            minimumHeights : undefined,
+            maximumHeights : undefined,
+            ellipsoid : scratchEllipsoid,
+            granularity : undefined
+        };
+
+        /**
+         * Retrieves an instance from a packed array.
+         *
+         * @param {Number[]} array The packed array.
+         * @param {Number} [startingIndex=0] The starting index of the element to be unpacked.
+         * @param {WallOutlineGeometry} [result] The object into which to store the result.
+         * @returns {WallOutlineGeometry} The modified result parameter or a new WallOutlineGeometry instance if one was not provided.
+         */
+        WallOutlineGeometry.unpack = function(array, startingIndex, result) {
+            //>>includeStart('debug', pragmas.debug);
+            if (!when.defined(array)) {
+                throw new Check.DeveloperError('array is required');
+            }
+            //>>includeEnd('debug');
+
+            startingIndex = when.defaultValue(startingIndex, 0);
+
+            var i;
+
+            var length = array[startingIndex++];
+            var positions = new Array(length);
+
+            for (i = 0; i < length; ++i, startingIndex += Cartesian3.Cartesian3.packedLength) {
+                positions[i] = Cartesian3.Cartesian3.unpack(array, startingIndex);
+            }
+
+            length = array[startingIndex++];
+            var minimumHeights;
+
+            if (length > 0) {
+                minimumHeights = new Array(length);
+                for (i = 0; i < length; ++i) {
+                    minimumHeights[i] = array[startingIndex++];
+                }
+            }
+
+            length = array[startingIndex++];
+            var maximumHeights;
+
+            if (length > 0) {
+                maximumHeights = new Array(length);
+                for (i = 0; i < length; ++i) {
+                    maximumHeights[i] = array[startingIndex++];
+                }
+            }
+
+            var ellipsoid = Ellipsoid.Ellipsoid.unpack(array, startingIndex, scratchEllipsoid);
+            startingIndex += Ellipsoid.Ellipsoid.packedLength;
+
+            var granularity = array[startingIndex];
+
+            if (!when.defined(result)) {
+                scratchOptions.positions = positions;
+                scratchOptions.minimumHeights = minimumHeights;
+                scratchOptions.maximumHeights = maximumHeights;
+                scratchOptions.granularity = granularity;
+                return new WallOutlineGeometry(scratchOptions);
+            }
+
+            result._positions = positions;
+            result._minimumHeights = minimumHeights;
+            result._maximumHeights = maximumHeights;
+            result._ellipsoid = Ellipsoid.Ellipsoid.clone(ellipsoid, result._ellipsoid);
+            result._granularity = granularity;
+
+            return result;
+        };
+
+        /**
+         * A description of a walloutline. A wall is defined by a series of points,
+         * which extrude down to the ground. Optionally, they can extrude downwards to a specified height.
+         *
+         * @param {Object} options Object with the following properties:
+         * @param {Cartesian3[]} options.positions An array of Cartesian objects, which are the points of the wall.
+         * @param {Number} [options.maximumHeight] A constant that defines the maximum height of the
+         *        wall at <code>positions</code>. If undefined, the height of each position in used.
+         * @param {Number} [options.minimumHeight] A constant that defines the minimum height of the
+         *        wall at <code>positions</code>. If undefined, the height at each position is 0.0.
+         * @param {Ellipsoid} [options.ellipsoid=Ellipsoid.WGS84] The ellipsoid for coordinate manipulation
+         * @returns {WallOutlineGeometry}
+         *
+         *
+         * @example
+         * // create a wall that spans from 10000 meters to 20000 meters
+         * var wall = Cesium.WallOutlineGeometry.fromConstantHeights({
+         *   positions : Cesium.Cartesian3.fromDegreesArray([
+         *     19.0, 47.0,
+         *     19.0, 48.0,
+         *     20.0, 48.0,
+         *     20.0, 47.0,
+         *     19.0, 47.0,
+         *   ]),
+         *   minimumHeight : 20000.0,
+         *   maximumHeight : 10000.0
+         * });
+         * var geometry = Cesium.WallOutlineGeometry.createGeometry(wall);
+         *
+         * @see WallOutlineGeometry#createGeometry
+         */
+        WallOutlineGeometry.fromConstantHeights = function(options) {
+            options = when.defaultValue(options, when.defaultValue.EMPTY_OBJECT);
+            var positions = options.positions;
+
+            //>>includeStart('debug', pragmas.debug);
+            if (!when.defined(positions)) {
+                throw new Check.DeveloperError('options.positions is required.');
+            }
+            //>>includeEnd('debug');
+
+            var minHeights;
+            var maxHeights;
+
+            var min = options.minimumHeight;
+            var max = options.maximumHeight;
+
+            var doMin = when.defined(min);
+            var doMax = when.defined(max);
+            if (doMin || doMax) {
+                var length = positions.length;
+                minHeights = (doMin) ? new Array(length) : undefined;
+                maxHeights = (doMax) ? new Array(length) : undefined;
+
+                for (var i = 0; i < length; ++i) {
+                    if (doMin) {
+                        minHeights[i] = min;
+                    }
+
+                    if (doMax) {
+                        maxHeights[i] = max;
+                    }
+                }
+            }
+
+            var newOptions = {
+                positions : positions,
+                maximumHeights : maxHeights,
+                minimumHeights : minHeights,
+                ellipsoid : options.ellipsoid
+            };
+            return new WallOutlineGeometry(newOptions);
+        };
+
+        /**
+         * Computes the geometric representation of a wall outline, including its vertices, indices, and a bounding sphere.
+         *
+         * @param {WallOutlineGeometry} wallGeometry A description of the wall outline.
+         * @returns {Geometry|undefined} The computed vertices and indices.
+         */
+        WallOutlineGeometry.createGeometry = function(wallGeometry) {
+            var wallPositions = wallGeometry._positions;
+            var minimumHeights = wallGeometry._minimumHeights;
+            var maximumHeights = wallGeometry._maximumHeights;
+            var granularity = wallGeometry._granularity;
+            var ellipsoid = wallGeometry._ellipsoid;
+
+            var pos = WallGeometryLibrary.WallGeometryLibrary.computePositions(ellipsoid, wallPositions, maximumHeights, minimumHeights, granularity, false);
+            if (!when.defined(pos)) {
+                return;
+            }
+
+            var bottomPositions = pos.bottomPositions;
+            var topPositions = pos.topPositions;
+
+            var length = topPositions.length;
+            var size = length * 2;
+
+            var positions = new Float64Array(size);
+            var positionIndex = 0;
+
+            // add lower and upper points one after the other, lower
+            // points being even and upper points being odd
+            length /= 3;
+            var i;
+            for (i = 0; i < length; ++i) {
+                var i3 = i * 3;
+                var topPosition = Cartesian3.Cartesian3.fromArray(topPositions, i3, scratchCartesian3Position1);
+                var bottomPosition = Cartesian3.Cartesian3.fromArray(bottomPositions, i3, scratchCartesian3Position2);
+
+                // insert the lower point
+                positions[positionIndex++] = bottomPosition.x;
+                positions[positionIndex++] = bottomPosition.y;
+                positions[positionIndex++] = bottomPosition.z;
+
+                // insert the upper point
+                positions[positionIndex++] = topPosition.x;
+                positions[positionIndex++] = topPosition.y;
+                positions[positionIndex++] = topPosition.z;
+            }
+
+            var attributes = new GeometryAttributes.GeometryAttributes({
+                position : new GeometryAttribute.GeometryAttribute({
+                    componentDatatype : ComponentDatatype.ComponentDatatype.DOUBLE,
+                    componentsPerAttribute : 3,
+                    values : positions
+                })
+            });
+
+            var numVertices = size / 3;
+            size = 2 * numVertices - 4 + numVertices;
+            var indices = IndexDatatype.IndexDatatype.createTypedArray(numVertices, size);
+
+            var edgeIndex = 0;
+            for (i = 0; i < numVertices - 2; i += 2) {
+                var LL = i;
+                var LR = i + 2;
+                var pl = Cartesian3.Cartesian3.fromArray(positions, LL * 3, scratchCartesian3Position1);
+                var pr = Cartesian3.Cartesian3.fromArray(positions, LR * 3, scratchCartesian3Position2);
+                if (Cartesian3.Cartesian3.equalsEpsilon(pl, pr, Cartesian3.CesiumMath.EPSILON10)) {
+                    continue;
+                }
+                var UL = i + 1;
+                var UR = i + 3;
+
+                indices[edgeIndex++] = UL;
+                indices[edgeIndex++] = LL;
+                indices[edgeIndex++] = UL;
+                indices[edgeIndex++] = UR;
+                indices[edgeIndex++] = LL;
+                indices[edgeIndex++] = LR;
+            }
+
+            indices[edgeIndex++] = numVertices - 2;
+            indices[edgeIndex++] = numVertices - 1;
+
+            return new GeometryAttribute.Geometry({
+                attributes : attributes,
+                indices : indices,
+                primitiveType : PrimitiveType.PrimitiveType.LINES,
+                boundingSphere : new Transforms.BoundingSphere.fromVertices(positions)
+            });
+        };
+
+    function createWallOutlineGeometry(wallGeometry, offset) {
+            if (when.defined(offset)) {
+                wallGeometry = WallOutlineGeometry.unpack(wallGeometry, offset);
+            }
+            wallGeometry._ellipsoid = Ellipsoid.Ellipsoid.clone(wallGeometry._ellipsoid);
+            return WallOutlineGeometry.createGeometry(wallGeometry);
+        }
+
+    return createWallOutlineGeometry;
+
+});
+//# sourceMappingURL=createWallOutlineGeometry.js.map

@@ -1,6 +1,13 @@
 <template>
   <div class="tableBox">
-     <BIMInfo />
+   <div class="qiehuanPosition">
+    <RadioGroup v-model="type"  @on-change="onChangeType">
+        <Radio label="2">广联达</Radio>
+        <Radio label="1">鲁班</Radio>
+    </RadioGroup>
+  </div>
+    <BIMInfo v-if="type==1" />
+    <BIMFACE  v-if="type==2" flag=2 />
     <div class="boxStyle"></div>
     <div class="titleTotal">
       <div class="title">
@@ -134,6 +141,7 @@ import { getbridgeStructInfo } from "@/util/api";
 import { filterParams } from "@/util/commonFilter";
 import { getbridgeBridgeInfo } from "@/util/api";
 import BIMInfo from "@/components/BIMInfo/index";
+import BIMFACE from "@/components/BIMFACE/index";
 import dataTotal from "./exportData";
 export default {
   data() {
@@ -146,11 +154,13 @@ export default {
       }, // 表单数据
       briageParams: {}, //桥信息
       columns: dataTotal.data,
-      data: []
+      data: [],
+      type: localStorage.getItem('type')||"2"
     };
   },
   components: {
-    BIMInfo
+    BIMInfo,
+    BIMFACE
   },
   created() {
     this.getbridge();
@@ -189,6 +199,9 @@ export default {
         this.formData[key] = "";
       }
       this.getbridge();
+    },
+    onChangeType(type){
+      localStorage.setItem('type',type)
     }
   }
 };

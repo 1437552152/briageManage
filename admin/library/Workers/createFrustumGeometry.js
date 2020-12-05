@@ -1,7 +1,7 @@
 /**
- * Cesium - https://github.com/AnalyticalGraphicsInc/cesium
+ * Cesium - https://github.com/CesiumGS/cesium
  *
- * Copyright 2011-2017 Cesium Contributors
+ * Copyright 2011-2020 Cesium Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,19 @@
  * Columbus View (Pat. Pend.)
  *
  * Portions licensed separately.
- * See https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md for full licensing details.
+ * See https://github.com/CesiumGS/cesium/blob/master/LICENSE.md for full licensing details.
  */
-define(["./when-4ca4e419","./Check-430b3551","./defineProperties-163ddb68","./Cartesian3-32451e63","./Ellipsoid-d2aa3b12","./Transforms-7b04d7e0","./Matrix4-33464f2b","./RuntimeError-443472b0","./Cartesian2-f49a1383","./FeatureDetection-0d4fee13","./WebGLConstants-2ddfa2f9","./ComponentDatatype-329b9462","./GeometryAttribute-b8faa946","./GeometryAttributes-614c63f8","./Plane-84b14a0a","./VertexFormat-a4fe3a21","./FrustumGeometry-8d4a3afc"],(function(e,t,r,a,n,o,i,u,f,s,d,m,b,c,y,G,p){"use strict";return function(t,r){return e.defined(r)&&(t=p.FrustumGeometry.unpack(t,r)),p.FrustumGeometry.createGeometry(t)}}));
+
+define(['./when-7ef6387a', './Check-ed6a1804', './Cartesian3-18c04df5', './Ellipsoid-f29f901d', './Transforms-239db6ff', './Matrix4-c68aaa66', './RuntimeError-5b606d78', './Cartesian2-e5f465dc', './WebGLConstants-30fc6f5c', './ComponentDatatype-a863af81', './GeometryAttribute-de79a9c2', './PrimitiveType-4c1d698a', './FeatureDetection-0c56f1be', './GeometryAttributes-cb18da36', './Plane-f22e7e98', './VertexFormat-d75df48f', './FrustumGeometry-16af9390'], function (when, Check, Cartesian3, Ellipsoid, Transforms, Matrix4, RuntimeError, Cartesian2, WebGLConstants, ComponentDatatype, GeometryAttribute, PrimitiveType, FeatureDetection, GeometryAttributes, Plane, VertexFormat, FrustumGeometry) { 'use strict';
+
+    function createFrustumGeometry(frustumGeometry, offset) {
+            if (when.defined(offset)) {
+                frustumGeometry = FrustumGeometry.FrustumGeometry.unpack(frustumGeometry, offset);
+            }
+            return FrustumGeometry.FrustumGeometry.createGeometry(frustumGeometry);
+        }
+
+    return createFrustumGeometry;
+
+});
+//# sourceMappingURL=createFrustumGeometry.js.map

@@ -1,7 +1,7 @@
 /**
- * Cesium - https://github.com/AnalyticalGraphicsInc/cesium
+ * Cesium - https://github.com/CesiumGS/cesium
  *
- * Copyright 2011-2017 Cesium Contributors
+ * Copyright 2011-2020 Cesium Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,361 @@
  * Columbus View (Pat. Pend.)
  *
  * Portions licensed separately.
- * See https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md for full licensing details.
+ * See https://github.com/CesiumGS/cesium/blob/master/LICENSE.md for full licensing details.
  */
-define(["./when-4ca4e419","./Check-430b3551","./defineProperties-163ddb68","./Cartesian3-32451e63","./Ellipsoid-d2aa3b12","./Transforms-7b04d7e0","./Matrix4-33464f2b","./RuntimeError-443472b0","./Cartesian2-f49a1383","./FeatureDetection-0d4fee13","./WebGLConstants-2ddfa2f9","./ComponentDatatype-329b9462","./AttributeCompression-7809eba4","./IndexDatatype-153fdd7f","./IntersectionTests-15d018f5","./Plane-84b14a0a","./WebMercatorProjection-72bc39e7","./createTaskProcessorWorker","./EllipsoidTangentPlane-3967708f","./OrientedBoundingBox-51e874ad","./TerrainEncoding-5ed40ec6"],(function(e,t,r,i,n,a,o,s,d,u,m,c,h,l,I,g,T,M,b,f,p){"use strict";var C=new i.Cartesian3,N=new i.Cartesian3,x=new i.Cartesian3,y=new n.Cartographic,v=new d.Cartesian2,w=new i.Cartesian3,A=new o.Matrix4,E=new o.Matrix4;function P(e,t,n,a,s,d,u,m,c){var h=Number.POSITIVE_INFINITY,l=s.north,I=s.south,g=s.east,T=s.west;g<T&&(g+=r.CesiumMath.TWO_PI);for(var M=e.length,b=0;b<M;++b){var f=e[b],p=n[f],N=a[f];y.longitude=r.CesiumMath.lerp(T,g,N.x),y.latitude=r.CesiumMath.lerp(I,l,N.y),y.height=p-t;var x=d.cartographicToCartesian(y,C);o.Matrix4.multiplyByPoint(u,x,x),i.Cartesian3.minimumByComponent(x,m,m),i.Cartesian3.maximumByComponent(x,c,c),h=Math.min(h,y.height)}return h}function B(t,n,s,d,u,m,c,l,I,g,M,b,f,p,N,x,P,B){var F,S,V;f?(F=u.length-1,S=-1,V=-1):(F=0,S=u.length,V=1);var _=-1,k=e.defined(I),H=n/m.getStride(),W=M.north,Y=M.south,O=M.east,z=M.west;O<z&&(O+=r.CesiumMath.TWO_PI);for(var D=F;D!==S;D+=V){var G=u[D],j=c[G],L=l[G];y.longitude=r.CesiumMath.lerp(z,O,L.x)+P,y.latitude=r.CesiumMath.lerp(Y,W,L.y)+B,y.height=j-b;var U,R=g.cartographicToCartesian(y,C);if(k){var q=2*G;if(v.x=I[q],v.y=I[q+1],1!==p){var J=h.AttributeCompression.octDecode(v.x,v.y,w),K=a.Transforms.eastNorthUpToFixedFrame(C,g,E),Q=o.Matrix4.inverseTransformation(K,A);o.Matrix4.multiplyByPointAsVector(Q,J,J),J.z*=p,i.Cartesian3.normalize(J,J),o.Matrix4.multiplyByPointAsVector(K,J,J),i.Cartesian3.normalize(J,J),h.AttributeCompression.octEncode(J,v)}}m.hasWebMercatorT&&(U=(T.WebMercatorProjection.geodeticLatitudeToMercatorAngle(y.latitude)-N)*x),n=m.encode(t,n,R,L,y.height,v,U),-1!==_&&(s[d++]=_,s[d++]=H-1,s[d++]=G,s[d++]=H-1,s[d++]=H,s[d++]=G),_=G,++H}return d}return M((function(t,s){var u,m,c=t.quantizedVertices,I=c.length/3,g=t.octEncodedNormals,M=t.westIndices.length+t.eastIndices.length+t.southIndices.length+t.northIndices.length,F=t.includeWebMercatorT,S=t.rectangle,V=S.west,_=S.south,k=S.east,H=S.north,W=n.Ellipsoid.clone(t.ellipsoid),Y=t.exaggeration,O=t.minimumHeight*Y,z=t.maximumHeight*Y,D=t.relativeToCenter,G=a.Transforms.eastNorthUpToFixedFrame(D,W),j=o.Matrix4.inverseTransformation(G,new o.Matrix4);F&&(u=T.WebMercatorProjection.geodeticLatitudeToMercatorAngle(_),m=1/(T.WebMercatorProjection.geodeticLatitudeToMercatorAngle(H)-u));var L=c.subarray(0,I),U=c.subarray(I,2*I),R=c.subarray(2*I,3*I),q=e.defined(g),J=new Array(I),K=new Array(I),Q=new Array(I),X=F?new Array(I):[],Z=N;Z.x=Number.POSITIVE_INFINITY,Z.y=Number.POSITIVE_INFINITY,Z.z=Number.POSITIVE_INFINITY;var $=x;$.x=Number.NEGATIVE_INFINITY,$.y=Number.NEGATIVE_INFINITY,$.z=Number.NEGATIVE_INFINITY;for(var ee,te,re=Number.POSITIVE_INFINITY,ie=Number.NEGATIVE_INFINITY,ne=Number.POSITIVE_INFINITY,ae=Number.NEGATIVE_INFINITY,oe=0;oe<I;++oe){var se=L[oe]/32767,de=U[oe]/32767,ue=r.CesiumMath.lerp(O,z,R[oe]/32767);y.longitude=r.CesiumMath.lerp(V,k,se),y.latitude=r.CesiumMath.lerp(_,H,de),y.height=ue,re=Math.min(y.longitude,re),ie=Math.max(y.longitude,ie),ne=Math.min(y.latitude,ne),ae=Math.max(y.latitude,ae);var me=W.cartographicToCartesian(y);J[oe]=new d.Cartesian2(se,de),K[oe]=ue,Q[oe]=me,F&&(X[oe]=(T.WebMercatorProjection.geodeticLatitudeToMercatorAngle(y.latitude)-u)*m),o.Matrix4.multiplyByPoint(j,me,C),i.Cartesian3.minimumByComponent(C,Z,Z),i.Cartesian3.maximumByComponent(C,$,$)}1!==Y&&(te=a.BoundingSphere.fromPoints(Q),ee=f.OrientedBoundingBox.fromRectangle(S,O,z,W));var ce=O;ce=Math.min(ce,P(t.westIndices,t.westSkirtHeight,K,J,S,W,j,Z,$)),ce=Math.min(ce,P(t.southIndices,t.southSkirtHeight,K,J,S,W,j,Z,$)),ce=Math.min(ce,P(t.eastIndices,t.eastSkirtHeight,K,J,S,W,j,Z,$)),ce=Math.min(ce,P(t.northIndices,t.northSkirtHeight,K,J,S,W,j,Z,$));for(var he=new b.AxisAlignedBoundingBox(Z,$,D),le=new p.TerrainEncoding(he,ce,z,G,q,F),Ie=le.getStride(),ge=new Float32Array(I*Ie+M*Ie),Te=0,Me=0;Me<I;++Me){if(q){var be=2*Me;if(v.x=g[be],v.y=g[be+1],1!==Y){var fe=h.AttributeCompression.octDecode(v.x,v.y,w),pe=a.Transforms.eastNorthUpToFixedFrame(Q[Me],W,E),Ce=o.Matrix4.inverseTransformation(pe,A);o.Matrix4.multiplyByPointAsVector(Ce,fe,fe),fe.z*=Y,i.Cartesian3.normalize(fe,fe),o.Matrix4.multiplyByPointAsVector(pe,fe,fe),i.Cartesian3.normalize(fe,fe),h.AttributeCompression.octEncode(fe,v)}}Te=le.encode(ge,Te,Q[Me],J[Me],K[Me],v,X[Me])}var Ne=Math.max(0,2*(M-4)),xe=t.indices.length+3*Ne,ye=l.IndexDatatype.createTypedArray(I+M,xe);ye.set(t.indices,0);var ve=1e-4*(ie-re),we=1e-4*(ae-ne),Ae=-ve,Ee=ve,Pe=we,Be=-we,Fe=I*Ie,Se=t.indices.length;return Se=B(ge,Fe,ye,Se,t.westIndices,le,K,J,g,W,S,t.westSkirtHeight,!0,Y,u,m,Ae,0),Se=B(ge,Fe+=t.westIndices.length*Ie,ye,Se,t.southIndices,le,K,J,g,W,S,t.southSkirtHeight,!1,Y,u,m,0,Be),Se=B(ge,Fe+=t.southIndices.length*Ie,ye,Se,t.eastIndices,le,K,J,g,W,S,t.eastSkirtHeight,!1,Y,u,m,Ee,0),B(ge,Fe+=t.eastIndices.length*Ie,ye,Se,t.northIndices,le,K,J,g,W,S,t.northSkirtHeight,!0,Y,u,m,0,Pe),s.push(ge.buffer,ye.buffer),{vertices:ge.buffer,indices:ye.buffer,vertexStride:Ie,center:D,minimumHeight:O,maximumHeight:z,boundingSphere:te,orientedBoundingBox:ee,encoding:le,skirtIndex:t.indices.length}}))}));
+
+define(['./when-7ef6387a', './Check-ed6a1804', './Cartesian3-18c04df5', './Ellipsoid-f29f901d', './Transforms-239db6ff', './Matrix4-c68aaa66', './RuntimeError-5b606d78', './Cartesian2-e5f465dc', './WebGLConstants-30fc6f5c', './ComponentDatatype-a863af81', './PrimitiveType-4c1d698a', './FeatureDetection-0c56f1be', './AttributeCompression-414035f7', './IndexDatatype-571b3b65', './IntersectionTests-927a9102', './Plane-f22e7e98', './WebMercatorProjection-96eb07e4', './createTaskProcessorWorker', './EllipsoidTangentPlane-09857d60', './OrientedBoundingBox-bb4a9bc7', './materem-6f89acf1', './TerrainEncoding-04aaa789', './TerrainProvider-d509ef7c', './CreatePhysicalArray-d5d894bc'], function (when, Check, Cartesian3, Ellipsoid, Transforms, Matrix4, RuntimeError, Cartesian2, WebGLConstants, ComponentDatatype, PrimitiveType, FeatureDetection, AttributeCompression, IndexDatatype, IntersectionTests, Plane, WebMercatorProjection, createTaskProcessorWorker, EllipsoidTangentPlane, OrientedBoundingBox, materem, TerrainEncoding, TerrainProvider, CreatePhysicalArray) { 'use strict';
+
+    var maxShort = 32767;
+
+    var cartesian3Scratch = new Cartesian3.Cartesian3();
+    var scratchMinimum = new Cartesian3.Cartesian3();
+    var scratchMaximum = new Cartesian3.Cartesian3();
+    var cartographicScratch = new Ellipsoid.Cartographic();
+    var toPack = new Cartesian2.Cartesian2();
+    var scratchNormal = new Cartesian3.Cartesian3();
+    var scratchToENU = new Matrix4.Matrix4();
+    var scratchFromENU = new Matrix4.Matrix4();
+    var physical;
+    var lbSpaMgr;
+
+    function createVertices(parameters, transferableObjects) {
+        var quantizedVertices = parameters.quantizedVertices;
+        var quantizedVertexCount = quantizedVertices.length / 3;
+        var octEncodedNormals = parameters.octEncodedNormals;
+        var edgeVertexCount = parameters.westIndices.length + parameters.eastIndices.length +
+                              parameters.southIndices.length + parameters.northIndices.length;
+        var includeWebMercatorT = parameters.includeWebMercatorT;
+
+        var rectangle = Cartesian2.Rectangle.clone(parameters.rectangle);
+        var west = rectangle.west;
+        var south = rectangle.south;
+        var east = rectangle.east;
+        var north = rectangle.north;
+
+        var ellipsoid = Ellipsoid.Ellipsoid.clone(parameters.ellipsoid);
+
+        var exaggeration = parameters.exaggeration;
+        var minimumHeight = parameters.minimumHeight * exaggeration;
+        var maximumHeight = parameters.maximumHeight * exaggeration;
+
+        var center = parameters.relativeToCenter;
+        var fromENU = Transforms.Transforms.eastNorthUpToFixedFrame(center, ellipsoid);
+        var toENU = Matrix4.Matrix4.inverseTransformation(fromENU, new Matrix4.Matrix4());
+
+        var southMercatorY;
+        var oneOverMercatorHeight;
+        if (includeWebMercatorT) {
+            southMercatorY = WebMercatorProjection.WebMercatorProjection.geodeticLatitudeToMercatorAngle(south);
+            oneOverMercatorHeight = 1.0 / (WebMercatorProjection.WebMercatorProjection.geodeticLatitudeToMercatorAngle(north) - southMercatorY);
+        }
+
+        var uBuffer = quantizedVertices.subarray(0, quantizedVertexCount);
+        var vBuffer = quantizedVertices.subarray(quantizedVertexCount, 2 * quantizedVertexCount);
+        var heightBuffer = quantizedVertices.subarray(quantizedVertexCount * 2, 3 * quantizedVertexCount);
+        var hasVertexNormals = when.defined(octEncodedNormals);
+
+        var uvs = new Array(quantizedVertexCount);
+        var heights = new Array(quantizedVertexCount);
+        var positions = new Array(quantizedVertexCount);
+        var webMercatorTs = includeWebMercatorT ? new Array(quantizedVertexCount) : [];
+
+        var minimum = scratchMinimum;
+        minimum.x = Number.POSITIVE_INFINITY;
+        minimum.y = Number.POSITIVE_INFINITY;
+        minimum.z = Number.POSITIVE_INFINITY;
+
+        var maximum = scratchMaximum;
+        maximum.x = Number.NEGATIVE_INFINITY;
+        maximum.y = Number.NEGATIVE_INFINITY;
+        maximum.z = Number.NEGATIVE_INFINITY;
+
+        var minLongitude = Number.POSITIVE_INFINITY;
+        var maxLongitude = Number.NEGATIVE_INFINITY;
+        var minLatitude = Number.POSITIVE_INFINITY;
+        var maxLatitude = Number.NEGATIVE_INFINITY;
+
+        for (var i = 0; i < quantizedVertexCount; ++i) {
+            var rawU = uBuffer[i];
+            var rawV = vBuffer[i];
+
+            var u = rawU / maxShort;
+            var v = rawV / maxShort;
+            var height = Cartesian3.CesiumMath.lerp(minimumHeight, maximumHeight, heightBuffer[i] / maxShort);
+
+            cartographicScratch.longitude = Cartesian3.CesiumMath.lerp(west, east, u);
+            cartographicScratch.latitude = Cartesian3.CesiumMath.lerp(south, north, v);
+            cartographicScratch.height = height;
+
+            minLongitude = Math.min(cartographicScratch.longitude, minLongitude);
+            maxLongitude = Math.max(cartographicScratch.longitude, maxLongitude);
+            minLatitude = Math.min(cartographicScratch.latitude, minLatitude);
+            maxLatitude = Math.max(cartographicScratch.latitude, maxLatitude);
+
+            var position = ellipsoid.cartographicToCartesian(cartographicScratch);
+
+            uvs[i] = new Cartesian2.Cartesian2(u, v);
+            heights[i] = height;
+            positions[i] = position;
+
+            if (includeWebMercatorT) {
+                webMercatorTs[i] = (WebMercatorProjection.WebMercatorProjection.geodeticLatitudeToMercatorAngle(cartographicScratch.latitude) - southMercatorY) * oneOverMercatorHeight;
+            }
+
+            Matrix4.Matrix4.multiplyByPoint(toENU, position, cartesian3Scratch);
+
+            Cartesian3.Cartesian3.minimumByComponent(cartesian3Scratch, minimum, minimum);
+            Cartesian3.Cartesian3.maximumByComponent(cartesian3Scratch, maximum, maximum);
+        }
+
+        var westIndicesSouthToNorth = copyAndSort(parameters.westIndices, function (a, b) {
+            return uvs[a].y - uvs[b].y;
+        });
+        var eastIndicesNorthToSouth = copyAndSort(parameters.eastIndices, function (a, b) {
+            return uvs[b].y - uvs[a].y;
+        });
+        var southIndicesEastToWest = copyAndSort(parameters.southIndices, function (a, b) {
+            return uvs[b].x - uvs[a].x;
+        });
+        var northIndicesWestToEast = copyAndSort(parameters.northIndices, function (a, b) {
+            return uvs[a].x - uvs[b].x;
+        });
+
+        var orientedBoundingBox;
+        var boundingSphere;
+
+        if (exaggeration !== 1.0) {
+            // Bounding volumes need to be recomputed since the tile payload assumes no exaggeration.
+            boundingSphere = Transforms.BoundingSphere.fromPoints(positions);
+            orientedBoundingBox = OrientedBoundingBox.OrientedBoundingBox.fromRectangle(rectangle, minimumHeight, maximumHeight, ellipsoid);
+        }
+
+        var occludeePointInScaledSpace;
+        if (exaggeration !== 1.0 || minimumHeight < 0.0) {
+            // Horizon culling point needs to be recomputed since the tile payload assumes no exaggeration.
+            var occluder = new TerrainEncoding.EllipsoidalOccluder(ellipsoid);
+            occludeePointInScaledSpace = occluder.computeHorizonCullingPointPossiblyUnderEllipsoid(center, positions, minimumHeight);
+        }
+
+        var hMin = minimumHeight;
+        hMin = Math.min(hMin, findMinMaxSkirts(parameters.westIndices, parameters.westSkirtHeight, heights, uvs, rectangle, ellipsoid, toENU, minimum, maximum));
+        hMin = Math.min(hMin, findMinMaxSkirts(parameters.southIndices, parameters.southSkirtHeight, heights, uvs, rectangle, ellipsoid, toENU, minimum, maximum));
+        hMin = Math.min(hMin, findMinMaxSkirts(parameters.eastIndices, parameters.eastSkirtHeight, heights, uvs, rectangle, ellipsoid, toENU, minimum, maximum));
+        hMin = Math.min(hMin, findMinMaxSkirts(parameters.northIndices, parameters.northSkirtHeight, heights, uvs, rectangle, ellipsoid, toENU, minimum, maximum));
+
+        var aaBox = new EllipsoidTangentPlane.AxisAlignedBoundingBox(minimum, maximum, center);
+        var encoding = new TerrainEncoding.TerrainEncoding(aaBox, hMin, maximumHeight, fromENU, hasVertexNormals, includeWebMercatorT);
+        var vertexStride = encoding.getStride();
+        var size = quantizedVertexCount * vertexStride + edgeVertexCount * vertexStride;
+        var vertexBuffer = new Float32Array(size);
+
+        var bufferIndex = 0;
+        for (var j = 0; j < quantizedVertexCount; ++j) {
+            if (hasVertexNormals) {
+                var n = j * 2.0;
+                toPack.x = octEncodedNormals[n];
+                toPack.y = octEncodedNormals[n + 1];
+
+                if (exaggeration !== 1.0) {
+                    var normal = AttributeCompression.AttributeCompression.octDecode(toPack.x, toPack.y, scratchNormal);
+                    var fromENUNormal = Transforms.Transforms.eastNorthUpToFixedFrame(positions[j], ellipsoid, scratchFromENU);
+                    var toENUNormal = Matrix4.Matrix4.inverseTransformation(fromENUNormal, scratchToENU);
+
+                    Matrix4.Matrix4.multiplyByPointAsVector(toENUNormal, normal, normal);
+                    normal.z *= exaggeration;
+                    Cartesian3.Cartesian3.normalize(normal, normal);
+
+                    Matrix4.Matrix4.multiplyByPointAsVector(fromENUNormal, normal, normal);
+                    Cartesian3.Cartesian3.normalize(normal, normal);
+
+                    AttributeCompression.AttributeCompression.octEncode(normal, toPack);
+                }
+            }
+
+            bufferIndex = encoding.encode(vertexBuffer, bufferIndex, positions[j], uvs[j], heights[j], toPack, webMercatorTs[j]);
+        }
+
+        var edgeTriangleCount = Math.max(0, (edgeVertexCount - 4) * 2);
+        var indexBufferLength = parameters.indices.length + edgeTriangleCount * 3;
+        var indexBuffer = IndexDatatype.IndexDatatype.createTypedArray(quantizedVertexCount + edgeVertexCount, indexBufferLength);
+        indexBuffer.set(parameters.indices, 0);
+
+        var percentage = 0.0001;
+        var lonOffset = (maxLongitude - minLongitude) * percentage;
+        var latOffset = (maxLatitude - minLatitude) * percentage;
+        var westLongitudeOffset = -lonOffset;
+        var westLatitudeOffset = 0.0;
+        var eastLongitudeOffset = lonOffset;
+        var eastLatitudeOffset = 0.0;
+        var northLongitudeOffset = 0.0;
+        var northLatitudeOffset = latOffset;
+        var southLongitudeOffset = 0.0;
+        var southLatitudeOffset = -latOffset;
+
+        // Add skirts.
+        var vertexBufferIndex = quantizedVertexCount * vertexStride;
+        addSkirt(vertexBuffer, vertexBufferIndex, westIndicesSouthToNorth, encoding, heights, uvs, octEncodedNormals, ellipsoid, rectangle, parameters.westSkirtHeight, exaggeration, southMercatorY, oneOverMercatorHeight, westLongitudeOffset, westLatitudeOffset);
+        vertexBufferIndex += parameters.westIndices.length * vertexStride;
+        addSkirt(vertexBuffer, vertexBufferIndex, southIndicesEastToWest, encoding, heights, uvs, octEncodedNormals, ellipsoid, rectangle, parameters.southSkirtHeight, exaggeration, southMercatorY, oneOverMercatorHeight, southLongitudeOffset, southLatitudeOffset);
+        vertexBufferIndex += parameters.southIndices.length * vertexStride;
+        addSkirt(vertexBuffer, vertexBufferIndex, eastIndicesNorthToSouth, encoding, heights, uvs, octEncodedNormals, ellipsoid, rectangle, parameters.eastSkirtHeight, exaggeration, southMercatorY, oneOverMercatorHeight, eastLongitudeOffset, eastLatitudeOffset);
+        vertexBufferIndex += parameters.eastIndices.length * vertexStride;
+        addSkirt(vertexBuffer, vertexBufferIndex, northIndicesWestToEast, encoding, heights, uvs, octEncodedNormals, ellipsoid, rectangle, parameters.northSkirtHeight, exaggeration, southMercatorY, oneOverMercatorHeight, northLongitudeOffset, northLatitudeOffset);
+
+        TerrainProvider.TerrainProvider.addSkirtIndices(westIndicesSouthToNorth, southIndicesEastToWest, eastIndicesNorthToSouth, northIndicesWestToEast, quantizedVertexCount, indexBuffer, parameters.indices.length);
+
+        var physicalArray = CreatePhysicalArray.CreatePhysicalArray.createPhysicalArrayFromTerrain(physical, lbSpaMgr, parameters.relativeToCenter, positions, parameters.indices);
+        transferableObjects.push(vertexBuffer.buffer, indexBuffer.buffer, physicalArray.buffer);
+
+        return {
+            vertices: vertexBuffer.buffer,
+            indices: indexBuffer.buffer,
+            westIndicesSouthToNorth: westIndicesSouthToNorth,
+            southIndicesEastToWest: southIndicesEastToWest,
+            eastIndicesNorthToSouth: eastIndicesNorthToSouth,
+            northIndicesWestToEast: northIndicesWestToEast,
+            vertexStride: vertexStride,
+            center: center,
+            minimumHeight: minimumHeight,
+            maximumHeight: maximumHeight,
+            boundingSphere: boundingSphere,
+            orientedBoundingBox: orientedBoundingBox,
+            occludeePointInScaledSpace: occludeePointInScaledSpace,
+            encoding: encoding,
+            indexCountWithoutSkirts: parameters.indices.length,
+            physicalArray: physicalArray
+        };
+    }
+
+    function findMinMaxSkirts(edgeIndices, edgeHeight, heights, uvs, rectangle, ellipsoid, toENU, minimum, maximum) {
+        var hMin = Number.POSITIVE_INFINITY;
+
+        var north = rectangle.north;
+        var south = rectangle.south;
+        var east = rectangle.east;
+        var west = rectangle.west;
+
+        if (east < west) {
+            east += Cartesian3.CesiumMath.TWO_PI;
+        }
+
+        var length = edgeIndices.length;
+        for (var i = 0; i < length; ++i) {
+            var index = edgeIndices[i];
+            var h = heights[index];
+            var uv = uvs[index];
+
+            cartographicScratch.longitude = Cartesian3.CesiumMath.lerp(west, east, uv.x);
+            cartographicScratch.latitude = Cartesian3.CesiumMath.lerp(south, north, uv.y);
+            cartographicScratch.height = h - edgeHeight;
+
+            var position = ellipsoid.cartographicToCartesian(cartographicScratch, cartesian3Scratch);
+            Matrix4.Matrix4.multiplyByPoint(toENU, position, position);
+
+            Cartesian3.Cartesian3.minimumByComponent(position, minimum, minimum);
+            Cartesian3.Cartesian3.maximumByComponent(position, maximum, maximum);
+
+            hMin = Math.min(hMin, cartographicScratch.height);
+        }
+        return hMin;
+    }
+
+    function addSkirt(vertexBuffer, vertexBufferIndex, edgeVertices, encoding, heights, uvs, octEncodedNormals, ellipsoid, rectangle, skirtLength, exaggeration, southMercatorY, oneOverMercatorHeight, longitudeOffset, latitudeOffset) {
+        var hasVertexNormals = when.defined(octEncodedNormals);
+
+        var north = rectangle.north;
+        var south = rectangle.south;
+        var east = rectangle.east;
+        var west = rectangle.west;
+
+        if (east < west) {
+            east += Cartesian3.CesiumMath.TWO_PI;
+        }
+
+        var length = edgeVertices.length;
+        for (var i = 0; i < length; ++i) {
+            var index = edgeVertices[i];
+            var h = heights[index];
+            var uv = uvs[index];
+
+            cartographicScratch.longitude = Cartesian3.CesiumMath.lerp(west, east, uv.x) + longitudeOffset;
+            cartographicScratch.latitude = Cartesian3.CesiumMath.lerp(south, north, uv.y) + latitudeOffset;
+            cartographicScratch.height = h - skirtLength;
+
+            var position = ellipsoid.cartographicToCartesian(cartographicScratch, cartesian3Scratch);
+
+            if (hasVertexNormals) {
+                var n = index * 2.0;
+                toPack.x = octEncodedNormals[n];
+                toPack.y = octEncodedNormals[n + 1];
+
+                if (exaggeration !== 1.0) {
+                    var normal = AttributeCompression.AttributeCompression.octDecode(toPack.x, toPack.y, scratchNormal);
+                    var fromENUNormal = Transforms.Transforms.eastNorthUpToFixedFrame(cartesian3Scratch, ellipsoid, scratchFromENU);
+                    var toENUNormal = Matrix4.Matrix4.inverseTransformation(fromENUNormal, scratchToENU);
+
+                    Matrix4.Matrix4.multiplyByPointAsVector(toENUNormal, normal, normal);
+                    normal.z *= exaggeration;
+                    Cartesian3.Cartesian3.normalize(normal, normal);
+
+                    Matrix4.Matrix4.multiplyByPointAsVector(fromENUNormal, normal, normal);
+                    Cartesian3.Cartesian3.normalize(normal, normal);
+
+                    AttributeCompression.AttributeCompression.octEncode(normal, toPack);
+                }
+            }
+
+            var webMercatorT;
+            if (encoding.hasWebMercatorT) {
+                webMercatorT = (WebMercatorProjection.WebMercatorProjection.geodeticLatitudeToMercatorAngle(cartographicScratch.latitude) - southMercatorY) * oneOverMercatorHeight;
+            }
+
+            vertexBufferIndex = encoding.encode(vertexBuffer, vertexBufferIndex, position, uv, cartographicScratch.height, toPack, webMercatorT);
+        }
+    }
+
+    function copyAndSort(typedArray, comparator) {
+        var copy;
+        if (typeof typedArray.slice === 'function') {
+            copy = typedArray.slice();
+            if (typeof copy.sort !== 'function') {
+                // Sliced typed array isn't sortable, so we can't use it.
+                copy = undefined;
+            }
+        }
+
+        if (!when.defined(copy)) {
+            copy = Array.prototype.slice.call(typedArray);
+        }
+
+        copy.sort(comparator);
+
+        return copy;
+    }
+
+    function createVerticesFromQuantizedTerrainMesh(event) {
+        var data = event.data;
+        var wasmConfig = data.webAssemblyConfig;
+        if (when.defined(wasmConfig)) {
+            fetch(wasmConfig.wasmBinaryFileES6)
+                .then(response => response.arrayBuffer())
+                .then(function (bytes) {
+                    var WebAssemblyType = {
+                        wasmBinary: bytes,
+                        onModuleLoaded: function (currentModule) {
+                            physical = currentModule;
+                            lbSpaMgr = new physical.LBSpaMgr();
+                            self.onmessage = createTaskProcessorWorker(createVertices);
+                            self.postMessage(true);
+                        }
+                    };
+
+                    materem.materem(WebAssemblyType);
+                });
+        }
+    }
+
+    return createVerticesFromQuantizedTerrainMesh;
+
+});
+//# sourceMappingURL=createVerticesFromQuantizedTerrainMesh.js.map

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: yfye
  * @Date: 2020-06-06 02:39:01
- * @LastEditTime: 2020-12-04 21:22:24
+ * @LastEditTime: 2020-12-05 16:12:31
  * @LastEditors: yfye
  */
 export const config = {
@@ -32,8 +32,8 @@ export const config = {
     },
     bridge:{
         bimServer:"https://open.lubansoft.com/api",
-        motorAppId:"d1c0762433074362bf4f646325d83995 ",
-        motorSecret:"876f66fc68bb03ca8d9780e0fe5c7682",
+        motorAppId:"a3e0bca8c90c4fa6bce0efac843896ae",
+        motorSecret:"26181acfaa21d0f9b94d561d86041aba",
         bimProjectId:"62924801-9263-4a15-89a3-933563bcdf49",
         cimProjectId:"62924801-9263-4a15-89a3-933563bcdf49",
         library:"https://lbdp.lubansoft.com/reference/motor-web-library/motor.js",

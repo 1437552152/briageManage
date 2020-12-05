@@ -3,7 +3,14 @@
 </style>
 <template>
   <div class="tableBox">
-    <BIMInfo />   
+     <div class="qiehuanPosition">
+    <RadioGroup v-model="type"  @on-change="onChangeType">
+        <Radio label="2">广联达</Radio>
+        <Radio label="1">鲁班</Radio>
+    </RadioGroup>
+  </div>
+    <BIMInfo v-if="type==1" />
+    <BIMFACE  v-if="type==2" flag=2 />
     <div class="boxStyle"></div>
     <div class="titleTotal">
       <div class="title">
@@ -153,13 +160,14 @@ import { getbridgeMainInfo } from "@/util/api";
 import { getbridgeInspectInfo } from "@/util/api";
 import { filterParams } from "@/util/commonFilter";
 import BIMInfo from "@/components/BIMInfo/index";
+import BIMFACE from "@/components/BIMFACE/index";
 import dataTotal from "./exportData";
 import $ from 'jquery';
 import moment from "moment";
 export default {
   components: {
     Circles,
-    Ring,BIMInfo
+    Ring,BIMInfo,BIMFACE
   },
   data() {
     return {
@@ -192,7 +200,8 @@ export default {
       },
       bridgeId: this.$route.query.bridgeId,
       columns:dataTotal.data,
-      data: []
+      data: [],
+      type: localStorage.getItem('type')||"2"
     };
   },
   created() {
@@ -249,6 +258,9 @@ export default {
         this.formData[key] = "";
       }
       this.getbridge();
+    },
+      onChangeType(type){
+      localStorage.setItem('type',type)
     }
   }
 };

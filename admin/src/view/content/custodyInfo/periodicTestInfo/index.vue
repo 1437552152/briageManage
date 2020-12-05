@@ -1,6 +1,13 @@
 <template>
   <div class="tableBox">
-    <BIMInfo />            
+    <div class="qiehuanPosition">
+    <RadioGroup v-model="type"  @on-change="onChangeType">
+        <Radio label="2">广联达</Radio>
+        <Radio label="1">鲁班</Radio>
+    </RadioGroup>
+  </div>
+    <BIMInfo v-if="type==1" />
+    <BIMFACE  v-if="type==2" flag=2 /> 
     <div class="boxStyle"></div>
     <div class="titleTotal">
       <div class="title">
@@ -121,11 +128,12 @@
 import { exportFileService } from "@/view/utils/myFetch";
 import Circles from "@/view/components/Circles/Circles";
 import BIMInfo from "@/components/BIMInfo/index";
+import BIMFACE from "@/components/BIMFACE/index";
 import dataTotal from "./exportData";
 import moment from "moment";
 export default {
   components: {
-    Circles,BIMInfo
+    Circles,BIMInfo,BIMFACE
   },
   data() {
     return {
@@ -144,7 +152,8 @@ export default {
       },
       bridgeId: this.$route.query.bridgeId,
       columns:dataTotal.data,
-      data: []
+      data: [],
+   type: localStorage.getItem('type')||"2"
     };
   },
   methods: {
@@ -182,6 +191,9 @@ export default {
         this.data = res.data;
       });
     },
+         onChangeType(type){
+      localStorage.setItem('type',type)
+    }
   }
 };
 </script>

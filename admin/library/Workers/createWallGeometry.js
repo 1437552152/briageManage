@@ -1,7 +1,7 @@
 /**
- * Cesium - https://github.com/AnalyticalGraphicsInc/cesium
+ * Cesium - https://github.com/CesiumGS/cesium
  *
- * Copyright 2011-2017 Cesium Contributors
+ * Copyright 2011-2020 Cesium Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,555 @@
  * Columbus View (Pat. Pend.)
  *
  * Portions licensed separately.
- * See https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md for full licensing details.
+ * See https://github.com/CesiumGS/cesium/blob/master/LICENSE.md for full licensing details.
  */
-define(["./when-4ca4e419","./Check-430b3551","./defineProperties-163ddb68","./Cartesian3-32451e63","./Ellipsoid-d2aa3b12","./Transforms-7b04d7e0","./Matrix4-33464f2b","./RuntimeError-443472b0","./Cartesian2-f49a1383","./FeatureDetection-0d4fee13","./WebGLConstants-2ddfa2f9","./ComponentDatatype-329b9462","./GeometryAttribute-b8faa946","./GeometryAttributes-614c63f8","./IndexDatatype-153fdd7f","./IntersectionTests-15d018f5","./Plane-84b14a0a","./VertexFormat-a4fe3a21","./EllipsoidTangentPlane-3967708f","./EllipsoidRhumbLine-c004db91","./PolygonPipeline-d25dad97","./EllipsoidGeodesic-c57b5e5c","./PolylinePipeline-4ac94627","./WallGeometryLibrary-8829821e"],(function(e,t,i,a,r,n,o,s,l,m,d,p,u,f,h,c,g,y,v,C,w,E,b,x){"use strict";var A=new a.Cartesian3,_=new a.Cartesian3,F=new a.Cartesian3,D=new a.Cartesian3,L=new a.Cartesian3,H=new a.Cartesian3,P=new a.Cartesian3,k=new a.Cartesian3;function G(n){var o=(n=e.defaultValue(n,e.defaultValue.EMPTY_OBJECT)).positions,s=n.maximumHeights,l=n.minimumHeights;if(!e.defined(o))throw new t.DeveloperError("options.positions is required.");if(e.defined(s)&&s.length!==o.length)throw new t.DeveloperError("options.positions and options.maximumHeights must have the same length.");if(e.defined(l)&&l.length!==o.length)throw new t.DeveloperError("options.positions and options.minimumHeights must have the same length.");var m=e.defaultValue(n.vertexFormat,y.VertexFormat.DEFAULT),d=e.defaultValue(n.granularity,i.CesiumMath.RADIANS_PER_DEGREE),p=e.defaultValue(n.ellipsoid,r.Ellipsoid.WGS84);this._positions=o,this._minimumHeights=l,this._maximumHeights=s,this._vertexFormat=y.VertexFormat.clone(m),this._granularity=d,this._ellipsoid=r.Ellipsoid.clone(p),this._workerName="createWallGeometry";var u=1+o.length*a.Cartesian3.packedLength+2;e.defined(l)&&(u+=l.length),e.defined(s)&&(u+=s.length),this.packedLength=u+r.Ellipsoid.packedLength+y.VertexFormat.packedLength+1}G.pack=function(i,n,o){if(!e.defined(i))throw new t.DeveloperError("value is required");if(!e.defined(n))throw new t.DeveloperError("array is required");var s;o=e.defaultValue(o,0);var l=i._positions,m=l.length;for(n[o++]=m,s=0;s<m;++s,o+=a.Cartesian3.packedLength)a.Cartesian3.pack(l[s],n,o);var d=i._minimumHeights;if(m=e.defined(d)?d.length:0,n[o++]=m,e.defined(d))for(s=0;s<m;++s)n[o++]=d[s];var p=i._maximumHeights;if(m=e.defined(p)?p.length:0,n[o++]=m,e.defined(p))for(s=0;s<m;++s)n[o++]=p[s];return r.Ellipsoid.pack(i._ellipsoid,n,o),o+=r.Ellipsoid.packedLength,y.VertexFormat.pack(i._vertexFormat,n,o),n[o+=y.VertexFormat.packedLength]=i._granularity,n};var V=r.Ellipsoid.clone(r.Ellipsoid.UNIT_SPHERE),T=new y.VertexFormat,z={positions:void 0,minimumHeights:void 0,maximumHeights:void 0,ellipsoid:V,vertexFormat:T,granularity:void 0};return G.unpack=function(i,n,o){if(!e.defined(i))throw new t.DeveloperError("array is required");var s;n=e.defaultValue(n,0);var l,m,d=i[n++],p=new Array(d);for(s=0;s<d;++s,n+=a.Cartesian3.packedLength)p[s]=a.Cartesian3.unpack(i,n);if((d=i[n++])>0)for(l=new Array(d),s=0;s<d;++s)l[s]=i[n++];if((d=i[n++])>0)for(m=new Array(d),s=0;s<d;++s)m[s]=i[n++];var u=r.Ellipsoid.unpack(i,n,V);n+=r.Ellipsoid.packedLength;var f=y.VertexFormat.unpack(i,n,T),h=i[n+=y.VertexFormat.packedLength];return e.defined(o)?(o._positions=p,o._minimumHeights=l,o._maximumHeights=m,o._ellipsoid=r.Ellipsoid.clone(u,o._ellipsoid),o._vertexFormat=y.VertexFormat.clone(f,o._vertexFormat),o._granularity=h,o):(z.positions=p,z.minimumHeights=l,z.maximumHeights=m,z.granularity=h,new G(z))},G.fromConstantHeights=function(i){var a,r,n=(i=e.defaultValue(i,e.defaultValue.EMPTY_OBJECT)).positions;if(!e.defined(n))throw new t.DeveloperError("options.positions is required.");var o=i.minimumHeight,s=i.maximumHeight,l=e.defined(o),m=e.defined(s);if(l||m){var d=n.length;a=l?new Array(d):void 0,r=m?new Array(d):void 0;for(var p=0;p<d;++p)l&&(a[p]=o),m&&(r[p]=s)}return new G({positions:n,maximumHeights:r,minimumHeights:a,ellipsoid:i.ellipsoid,vertexFormat:i.vertexFormat})},G.createGeometry=function(t){var r=t._positions,o=t._minimumHeights,s=t._maximumHeights,l=t._vertexFormat,m=t._granularity,d=t._ellipsoid,c=x.WallGeometryLibrary.computePositions(d,r,s,o,m,!0);if(e.defined(c)){var g,y=c.bottomPositions,v=c.topPositions,C=c.numCorners,w=v.length,E=2*w,b=l.position?new Float64Array(E):void 0,G=l.normal?new Float32Array(E):void 0,V=l.tangent?new Float32Array(E):void 0,T=l.bitangent?new Float32Array(E):void 0,z=l.st?new Float32Array(E/3*2):void 0,O=0,S=0,I=0,R=0,q=0,M=k,N=P,W=H,B=!0,U=0,J=1/((w/=3)-r.length+1);for(g=0;g<w;++g){var Y=3*g,Z=a.Cartesian3.fromArray(v,Y,A),j=a.Cartesian3.fromArray(y,Y,_);if(l.position&&(b[O++]=j.x,b[O++]=j.y,b[O++]=j.z,b[O++]=Z.x,b[O++]=Z.y,b[O++]=Z.z),l.st&&(z[q++]=U,z[q++]=0,z[q++]=U,z[q++]=1),l.normal||l.tangent||l.bitangent){var K,Q=a.Cartesian3.clone(a.Cartesian3.ZERO,L),X=d.scaleToGeodeticSurface(a.Cartesian3.fromArray(v,Y,_),_);if(g+1<w&&(K=d.scaleToGeodeticSurface(a.Cartesian3.fromArray(v,Y+3,F),F),Q=a.Cartesian3.fromArray(v,Y+3,L)),B){var $=a.Cartesian3.subtract(Q,Z,D),ee=a.Cartesian3.subtract(X,Z,A);M=a.Cartesian3.normalize(a.Cartesian3.cross(ee,$,M),M),B=!1}a.Cartesian3.equalsEpsilon(K,X,i.CesiumMath.EPSILON10)?B=!0:(U+=J,l.tangent&&(N=a.Cartesian3.normalize(a.Cartesian3.subtract(K,X,N),N)),l.bitangent&&(W=a.Cartesian3.normalize(a.Cartesian3.cross(M,N,W),W))),l.normal&&(G[S++]=M.x,G[S++]=M.y,G[S++]=M.z,G[S++]=M.x,G[S++]=M.y,G[S++]=M.z),l.tangent&&(V[R++]=N.x,V[R++]=N.y,V[R++]=N.z,V[R++]=N.x,V[R++]=N.y,V[R++]=N.z),l.bitangent&&(T[I++]=W.x,T[I++]=W.y,T[I++]=W.z,T[I++]=W.x,T[I++]=W.y,T[I++]=W.z)}}var te=new f.GeometryAttributes;l.position&&(te.position=new u.GeometryAttribute({componentDatatype:p.ComponentDatatype.DOUBLE,componentsPerAttribute:3,values:b})),l.normal&&(te.normal=new u.GeometryAttribute({componentDatatype:p.ComponentDatatype.FLOAT,componentsPerAttribute:3,values:G})),l.tangent&&(te.tangent=new u.GeometryAttribute({componentDatatype:p.ComponentDatatype.FLOAT,componentsPerAttribute:3,values:V})),l.bitangent&&(te.bitangent=new u.GeometryAttribute({componentDatatype:p.ComponentDatatype.FLOAT,componentsPerAttribute:3,values:T})),l.st&&(te.st=new u.GeometryAttribute({componentDatatype:p.ComponentDatatype.FLOAT,componentsPerAttribute:2,values:z}));var ie=E/3;E-=6*(C+1);var ae=h.IndexDatatype.createTypedArray(ie,E),re=0;for(g=0;g<ie-2;g+=2){var ne=g,oe=g+2,se=a.Cartesian3.fromArray(b,3*ne,A),le=a.Cartesian3.fromArray(b,3*oe,_);if(!a.Cartesian3.equalsEpsilon(se,le,i.CesiumMath.EPSILON10)){var me=g+1,de=g+3;ae[re++]=me,ae[re++]=ne,ae[re++]=de,ae[re++]=de,ae[re++]=ne,ae[re++]=oe}}return new u.Geometry({attributes:te,indices:ae,primitiveType:u.PrimitiveType.TRIANGLES,boundingSphere:new n.BoundingSphere.fromVertices(b)})}},function(t,i){return e.defined(i)&&(t=G.unpack(t,i)),t._ellipsoid=r.Ellipsoid.clone(t._ellipsoid),G.createGeometry(t)}}));
+
+define(['./when-7ef6387a', './Check-ed6a1804', './Cartesian3-18c04df5', './Ellipsoid-f29f901d', './Transforms-239db6ff', './Matrix4-c68aaa66', './RuntimeError-5b606d78', './Cartesian2-e5f465dc', './WebGLConstants-30fc6f5c', './ComponentDatatype-a863af81', './GeometryAttribute-de79a9c2', './PrimitiveType-4c1d698a', './FeatureDetection-0c56f1be', './GeometryAttributes-cb18da36', './IndexDatatype-571b3b65', './IntersectionTests-927a9102', './Plane-f22e7e98', './VertexFormat-d75df48f', './EllipsoidTangentPlane-09857d60', './EllipsoidRhumbLine-e9bf1af4', './PolygonPipeline-5f144950', './EllipsoidGeodesic-80195a45', './PolylinePipeline-b60c6e78', './WallGeometryLibrary-786a96f6'], function (when, Check, Cartesian3, Ellipsoid, Transforms, Matrix4, RuntimeError, Cartesian2, WebGLConstants, ComponentDatatype, GeometryAttribute, PrimitiveType, FeatureDetection, GeometryAttributes, IndexDatatype, IntersectionTests, Plane, VertexFormat, EllipsoidTangentPlane, EllipsoidRhumbLine, PolygonPipeline, EllipsoidGeodesic, PolylinePipeline, WallGeometryLibrary) { 'use strict';
+
+    var scratchCartesian3Position1 = new Cartesian3.Cartesian3();
+        var scratchCartesian3Position2 = new Cartesian3.Cartesian3();
+        var scratchCartesian3Position3 = new Cartesian3.Cartesian3();
+        var scratchCartesian3Position4 = new Cartesian3.Cartesian3();
+        var scratchCartesian3Position5 = new Cartesian3.Cartesian3();
+        var scratchBitangent = new Cartesian3.Cartesian3();
+        var scratchTangent = new Cartesian3.Cartesian3();
+        var scratchNormal = new Cartesian3.Cartesian3();
+
+        /**
+         * A description of a wall, which is similar to a KML line string. A wall is defined by a series of points,
+         * which extrude down to the ground. Optionally, they can extrude downwards to a specified height.
+         *
+         * @alias WallGeometry
+         * @constructor
+         *
+         * @param {Object} options Object with the following properties:
+         * @param {Cartesian3[]} options.positions An array of Cartesian objects, which are the points of the wall.
+         * @param {Number} [options.granularity=CesiumMath.RADIANS_PER_DEGREE] The distance, in radians, between each latitude and longitude. Determines the number of positions in the buffer.
+         * @param {Number[]} [options.maximumHeights] An array parallel to <code>positions</code> that give the maximum height of the
+         *        wall at <code>positions</code>. If undefined, the height of each position in used.
+         * @param {Number[]} [options.minimumHeights] An array parallel to <code>positions</code> that give the minimum height of the
+         *        wall at <code>positions</code>. If undefined, the height at each position is 0.0.
+         * @param {Ellipsoid} [options.ellipsoid=Ellipsoid.WGS84] The ellipsoid for coordinate manipulation
+         * @param {VertexFormat} [options.vertexFormat=VertexFormat.DEFAULT] The vertex attributes to be computed.
+         *
+         * @exception {DeveloperError} positions length must be greater than or equal to 2.
+         * @exception {DeveloperError} positions and maximumHeights must have the same length.
+         * @exception {DeveloperError} positions and minimumHeights must have the same length.
+         *
+         * @see WallGeometry#createGeometry
+         * @see WallGeometry#fromConstantHeight
+         *
+         * @demo {@link https://sandcastle.cesium.com/index.html?src=Wall.html|Cesium Sandcastle Wall Demo}
+         *
+         * @example
+         * // create a wall that spans from ground level to 10000 meters
+         * var wall = new Cesium.WallGeometry({
+         *   positions : Cesium.Cartesian3.fromDegreesArrayHeights([
+         *     19.0, 47.0, 10000.0,
+         *     19.0, 48.0, 10000.0,
+         *     20.0, 48.0, 10000.0,
+         *     20.0, 47.0, 10000.0,
+         *     19.0, 47.0, 10000.0
+         *   ])
+         * });
+         * var geometry = Cesium.WallGeometry.createGeometry(wall);
+         */
+        function WallGeometry(options) {
+            options = when.defaultValue(options, when.defaultValue.EMPTY_OBJECT);
+
+            var wallPositions = options.positions;
+            var maximumHeights = options.maximumHeights;
+            var minimumHeights = options.minimumHeights;
+
+            //>>includeStart('debug', pragmas.debug);
+            if (!when.defined(wallPositions)) {
+                throw new Check.DeveloperError('options.positions is required.');
+            }
+            if (when.defined(maximumHeights) && maximumHeights.length !== wallPositions.length) {
+                throw new Check.DeveloperError('options.positions and options.maximumHeights must have the same length.');
+            }
+            if (when.defined(minimumHeights) && minimumHeights.length !== wallPositions.length) {
+                throw new Check.DeveloperError('options.positions and options.minimumHeights must have the same length.');
+            }
+            //>>includeEnd('debug');
+
+            var vertexFormat = when.defaultValue(options.vertexFormat, VertexFormat.VertexFormat.DEFAULT);
+            var granularity = when.defaultValue(options.granularity, Cartesian3.CesiumMath.RADIANS_PER_DEGREE);
+            var ellipsoid = when.defaultValue(options.ellipsoid, Ellipsoid.Ellipsoid.WGS84);
+
+            this._positions = wallPositions;
+            this._minimumHeights = minimumHeights;
+            this._maximumHeights = maximumHeights;
+            this._vertexFormat = VertexFormat.VertexFormat.clone(vertexFormat);
+            this._granularity = granularity;
+            this._ellipsoid = Ellipsoid.Ellipsoid.clone(ellipsoid);
+            this._workerName = 'createWallGeometry';
+
+            var numComponents = 1 + wallPositions.length * Cartesian3.Cartesian3.packedLength + 2;
+            if (when.defined(minimumHeights)) {
+                numComponents += minimumHeights.length;
+            }
+            if (when.defined(maximumHeights)) {
+                numComponents += maximumHeights.length;
+            }
+
+            /**
+             * The number of elements used to pack the object into an array.
+             * @type {Number}
+             */
+            this.packedLength = numComponents + Ellipsoid.Ellipsoid.packedLength + VertexFormat.VertexFormat.packedLength + 1;
+        }
+
+        /**
+         * Stores the provided instance into the provided array.
+         *
+         * @param {WallGeometry} value The value to pack.
+         * @param {Number[]} array The array to pack into.
+         * @param {Number} [startingIndex=0] The index into the array at which to start packing the elements.
+         *
+         * @returns {Number[]} The array that was packed into
+         */
+        WallGeometry.pack = function(value, array, startingIndex) {
+            //>>includeStart('debug', pragmas.debug);
+            if (!when.defined(value)) {
+                throw new Check.DeveloperError('value is required');
+            }
+            if (!when.defined(array)) {
+                throw new Check.DeveloperError('array is required');
+            }
+            //>>includeEnd('debug');
+
+            startingIndex = when.defaultValue(startingIndex, 0);
+
+            var i;
+
+            var positions = value._positions;
+            var length = positions.length;
+            array[startingIndex++] = length;
+
+            for (i = 0; i < length; ++i, startingIndex += Cartesian3.Cartesian3.packedLength) {
+                Cartesian3.Cartesian3.pack(positions[i], array, startingIndex);
+            }
+
+            var minimumHeights = value._minimumHeights;
+            length = when.defined(minimumHeights) ? minimumHeights.length : 0;
+            array[startingIndex++] = length;
+
+            if (when.defined(minimumHeights)) {
+                for (i = 0; i < length; ++i) {
+                    array[startingIndex++] = minimumHeights[i];
+                }
+            }
+
+            var maximumHeights = value._maximumHeights;
+            length = when.defined(maximumHeights) ? maximumHeights.length : 0;
+            array[startingIndex++] = length;
+
+            if (when.defined(maximumHeights)) {
+                for (i = 0; i < length; ++i) {
+                    array[startingIndex++] = maximumHeights[i];
+                }
+            }
+
+            Ellipsoid.Ellipsoid.pack(value._ellipsoid, array, startingIndex);
+            startingIndex += Ellipsoid.Ellipsoid.packedLength;
+
+            VertexFormat.VertexFormat.pack(value._vertexFormat, array, startingIndex);
+            startingIndex += VertexFormat.VertexFormat.packedLength;
+
+            array[startingIndex] = value._granularity;
+
+            return array;
+        };
+
+        var scratchEllipsoid = Ellipsoid.Ellipsoid.clone(Ellipsoid.Ellipsoid.UNIT_SPHERE);
+        var scratchVertexFormat = new VertexFormat.VertexFormat();
+        var scratchOptions = {
+            positions : undefined,
+            minimumHeights : undefined,
+            maximumHeights : undefined,
+            ellipsoid : scratchEllipsoid,
+            vertexFormat : scratchVertexFormat,
+            granularity : undefined
+        };
+
+        /**
+         * Retrieves an instance from a packed array.
+         *
+         * @param {Number[]} array The packed array.
+         * @param {Number} [startingIndex=0] The starting index of the element to be unpacked.
+         * @param {WallGeometry} [result] The object into which to store the result.
+         * @returns {WallGeometry} The modified result parameter or a new WallGeometry instance if one was not provided.
+         */
+        WallGeometry.unpack = function(array, startingIndex, result) {
+            //>>includeStart('debug', pragmas.debug);
+            if (!when.defined(array)) {
+                throw new Check.DeveloperError('array is required');
+            }
+            //>>includeEnd('debug');
+
+            startingIndex = when.defaultValue(startingIndex, 0);
+
+            var i;
+
+            var length = array[startingIndex++];
+            var positions = new Array(length);
+
+            for (i = 0; i < length; ++i, startingIndex += Cartesian3.Cartesian3.packedLength) {
+                positions[i] = Cartesian3.Cartesian3.unpack(array, startingIndex);
+            }
+
+            length = array[startingIndex++];
+            var minimumHeights;
+
+            if (length > 0) {
+                minimumHeights = new Array(length);
+                for (i = 0; i < length; ++i) {
+                    minimumHeights[i] = array[startingIndex++];
+                }
+            }
+
+            length = array[startingIndex++];
+            var maximumHeights;
+
+            if (length > 0) {
+                maximumHeights = new Array(length);
+                for (i = 0; i < length; ++i) {
+                    maximumHeights[i] = array[startingIndex++];
+                }
+            }
+
+            var ellipsoid = Ellipsoid.Ellipsoid.unpack(array, startingIndex, scratchEllipsoid);
+            startingIndex += Ellipsoid.Ellipsoid.packedLength;
+
+            var vertexFormat = VertexFormat.VertexFormat.unpack(array, startingIndex, scratchVertexFormat);
+            startingIndex += VertexFormat.VertexFormat.packedLength;
+
+            var granularity = array[startingIndex];
+
+            if (!when.defined(result)) {
+                scratchOptions.positions = positions;
+                scratchOptions.minimumHeights = minimumHeights;
+                scratchOptions.maximumHeights = maximumHeights;
+                scratchOptions.granularity = granularity;
+                return new WallGeometry(scratchOptions);
+            }
+
+            result._positions = positions;
+            result._minimumHeights = minimumHeights;
+            result._maximumHeights = maximumHeights;
+            result._ellipsoid = Ellipsoid.Ellipsoid.clone(ellipsoid, result._ellipsoid);
+            result._vertexFormat = VertexFormat.VertexFormat.clone(vertexFormat, result._vertexFormat);
+            result._granularity = granularity;
+
+            return result;
+        };
+
+        /**
+         * A description of a wall, which is similar to a KML line string. A wall is defined by a series of points,
+         * which extrude down to the ground. Optionally, they can extrude downwards to a specified height.
+         *
+         * @param {Object} options Object with the following properties:
+         * @param {Cartesian3[]} options.positions An array of Cartesian objects, which are the points of the wall.
+         * @param {Number} [options.maximumHeight] A constant that defines the maximum height of the
+         *        wall at <code>positions</code>. If undefined, the height of each position in used.
+         * @param {Number} [options.minimumHeight] A constant that defines the minimum height of the
+         *        wall at <code>positions</code>. If undefined, the height at each position is 0.0.
+         * @param {Ellipsoid} [options.ellipsoid=Ellipsoid.WGS84] The ellipsoid for coordinate manipulation
+         * @param {VertexFormat} [options.vertexFormat=VertexFormat.DEFAULT] The vertex attributes to be computed.
+         * @returns {WallGeometry}
+         *
+         *
+         * @example
+         * // create a wall that spans from 10000 meters to 20000 meters
+         * var wall = Cesium.WallGeometry.fromConstantHeights({
+         *   positions : Cesium.Cartesian3.fromDegreesArray([
+         *     19.0, 47.0,
+         *     19.0, 48.0,
+         *     20.0, 48.0,
+         *     20.0, 47.0,
+         *     19.0, 47.0,
+         *   ]),
+         *   minimumHeight : 20000.0,
+         *   maximumHeight : 10000.0
+         * });
+         * var geometry = Cesium.WallGeometry.createGeometry(wall);
+         *
+         * @see WallGeometry#createGeometry
+         */
+        WallGeometry.fromConstantHeights = function(options) {
+            options = when.defaultValue(options, when.defaultValue.EMPTY_OBJECT);
+            var positions = options.positions;
+
+            //>>includeStart('debug', pragmas.debug);
+            if (!when.defined(positions)) {
+                throw new Check.DeveloperError('options.positions is required.');
+            }
+            //>>includeEnd('debug');
+
+            var minHeights;
+            var maxHeights;
+
+            var min = options.minimumHeight;
+            var max = options.maximumHeight;
+
+            var doMin = when.defined(min);
+            var doMax = when.defined(max);
+            if (doMin || doMax) {
+                var length = positions.length;
+                minHeights = (doMin) ? new Array(length) : undefined;
+                maxHeights = (doMax) ? new Array(length) : undefined;
+
+                for (var i = 0; i < length; ++i) {
+                    if (doMin) {
+                        minHeights[i] = min;
+                    }
+
+                    if (doMax) {
+                        maxHeights[i] = max;
+                    }
+                }
+            }
+
+            var newOptions = {
+                positions : positions,
+                maximumHeights : maxHeights,
+                minimumHeights : minHeights,
+                ellipsoid : options.ellipsoid,
+                vertexFormat : options.vertexFormat
+            };
+            return new WallGeometry(newOptions);
+        };
+
+        /**
+         * Computes the geometric representation of a wall, including its vertices, indices, and a bounding sphere.
+         *
+         * @param {WallGeometry} wallGeometry A description of the wall.
+         * @returns {Geometry|undefined} The computed vertices and indices.
+         */
+        WallGeometry.createGeometry = function(wallGeometry) {
+            var wallPositions = wallGeometry._positions;
+            var minimumHeights = wallGeometry._minimumHeights;
+            var maximumHeights = wallGeometry._maximumHeights;
+            var vertexFormat = wallGeometry._vertexFormat;
+            var granularity = wallGeometry._granularity;
+            var ellipsoid = wallGeometry._ellipsoid;
+
+            var pos = WallGeometryLibrary.WallGeometryLibrary.computePositions(ellipsoid, wallPositions, maximumHeights, minimumHeights, granularity, true);
+            if (!when.defined(pos)) {
+                return;
+            }
+
+            var bottomPositions = pos.bottomPositions;
+            var topPositions = pos.topPositions;
+            var numCorners = pos.numCorners;
+
+            var length = topPositions.length;
+            var size = length * 2;
+
+            var positions = vertexFormat.position ? new Float64Array(size) : undefined;
+            var normals = vertexFormat.normal ? new Float32Array(size) : undefined;
+            var tangents = vertexFormat.tangent ? new Float32Array(size) : undefined;
+            var bitangents = vertexFormat.bitangent ? new Float32Array(size) : undefined;
+            var textureCoordinates = vertexFormat.st ? new Float32Array(size / 3 * 2) : undefined;
+
+            var positionIndex = 0;
+            var normalIndex = 0;
+            var bitangentIndex = 0;
+            var tangentIndex = 0;
+            var stIndex = 0;
+
+            // add lower and upper points one after the other, lower
+            // points being even and upper points being odd
+            var normal = scratchNormal;
+            var tangent = scratchTangent;
+            var bitangent = scratchBitangent;
+            var recomputeNormal = true;
+            length /= 3;
+            var i;
+            var s = 0;
+            var ds = 1/(length - wallPositions.length + 1);
+            for (i = 0; i < length; ++i) {
+                var i3 = i * 3;
+                var topPosition = Cartesian3.Cartesian3.fromArray(topPositions, i3, scratchCartesian3Position1);
+                var bottomPosition = Cartesian3.Cartesian3.fromArray(bottomPositions, i3, scratchCartesian3Position2);
+                if (vertexFormat.position) {
+                    // insert the lower point
+                    positions[positionIndex++] = bottomPosition.x;
+                    positions[positionIndex++] = bottomPosition.y;
+                    positions[positionIndex++] = bottomPosition.z;
+
+                    // insert the upper point
+                    positions[positionIndex++] = topPosition.x;
+                    positions[positionIndex++] = topPosition.y;
+                    positions[positionIndex++] = topPosition.z;
+                }
+
+                if (vertexFormat.st) {
+                    textureCoordinates[stIndex++] = s;
+                    textureCoordinates[stIndex++] = 0.0;
+
+                    textureCoordinates[stIndex++] = s;
+                    textureCoordinates[stIndex++] = 1.0;
+                }
+
+                if (vertexFormat.normal || vertexFormat.tangent || vertexFormat.bitangent) {
+                    var nextPosition;
+                    var nextTop = Cartesian3.Cartesian3.clone(Cartesian3.Cartesian3.ZERO, scratchCartesian3Position5);
+                    var groundPosition = ellipsoid.scaleToGeodeticSurface(Cartesian3.Cartesian3.fromArray(topPositions, i3, scratchCartesian3Position2), scratchCartesian3Position2);
+                    if (i + 1 < length) {
+                        nextPosition = ellipsoid.scaleToGeodeticSurface(Cartesian3.Cartesian3.fromArray(topPositions, i3 + 3, scratchCartesian3Position3), scratchCartesian3Position3);
+                        nextTop = Cartesian3.Cartesian3.fromArray(topPositions, i3 + 3, scratchCartesian3Position5);
+                    }
+
+                    if (recomputeNormal) {
+                        var scalednextPosition = Cartesian3.Cartesian3.subtract(nextTop, topPosition, scratchCartesian3Position4);
+                        var scaledGroundPosition = Cartesian3.Cartesian3.subtract(groundPosition, topPosition, scratchCartesian3Position1);
+                        normal = Cartesian3.Cartesian3.normalize(Cartesian3.Cartesian3.cross(scaledGroundPosition, scalednextPosition, normal), normal);
+                        recomputeNormal = false;
+                    }
+
+                    if (Cartesian3.Cartesian3.equalsEpsilon(nextPosition, groundPosition, Cartesian3.CesiumMath.EPSILON10)) {
+                        recomputeNormal = true;
+                    } else {
+                        s += ds;
+                        if (vertexFormat.tangent) {
+                            tangent = Cartesian3.Cartesian3.normalize(Cartesian3.Cartesian3.subtract(nextPosition, groundPosition, tangent), tangent);
+                        }
+                        if (vertexFormat.bitangent) {
+                            bitangent = Cartesian3.Cartesian3.normalize(Cartesian3.Cartesian3.cross(normal, tangent, bitangent), bitangent);
+                        }
+                    }
+
+                    if (vertexFormat.normal) {
+                        normals[normalIndex++] = normal.x;
+                        normals[normalIndex++] = normal.y;
+                        normals[normalIndex++] = normal.z;
+
+                        normals[normalIndex++] = normal.x;
+                        normals[normalIndex++] = normal.y;
+                        normals[normalIndex++] = normal.z;
+                    }
+
+                    if (vertexFormat.tangent) {
+                        tangents[tangentIndex++] = tangent.x;
+                        tangents[tangentIndex++] = tangent.y;
+                        tangents[tangentIndex++] = tangent.z;
+
+                        tangents[tangentIndex++] = tangent.x;
+                        tangents[tangentIndex++] = tangent.y;
+                        tangents[tangentIndex++] = tangent.z;
+                    }
+
+                    if (vertexFormat.bitangent) {
+                        bitangents[bitangentIndex++] = bitangent.x;
+                        bitangents[bitangentIndex++] = bitangent.y;
+                        bitangents[bitangentIndex++] = bitangent.z;
+
+                        bitangents[bitangentIndex++] = bitangent.x;
+                        bitangents[bitangentIndex++] = bitangent.y;
+                        bitangents[bitangentIndex++] = bitangent.z;
+                    }
+                }
+            }
+
+            var attributes = new GeometryAttributes.GeometryAttributes();
+
+            if (vertexFormat.position) {
+                attributes.position = new GeometryAttribute.GeometryAttribute({
+                    componentDatatype : ComponentDatatype.ComponentDatatype.DOUBLE,
+                    componentsPerAttribute : 3,
+                    values : positions
+                });
+            }
+
+            if (vertexFormat.normal) {
+                attributes.normal = new GeometryAttribute.GeometryAttribute({
+                    componentDatatype : ComponentDatatype.ComponentDatatype.FLOAT,
+                    componentsPerAttribute : 3,
+                    values : normals
+                });
+            }
+
+            if (vertexFormat.tangent) {
+                attributes.tangent = new GeometryAttribute.GeometryAttribute({
+                    componentDatatype : ComponentDatatype.ComponentDatatype.FLOAT,
+                    componentsPerAttribute : 3,
+                    values : tangents
+                });
+            }
+
+            if (vertexFormat.bitangent) {
+                attributes.bitangent = new GeometryAttribute.GeometryAttribute({
+                    componentDatatype : ComponentDatatype.ComponentDatatype.FLOAT,
+                    componentsPerAttribute : 3,
+                    values : bitangents
+                });
+            }
+
+            if (vertexFormat.st) {
+                attributes.st = new GeometryAttribute.GeometryAttribute({
+                    componentDatatype : ComponentDatatype.ComponentDatatype.FLOAT,
+                    componentsPerAttribute : 2,
+                    values : textureCoordinates
+                });
+            }
+
+            // prepare the side walls, two triangles for each wall
+            //
+            //    A (i+1)  B (i+3) E
+            //    +--------+-------+
+            //    |      / |      /|    triangles:  A C B
+            //    |     /  |     / |                B C D
+            //    |    /   |    /  |
+            //    |   /    |   /   |
+            //    |  /     |  /    |
+            //    | /      | /     |
+            //    +--------+-------+
+            //    C (i)    D (i+2) F
+            //
+
+            var numVertices = size / 3;
+            size -= 6 * (numCorners + 1);
+            var indices = IndexDatatype.IndexDatatype.createTypedArray(numVertices, size);
+
+            var edgeIndex = 0;
+            for (i = 0; i < numVertices - 2; i += 2) {
+                var LL = i;
+                var LR = i + 2;
+                var pl = Cartesian3.Cartesian3.fromArray(positions, LL * 3, scratchCartesian3Position1);
+                var pr = Cartesian3.Cartesian3.fromArray(positions, LR * 3, scratchCartesian3Position2);
+                if (Cartesian3.Cartesian3.equalsEpsilon(pl, pr, Cartesian3.CesiumMath.EPSILON10)) {
+                    continue;
+                }
+                var UL = i + 1;
+                var UR = i + 3;
+
+                indices[edgeIndex++] = UL;
+                indices[edgeIndex++] = LL;
+                indices[edgeIndex++] = UR;
+                indices[edgeIndex++] = UR;
+                indices[edgeIndex++] = LL;
+                indices[edgeIndex++] = LR;
+            }
+
+            return new GeometryAttribute.Geometry({
+                attributes : attributes,
+                indices : indices,
+                primitiveType : PrimitiveType.PrimitiveType.TRIANGLES,
+                boundingSphere : new Transforms.BoundingSphere.fromVertices(positions)
+            });
+        };
+
+    function createWallGeometry(wallGeometry, offset) {
+            if (when.defined(offset)) {
+                wallGeometry = WallGeometry.unpack(wallGeometry, offset);
+            }
+            wallGeometry._ellipsoid = Ellipsoid.Ellipsoid.clone(wallGeometry._ellipsoid);
+            return WallGeometry.createGeometry(wallGeometry);
+        }
+
+    return createWallGeometry;
+
+});
+//# sourceMappingURL=createWallGeometry.js.map

@@ -1,7 +1,14 @@
 <template>
   <div class="tableBox">
     <div class="leftPart">
-      <BIMLUBAN />
+       <div class="qiehuanPosition">
+    <RadioGroup v-model="type"  @on-change="onChangeType">
+        <Radio label="2">广联达</Radio>
+        <Radio label="1">鲁班</Radio>
+    </RadioGroup>
+  </div>
+       <BIMLUBAN v-if="type==1"/>
+       <BIMFACE  v-if="type==2"/>
       <div class="moduleB">
         <div style="width:100%;height:100%">
           <Bar1 class="container1" type="InstrumentPanel" :dataObj="data1" v-if="data1.valueX" />
@@ -92,6 +99,7 @@ import Bar2 from "@/view/components/Bar/Bar2";
 import Bar3 from "@/view/components/Bar/Bar3";
 import Bar4 from "@/view/components/Bar/Bar4";
 import BIMLUBAN from "@/components/BIMLUBAN/index";
+import BIMFACE from "@/components/BIMFACE/index";
 import dataTotal from "./exportData";
 export default {
   components: {
@@ -99,7 +107,8 @@ export default {
     Bar2,
     Bar3,
     Bar4,
-    BIMLUBAN
+    BIMLUBAN,
+    BIMFACE
   },
   data() {
     return {
@@ -111,8 +120,14 @@ export default {
       data6: dataTotal.data6,
       data7: dataTotal.data7,
       data8: dataTotal.data8,
-      ContentHeight: "100%"
+      ContentHeight: "100%",
+      type: localStorage.getItem('type')||"2"
     };
+  },  
+  methods: {
+        onChangeType(type){
+      localStorage.setItem('type',type)
+    }
   }
 };
 </script>
@@ -153,5 +168,11 @@ export default {
 .partBot {
   width: 100%;
   height: 40%;
+}
+.qiehuanPosition{
+  position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 999;
 }
 </style>

@@ -1,7 +1,7 @@
 /**
- * Cesium - https://github.com/AnalyticalGraphicsInc/cesium
+ * Cesium - https://github.com/CesiumGS/cesium
  *
- * Copyright 2011-2017 Cesium Contributors
+ * Copyright 2011-2020 Cesium Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,75 @@
  * Columbus View (Pat. Pend.)
  *
  * Portions licensed separately.
- * See https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md for full licensing details.
+ * See https://github.com/CesiumGS/cesium/blob/master/LICENSE.md for full licensing details.
  */
-define(["./when-4ca4e419","./Check-430b3551","./defineProperties-163ddb68","./Cartesian3-32451e63","./Ellipsoid-d2aa3b12","./Cartesian2-f49a1383","./AttributeCompression-7809eba4","./createTaskProcessorWorker"],(function(a,e,r,t,n,i,s,o){"use strict";var c=new n.Cartographic,u=new t.Cartesian3,p=new i.Rectangle,l=new n.Ellipsoid,d={min:void 0,max:void 0};return o((function(a,e){var o=new Uint16Array(a.positions);!function(a){a=new Float64Array(a);var e=0;d.min=a[e++],d.max=a[e++],i.Rectangle.unpack(a,e,p),e+=i.Rectangle.packedLength,n.Ellipsoid.unpack(a,e,l)}(a.packedBuffer);var f=p,h=l,C=d.min,m=d.max,b=o.length/3,g=o.subarray(0,b),w=o.subarray(b,2*b),k=o.subarray(2*b,3*b);s.AttributeCompression.zigZagDeltaDecode(g,w,k);for(var v=new Float64Array(o.length),y=0;y<b;++y){var A=g[y],R=w[y],x=k[y],E=r.CesiumMath.lerp(f.west,f.east,A/32767),M=r.CesiumMath.lerp(f.south,f.north,R/32767),D=r.CesiumMath.lerp(C,m,x/32767),F=n.Cartographic.fromRadians(E,M,D,c),P=h.cartographicToCartesian(F,u);t.Cartesian3.pack(P,v,3*y)}return e.push(v.buffer),{positions:v.buffer}}))}));
+
+define(['./when-7ef6387a', './Check-ed6a1804', './Cartesian3-18c04df5', './Ellipsoid-f29f901d', './Cartesian2-e5f465dc', './AttributeCompression-414035f7', './createTaskProcessorWorker'], function (when, Check, Cartesian3, Ellipsoid, Cartesian2, AttributeCompression, createTaskProcessorWorker) { 'use strict';
+
+    var maxShort = 32767;
+
+        var scratchBVCartographic = new Ellipsoid.Cartographic();
+        var scratchEncodedPosition = new Cartesian3.Cartesian3();
+
+        var scratchRectangle = new Cartesian2.Rectangle();
+        var scratchEllipsoid = new Ellipsoid.Ellipsoid();
+        var scratchMinMaxHeights = {
+            min : undefined,
+            max : undefined
+        };
+
+        function unpackBuffer(packedBuffer) {
+            packedBuffer = new Float64Array(packedBuffer);
+
+            var offset = 0;
+            scratchMinMaxHeights.min = packedBuffer[offset++];
+            scratchMinMaxHeights.max = packedBuffer[offset++];
+
+            Cartesian2.Rectangle.unpack(packedBuffer, offset, scratchRectangle);
+            offset += Cartesian2.Rectangle.packedLength;
+
+            Ellipsoid.Ellipsoid.unpack(packedBuffer, offset, scratchEllipsoid);
+        }
+
+        function createVectorTilePoints(parameters, transferableObjects) {
+            var positions = new Uint16Array(parameters.positions);
+
+            unpackBuffer(parameters.packedBuffer);
+            var rectangle = scratchRectangle;
+            var ellipsoid = scratchEllipsoid;
+            var minimumHeight = scratchMinMaxHeights.min;
+            var maximumHeight = scratchMinMaxHeights.max;
+
+            var positionsLength = positions.length / 3;
+            var uBuffer = positions.subarray(0, positionsLength);
+            var vBuffer = positions.subarray(positionsLength, 2 * positionsLength);
+            var heightBuffer = positions.subarray(2 * positionsLength, 3 * positionsLength);
+            AttributeCompression.AttributeCompression.zigZagDeltaDecode(uBuffer, vBuffer, heightBuffer);
+
+            var decoded = new Float64Array(positions.length);
+            for (var i = 0; i < positionsLength; ++i) {
+                var u = uBuffer[i];
+                var v = vBuffer[i];
+                var h = heightBuffer[i];
+
+                var lon = Cartesian3.CesiumMath.lerp(rectangle.west, rectangle.east, u / maxShort);
+                var lat = Cartesian3.CesiumMath.lerp(rectangle.south, rectangle.north, v / maxShort);
+                var alt = Cartesian3.CesiumMath.lerp(minimumHeight, maximumHeight, h / maxShort);
+
+                var cartographic = Ellipsoid.Cartographic.fromRadians(lon, lat, alt, scratchBVCartographic);
+                var decodedPosition = ellipsoid.cartographicToCartesian(cartographic, scratchEncodedPosition);
+                Cartesian3.Cartesian3.pack(decodedPosition, decoded, i * 3);
+            }
+
+            transferableObjects.push(decoded.buffer);
+
+            return {
+                positions : decoded.buffer
+            };
+        }
+    var createVectorTilePoints$1 = createTaskProcessorWorker(createVectorTilePoints);
+
+    return createVectorTilePoints$1;
+
+});
+//# sourceMappingURL=createVectorTilePoints.js.map

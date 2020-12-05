@@ -72,6 +72,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       new CopyWebpackPlugin([{ from: path.join(motorSource, 'Widgets'), to: path.join(motorDist, 'Widgets')}]),
       new CopyWebpackPlugin([{ from: path.join(motorSource, 'ThirdParty'), to: path.join(motorDist, 'ThirdParty') }]),
       new CopyWebpackPlugin([{ from: path.join(motorSource, 'wasm'), to: path.join(motorDist, 'wasm') }]),
+      new CopyWebpackPlugin([{ from: path.join(motorSource, 'model'), to: path.join(motorDist, 'model') }]),
       /**设置全局变量，存放静态资源目录路径**/
       new webpack.DefinePlugin({
           MOTOR_BASE_URL: JSON.stringify(motorDist)

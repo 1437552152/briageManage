@@ -2,12 +2,20 @@
  * @Description: 
  * @Author: yfye
  * @Date: 2020-06-06 02:39:00
- * @LastEditTime: 2020-12-04 23:14:37
+ * @LastEditTime: 2020-12-05 14:29:56
+ * @LastEditors: yfye
+-->
+<!--*
+ * @Description: 
+ * @Author: yfye
+ * @Date: 2020-06-06 02:39:00
+ * @LastEditTime: 2020-12-05 14:16:42
  * @LastEditors: yfye
 -->
 <template>
   <div class="tableBox">
-     <BIMInfo />   
+       <BIMLUBAN v-if="type==1"/>
+       <BIMFACE  v-if="type==2" flag=2 />
       <div class="boxStyle"></div>
       <div class="titleTotal">
       <div class="title">动挠度分析<img src="../../../../assets/images/dashed.png"></div></div>   
@@ -18,6 +26,7 @@
 <script>
 import { exportFileService } from '@/view/utils/myFetch';
 import BIMInfo from "@/components/BIMInfo/index";
+import BIMFACE from "@/components/BIMFACE/index";
 import dataTotal from "./exportData";
 export default {
   data () {
@@ -27,12 +36,12 @@ export default {
       },
       bridgeId: this.$route.query.bridgeId,
       columns:dataTotal.data,
-      
+      type:2,
       data: []
     }
   },
  components: {
-    BIMInfo
+    BIMInfo,BIMFACE
   },
   methods: {
   }

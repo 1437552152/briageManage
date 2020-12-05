@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: yfye
  * @Date: 2020-12-02 20:35:02
- * @LastEditTime: 2020-12-03 23:13:33
+ * @LastEditTime: 2020-12-05 11:17:53
  * @LastEditors: yfye
 -->
 <template>
@@ -16,61 +16,50 @@ export default {
   name: "HelloWorld",
   data() {
     return {
-      viewToken: "10c649e8832743119d856e00ff9aea0e",
-      viewer2D: "",
-      app: "",
-      viewLoaded: false,
-      drawingFrame: null,
-      drawingCount: null
+     viewer3D:null,
+     app:null,
+     viewToken:'9f8850874f5d4cada47e9700c4e0ad95',
+
     };
   },
   mounted() {
-    var loaderConfig = new BimfaceSDKLoaderConfig();
-    loaderConfig.viewToken = this.viewToken;
-    BimfaceSDKLoader.load(
-      loaderConfig,
-      this.successCallback,
-      this.failureCallback
-    );
+        var options = new BimfaceSDKLoaderConfig();
+        options.viewToken = this.viewToken;
+        BimfaceSDKLoader.load(options, this.successCallback, this.failureCallback);
   },
   methods: {
     failureCallback(error) {
       console.log(error);
     },
     successCallback(viewMetaData) {
-      var dom4Show = document.getElementById("domId");
-      // 设置WebApplicationDrawing的配置项
-      var webAppConfig = new Glodon.Bimface.Application.WebApplicationDrawingConfig();
-      webAppConfig.domElement = dom4Show;
-      // 创建WebApplicationDrawing，用以显示模型
-      this.app = new Glodon.Bimface.Application.WebApplicationDrawing(
-        webAppConfig
-      );
-      this.app.load(this.viewToken);
-      this.viewer2D = this.app.getViewer();
-      // 添加视口变化的监听事件
-      this.viewer2D.addEventListener(
-        Glodon.Bimface.Viewer.ViewerDrawingEvent.Loaded,
-        function(data) {
-          window.onresize = function() {
-            this.viewer2D.resize(
-              document.documentElement.clientWidth,
-              document.documentElement.clientHeight - 40
-            );
-          };
-          this.viewLoaded = true;
-          // 获取拆图结果
-          if (!drawingCount) {
-            this.viewer2D.getDrawingFrame(function(data) {
-              this.drawingFrame = data.data[0].frames;
-              this.drawingCount = drawingFrame.length;
-            });
-          }
-        }
-      );
-    }
+       const that=this;
+       if (viewMetaData.viewType == "3DView") {
+               // 获取DOM元素
+                var dom4Show = document.getElementById('domId');
+                var webAppConfig = new Glodon.Bimface.Application.WebApplication3DConfig();
+                webAppConfig.domElement = dom4Show;
+                // 创建WebApplication
+                that.app = new Glodon.Bimface.Application.WebApplication3D(webAppConfig);
+                // 添加待显示的模型
+                that.app.addView(that.viewToken);
+                // 从WebApplication获取viewer3D对象
+                that.viewer3D = that.app.getViewer();
+                // 监听添加view完成的事件
+                that.viewer3D.addEventListener(Glodon.Bimface.Viewer.Viewer3DEvent.ViewAdded, function () {
+
+                    // 调用viewer3D对象的Method，可以继续扩展功能
+                    //自适应屏幕大小
+                    window.onresize = function () {
+                        viewer3D.resize(document.documentElement.clientWidth, document.documentElement
+                            .clientHeight - 40);
+                    }
+                    // 渲染3D模型
+                    that.viewer3D.render();
+                });
+            }
   }
-};
+}
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
