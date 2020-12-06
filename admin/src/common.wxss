@@ -253,4 +253,10 @@
 .qiehuanPosition {
   text-align: center;
   margin-top: 10px;
+  position: sticky;
+  top: 10px;
+  z-index: 999;
+}
+.cesium-widget canvas {
+  outline: none;
 }

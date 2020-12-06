@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: yfye
  * @Date: 2020-12-02 20:35:02
- * @LastEditTime: 2020-12-05 13:52:38
+ * @LastEditTime: 2020-12-06 23:22:10
  * @LastEditors: yfye
 -->
 <template>
@@ -18,13 +18,12 @@ export default {
     return {
      viewer3D:null,
      app:null,
-     viewToken:'9f8850874f5d4cada47e9700c4e0ad95',
+     viewToken:localStorage.getItem("viewToken")||'9f8850874f5d4cada47e9700c4e0ad95',
 
     };
   },
   props: {
     flag: {
-        type: Number, 
         default:1
     }
 },
@@ -60,7 +59,7 @@ export default {
                     // 调用viewer3D对象的Method，可以继续扩展功能
                     //自适应屏幕大小
                     window.onresize = function () {
-                        viewer3D.resize(document.documentElement.clientWidth, document.documentElement
+                        that.viewer3D.resize(document.documentElement.clientWidth, document.documentElement
                             .clientHeight - 40);
                     }
                     // 渲染3D模型

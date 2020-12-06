@@ -10,10 +10,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-//motor在源码库中的位置
-const motorSource = `./library`;
-//打包后motor静态资源存放的位置
-const motorDist = 'motor';
 const env = require('../config/prod.env')
 
 const webpackConfig = merge(baseWebpackConfig, {
@@ -86,27 +82,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       async: 'vendor-async',
       children: true,
       minChunks: 3
-    }),
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, '../static'),
-        to: config.build.assetsSubDirectory,
-        ignore: ['.*']
-      }
-    ]), 
-     /**复制motorSource中的静态资源到打包后根目录的motor文件夹下**/
-     new CopyWebpackPlugin([{ from: path.join(motorSource, 'Workers'), to: path.join(motorDist, 'Workers') }]),
-     new CopyWebpackPlugin([{ from: path.join(motorSource, 'images'), to: path.join(motorDist, 'images') }]),
-     new CopyWebpackPlugin([{ from: path.join(motorSource, 'environmentMap'), to: path.join(motorDist, 'environmentMap') }]),
-     new CopyWebpackPlugin([{ from: path.join(motorSource, 'Assets'), to: path.join(motorDist, 'Assets') }]),
-     new CopyWebpackPlugin([{ from: path.join(motorSource, 'Widgets'), to: path.join(motorDist, 'Widgets')}]),
-     new CopyWebpackPlugin([{ from: path.join(motorSource, 'ThirdParty'), to: path.join(motorDist, 'ThirdParty') }]),
-     new CopyWebpackPlugin([{ from: path.join(motorSource, 'wasm'), to: path.join(motorDist, 'wasm') }]),
-     new CopyWebpackPlugin([{ from: path.join(motorSource, 'model'), to: path.join(motorDist, 'model') }]),
-     /**设置全局变量，存放静态资源目录路径**/
-     new webpack.DefinePlugin({
-         MOTOR_BASE_URL: JSON.stringify(motorDist)
-     }),
+    })
   ]
 })
 

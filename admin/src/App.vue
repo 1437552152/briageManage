@@ -19,11 +19,13 @@ export default {
         if (val.matched[0].path === "/ChildSystem") {
           if (val.query.bridgeId) {
             window.localStorage.setItem("bridgeId", val.query.bridgeId);
+            window.localStorage.setItem("viewToken", val.query.viewToken);
           } else {
             this.$router.push({
               path: "/ParentSystem/home",
             });
             localStorage.clear("bridgeId");
+              localStorage.clear("viewToken");
           }
         }
       },

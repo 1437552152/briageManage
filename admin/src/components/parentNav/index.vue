@@ -26,13 +26,13 @@
             class="formSearch"
           />
           <li
-            @click="goChildSystem(item.id)"
+            @click="goChildSystem(item)"
             v-for="(item, index) in arr"
             :key="index"
           >
             <router-link
               :to="
-                `/ChildSystem/childhome?bridgeId=${item.id}`
+                `/ChildSystem/childhome?bridgeId=${item.id}&viewToken=${item.viewToken}`
               "
             >
               {{ item.name }}</router-link
@@ -140,8 +140,9 @@ export default {
         path: "/ParentSystem/home"
       });
     },
-    goChildSystem(id) {
-      window.localStorage.setItem("bridgeId", id);
+    goChildSystem(params) {
+      window.localStorage.setItem("bridgeId", params.id);
+      window.localStorage.setItem("viewToken", params.viewToken||'9f8850874f5d4cada47e9700c4e0ad95');
     },
     newValue() {
       console.log(this.formLeft.input);

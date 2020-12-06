@@ -2,7 +2,7 @@
   <div class="left-nav" :style="{ left: letName }" @mouseleave="handleLeave">
     <ul>
       <router-link
-        :to="`/ChildSystem/childhome?bridgeId=${bridgeId}`"
+        :to="`/ChildSystem/childhome?bridgeId=${bridgeId}&viewToken=${viewToken}`"
       >
         <li class="deal">
           首页
@@ -14,13 +14,13 @@
         <ul class="protact">
           <router-link
             :to="
-              `/ChildSystem/brigetotalInfo?bridgeId=${bridgeId}`
+              `/ChildSystem/brigetotalInfo?bridgeId=${bridgeId}&viewToken=${viewToken}`
             "
           >
             <li>总体信息</li></router-link
           >
           <router-link
-            :to="`/ChildSystem/buildInfo?bridgeId=${bridgeId}`"
+            :to="`/ChildSystem/buildInfo?bridgeId=${bridgeId}&viewToken=${viewToken}`"
           >
             <li>构件信息</li></router-link
           >
@@ -31,20 +31,20 @@
         <img src="../../assets/images/right.png" />
         <ul class="protact">
           <router-link
-            :to="`/ChildSystem/status?bridgeId=${bridgeId}`"
+            :to="`/ChildSystem/status?bridgeId=${bridgeId}&viewToken=${viewToken}`"
             ><li>布置及状态</li></router-link
           >
           <router-link
-            :to="`/ChildSystem/static?bridgeId=${bridgeId}`"
+            :to="`/ChildSystem/static?bridgeId=${bridgeId}&viewToken=${viewToken}`"
           >
             <li>静挠度</li></router-link
           >
           <router-link
-            :to="`/ChildSystem/move?bridgeId=${bridgeId}`"
+            :to="`/ChildSystem/move?bridgeId=${bridgeId}&viewToken=${viewToken}`"
             ><li>动挠度</li></router-link
           >
           <router-link
-            :to="`/ChildSystem/crack?bridgeId=${bridgeId}`"
+            :to="`/ChildSystem/crack?bridgeId=${bridgeId}&viewToken=${viewToken}`"
           >
             <li>裂缝</li></router-link
           >
@@ -55,19 +55,19 @@
         <img src="../../assets/images/right.png" />
         <ul class="protact">
           <router-link
-            :to="`/ChildSystem/totalInfo?bridgeId=${bridgeId}`"
+            :to="`/ChildSystem/totalInfo?bridgeId=${bridgeId}&viewToken=${viewToken}`"
           >
             <li>总体信息</li></router-link
           >
           <router-link
             :to="
-              `/ChildSystem/patrolCheckInfo?bridgeId=${bridgeId}`
+              `/ChildSystem/patrolCheckInfo?bridgeId=${bridgeId}&viewToken=${viewToken}`
             "
             ><li>巡检信息</li></router-link
           >
           <router-link
             :to="
-              `/ChildSystem/periodicTestInfo?bridgeId=${bridgeId}`
+              `/ChildSystem/periodicTestInfo?bridgeId=${bridgeId}&viewToken=${viewToken}`
             "
           >
             <li>
@@ -82,19 +82,19 @@
         <ul class="protact">
           <router-link
             :to="
-              `/ChildSystem/disturbance?bridgeId=${bridgeId}`
+              `/ChildSystem/disturbance?bridgeId=${bridgeId}&viewToken=${viewToken}`
             "
             ><li>动挠度分析</li></router-link
           >
           <router-link
             :to="
-              `/ChildSystem/vehicleLoad?bridgeId=${bridgeId}`
+              `/ChildSystem/vehicleLoad?bridgeId=${bridgeId}&viewToken=${viewToken}`
             "
             ><li>车辆荷载分析</li></router-link
           >
           <router-link
             :to="
-              `/ChildSystem/structuralStress?bridgeId=${bridgeId}`
+              `/ChildSystem/structuralStress?bridgeId=${bridgeId}&viewToken=${viewToken}`
             "
             ><li>
               结构应力分析
@@ -102,14 +102,14 @@
           >
           <router-link
             :to="
-              `/ChildSystem/development?bridgeId=${bridgeId}`
+              `/ChildSystem/development?bridgeId=${bridgeId}&viewToken=${viewToken}`
             "
           >
             <li>裂缝发展分析</li></router-link
           >
           <router-link
             :to="
-              `/ChildSystem/acceleration?bridgeId=${bridgeId}`
+              `/ChildSystem/acceleration?bridgeId=${bridgeId}&viewToken=${viewToken}`
             "
           >
             <li>
@@ -118,14 +118,14 @@
           >
           <router-link
             :to="
-              `/ChildSystem/displacement?bridgeId=${bridgeId}`
+              `/ChildSystem/displacement?bridgeId=${bridgeId}&viewToken=${viewToken}`
             "
           >
             <li>支座位移分析</li></router-link
           >
           <router-link
             :to="
-              `/ChildSystem/comprehensive?bridgeId=${bridgeId}`
+              `/ChildSystem/comprehensive?bridgeId=${bridgeId}&viewToken=${viewToken}`
             "
           >
             <li>
@@ -140,14 +140,14 @@
         <ul class="protact">
           <router-link
             :to="
-              `/ChildSystem/evaluation?bridgeId=${bridgeId}`
+              `/ChildSystem/evaluation?bridgeId=${bridgeId}&viewToken=${viewToken}`
             "
             ><li>
               基于监测数据结构性能评估
             </li></router-link
           >
           <router-link
-            :to="`/ChildSystem/capacity?bridgeId=${bridgeId}`"
+            :to="`/ChildSystem/capacity?bridgeId=${bridgeId}&viewToken=${viewToken}`"
           >
             <li>
               基于定期检测结构承载力评估
@@ -155,7 +155,7 @@
           >
           <router-link
             :to="
-              `/ChildSystem/structures?bridgeId=${bridgeId}`
+              `/ChildSystem/structures?bridgeId=${bridgeId}&viewToken=${viewToken}`
             "
           >
             <li>
@@ -163,7 +163,7 @@
             </li></router-link
           >
           <router-link
-            :to="`/ChildSystem/report?bridgeId=${bridgeId}`"
+            :to="`/ChildSystem/report?bridgeId=${bridgeId}&viewToken=${viewToken}`"
           >
             <li>
               评估报告
@@ -208,7 +208,8 @@ export default {
     return {
       letName: "-130px",
       mousePositionLeft: "2px",
-      bridgeId: localStorage.getItem("bridgeId")
+      bridgeId: localStorage.getItem("bridgeId"),
+      viewToken: localStorage.getItem("viewToken")
     };
   },
   methods: {

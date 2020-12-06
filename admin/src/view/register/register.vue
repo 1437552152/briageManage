@@ -2,64 +2,39 @@
  * @Description: 
  * @Author: yfye
  * @Date: 2020-12-02 20:35:02
- * @LastEditTime: 2020-12-05 11:17:53
+ * @LastEditTime: 2020-12-06 22:24:21
  * @LastEditors: yfye
 -->
 <template>
-  <div class="main">
-    <div id="domId"></div>
-  </div>
+  <div id="container" style="width:100%;height:500px"></div>
 </template>
 
 <script>
 export default {
-  name: "HelloWorld",
   data() {
-    return {
-     viewer3D:null,
-     app:null,
-     viewToken:'9f8850874f5d4cada47e9700c4e0ad95',
-
-    };
+    return {};
   },
   mounted() {
-        var options = new BimfaceSDKLoaderConfig();
-        options.viewToken = this.viewToken;
-        BimfaceSDKLoader.load(options, this.successCallback, this.failureCallback);
+    const appid = "a3e0bca8c90c4fa6bce0efac843896ae";
+    const secret = "26181acfaa21d0f9b94d561d86041aba";
+    const projectId = "72142317-1e84-4d64-acb6-2a6de7db9b45";
+    let viewer = new Motor.Viewer({
+      container: "container",
+      viewerMode: Motor.ViewerMode.BIM,
+      secret: secret,
+      appid: appid,
+      antialias: true,
+      taaEnabled: true
+    });
+    viewer.initialize().then(function() {
+      let project = viewer.queryProject(projectId);
+      project.open().then(function(projects) {
+        console.log("加载完成");
+      });
+    });
   },
-  methods: {
-    failureCallback(error) {
-      console.log(error);
-    },
-    successCallback(viewMetaData) {
-       const that=this;
-       if (viewMetaData.viewType == "3DView") {
-               // 获取DOM元素
-                var dom4Show = document.getElementById('domId');
-                var webAppConfig = new Glodon.Bimface.Application.WebApplication3DConfig();
-                webAppConfig.domElement = dom4Show;
-                // 创建WebApplication
-                that.app = new Glodon.Bimface.Application.WebApplication3D(webAppConfig);
-                // 添加待显示的模型
-                that.app.addView(that.viewToken);
-                // 从WebApplication获取viewer3D对象
-                that.viewer3D = that.app.getViewer();
-                // 监听添加view完成的事件
-                that.viewer3D.addEventListener(Glodon.Bimface.Viewer.Viewer3DEvent.ViewAdded, function () {
-
-                    // 调用viewer3D对象的Method，可以继续扩展功能
-                    //自适应屏幕大小
-                    window.onresize = function () {
-                        viewer3D.resize(document.documentElement.clientWidth, document.documentElement
-                            .clientHeight - 40);
-                    }
-                    // 渲染3D模型
-                    that.viewer3D.render();
-                });
-            }
-  }
-}
-}
+  methods: {}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

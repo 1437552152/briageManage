@@ -2,64 +2,48 @@
  * @Description: 
  * @Author: yfye
  * @Date: 2020-12-03 22:05:34
- * @LastEditTime: 2020-12-05 22:20:44
+ * @LastEditTime: 2020-12-06 23:32:31
  * @LastEditors: yfye
 -->
 <template>
-  <div>
-    <div class="moduleRe">
-      <div id="loading">
-        <div
-          class="loading-image"
-          style="background-image:url('http://47.107.180.202:40605/ezgif.com-crop.gif');"
-        >
-          <div class="loadingNuliLoading">正在努力加载中...</div>
-        </div>
-      </div>
-    </div>
     <div class="module">
-      <div id="container" style="height:550px" />
+      <div id="container" style="height:590px" />
     </div>
-  </div>
 </template>
 
 <script>
-import { config } from "@/view/utils/common";
-import Motor from "../../../library/motor";
-Motor.Config.serverUrl = config.bridge.bimServer;
+  const appid = "a3e0bca8c90c4fa6bce0efac843896ae";
+  const secret = "26181acfaa21d0f9b94d561d86041aba";
+  const projectId =localStorage.getItem("bridgeId");
 export default {
   data() {
     return {
       project: null,
-      projectId: null,
-      bridgeId: this.$route.query.bridgeId
+      flag: true,
+      isShowFullscreen:true,
     };
   },
   mounted() {
     const that = this;
-    var projectId = localStorage.getItem("bridgeId");
-    this.projectId = projectId;
     var viewer = new Motor.Viewer({
       container: "container",
       antialias: true,
       viewerMode: Motor.ViewerMode.BIM,
-      appid: config.bridge.motorAppId,
-      secret: config.bridge.motorSecret,
+      appid,
+      secret,
       backgroundImageCss: "url('/assets/images/login-bg.jpg')"
     });
-     
-
-    let project = viewer.queryProject(projectId);
     var currentSelectedComponent,
       selectedComponents = [],
       isolatedComponents = [],
       hiddenComponents = [],
       transparentComponents = [];
-    this.project = project;
+   
     viewer.initialize().then(function() {
       $(".cesium-viewer-fullscreenContainer").css("display", "none");
+        let project = viewer.queryProject(projectId);
+       that.project = project;
       that.drawProject(projectId, true, false);
-
       //设置点选后的回调函数
       function highlightComponent(component, multi = false) {
         //改变构件透明度
@@ -136,11 +120,6 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.moduleRe {
-  position: absolute;
-  width: calc((100% - 70px) / 2);
-  height: 50%;
-}
 #loading {
   display: block;
 }

@@ -1,3 +1,10 @@
+/*
+ * @Description: 
+ * @Author: yfye
+ * @Date: 2020-06-06 02:38:52
+ * @LastEditTime: 2020-12-06 21:11:59
+ * @LastEditors: yfye
+ */
 'use strict'
 const utils = require('./utils')
 const webpack = require('webpack')
@@ -11,12 +18,6 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
-//motor在源码库中的位置
-const motorSource = `./library`;
-//打包后motor静态资源存放的位置
-const motorDist = 'motor';
-
-
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
@@ -56,27 +57,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       filename: 'index.html',
       template: 'index.html',
       inject: true
-    }),
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, '../static'),
-        to: config.dev.assetsSubDirectory,
-        ignore: ['.*']
-      }
-    ]),
-      /**复制motorSource中的静态资源到打包后根目录的motor文件夹下**/
-      new CopyWebpackPlugin([{ from: path.join(motorSource, 'Workers'), to: path.join(motorDist, 'Workers') }]),
-      new CopyWebpackPlugin([{ from: path.join(motorSource, 'images'), to: path.join(motorDist, 'images') }]),
-      new CopyWebpackPlugin([{ from: path.join(motorSource, 'environmentMap'), to: path.join(motorDist, 'environmentMap') }]),
-      new CopyWebpackPlugin([{ from: path.join(motorSource, 'Assets'), to: path.join(motorDist, 'Assets') }]),
-      new CopyWebpackPlugin([{ from: path.join(motorSource, 'Widgets'), to: path.join(motorDist, 'Widgets')}]),
-      new CopyWebpackPlugin([{ from: path.join(motorSource, 'ThirdParty'), to: path.join(motorDist, 'ThirdParty') }]),
-      new CopyWebpackPlugin([{ from: path.join(motorSource, 'wasm'), to: path.join(motorDist, 'wasm') }]),
-      new CopyWebpackPlugin([{ from: path.join(motorSource, 'model'), to: path.join(motorDist, 'model') }]),
-      /**设置全局变量，存放静态资源目录路径**/
-      new webpack.DefinePlugin({
-          MOTOR_BASE_URL: JSON.stringify(motorDist)
-      }),
+    })
   ]
 })
 

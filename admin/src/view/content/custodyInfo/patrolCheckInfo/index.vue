@@ -6,7 +6,7 @@
         <Radio label="1">鲁班</Radio>
     </RadioGroup>
   </div>
-    <BIMInfo v-if="type==1" />
+    <BIMInfo v-if="type==1"  ref="biminfo"/>
     <BIMFACE  v-if="type==2" flag=2 /> 
     <div class="boxStyle"></div>
     <div class="titleTotal">
@@ -170,12 +170,8 @@ export default {
     this.getbridge();
   },
   methods: {
-    dodail(params) {
-      const that = this;
-      this.project.resetComponentsDefaultColor();
-      this.project.setComponentsColor(Motor.Color.GREEN.withAlpha(0.4), [
-        params
-      ]);
+    dodail() {
+      this.$refs.biminfo.sing(params);
     },
     getbridge() {
       let body = {};
@@ -201,7 +197,7 @@ export default {
       });
     },
     rowClick(params) {
-     // this.dodail(params.componentId);
+      this.dodail(params.componentId);
     },
     handleSubmit(name) {
       this.getbridge();

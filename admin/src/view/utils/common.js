@@ -1,4 +1,11 @@
-export const config = {
+/*
+ * @Description: 
+ * @Author: yfye
+ * @Date: 2020-06-06 02:39:01
+ * @LastEditTime: 2020-12-06 21:55:34
+ * @LastEditors: yfye
+ */
+ const config = {
     out:{
         bimServer:"https://open.lubansoft.com/api",
         motorAppId:"d0b3c61c6639434e84900b1fd8d391cb",
@@ -33,4 +40,8 @@ export const config = {
         library_1:"http://localhost:20605/bim/library/motor.js",
         library_2:"https://lbdp.lubansoft.com/reference/motor-web-library/motor.js"
     }
+}
+
+export default {
+    config
 }

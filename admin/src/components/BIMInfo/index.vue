@@ -2,11 +2,11 @@
  * @Description: 
  * @Author: yfye
  * @Date: 2020-12-03 22:05:34
- * @LastEditTime: 2020-12-04 22:16:42
+ * @LastEditTime: 2020-12-06 23:34:25
  * @LastEditors: yfye
 -->
 <template>
-<div>
+<div style="position: sticky;top: 0;z-index: 998;">
  <img src="../../assets/images/big.png" class="fullscreenButton">
     <div id="infoBox" style="display: none;z-index:9999"></div>
     <div id="contextContainer">
@@ -20,13 +20,13 @@
         <li class="li">还原所有</li>
       </ul>
     </div>
-    <div class="moduleRe">
+   <!--  <div class="moduleRe">
        <div id="loading">
           <div class="loading-image" style="background-image:url('http://47.107.180.202:40605/ezgif.com-crop.gif');">
               <div class="loadingNuliLoading">正在努力加载中...</div>
           </div>
         </div>
-    </div>
+    </div> -->
     <div id="container" style="height:500px" />
     <div class="tree_container">
       <ul id="treeDemo" class="ztree"></ul>
@@ -36,42 +36,38 @@
 
 
 <script>
-import { config } from "@/view/utils/common";
-import Motor from "../../../library/motor";
-Motor.Config.serverUrl = config.bridge.bimServer;
-
-
+  const appid = "a3e0bca8c90c4fa6bce0efac843896ae";
+  const secret = "26181acfaa21d0f9b94d561d86041aba";
+  const projectId =localStorage.getItem("bridgeId");
 export default {
   data() {
     return {
-       project: null,
-      projectId: null,
-      viewer:null,
+      project: null,
       flag: true,
-      bridgeId: this.$route.query.bridgeId,
       isShowFullscreen:true,
     };
   },
   mounted() {
     const that = this;
-      var projectId = localStorage.getItem("bridgeId");
-      this.projectId = projectId;
-      var viewer = new Motor.Viewer({
-        container: "container",
-        antialias: true,
-        viewerMode: Motor.ViewerMode.BIM,
-        appid: config.bridge.motorAppId,
-        secret: config.bridge.motorSecret,
-        backgroundImageCss: "url('/assets/images/login-bg.jpg')"
-      });
-      this.viewer=viewer;
-      let project = viewer.queryProject(projectId);
-      var currentSelectedComponent,selectedComponents=[],isolatedComponents=[],hiddenComponents=[],transparentComponents=[];
-      this.project = project;
-      viewer.initialize().then(function() {
-              $(".cesium-viewer-fullscreenContainer").css('display','none')
-        that.drawProject(projectId, true, false);
-
+    var viewer = new Motor.Viewer({
+      container: "container",
+      antialias: true,
+      viewerMode: Motor.ViewerMode.BIM,
+      appid,
+      secret,
+      backgroundImageCss: "url('/assets/images/login-bg.jpg')"
+    });
+    var currentSelectedComponent,
+      selectedComponents = [],
+      isolatedComponents = [],
+      hiddenComponents = [],
+      transparentComponents = [];
+   
+    viewer.initialize().then(function() {
+      $(".cesium-viewer-fullscreenContainer").css("display", "none");
+        let project = viewer.queryProject(projectId);
+       that.project = project;
+      that.drawProject(projectId, true, false);
         //设置点选后的回调函数
          function highlightComponent(component,multi=false){
                 //改变构件透明度
@@ -466,16 +462,18 @@ export default {
         // 动态加载数据
     dynamicloadNodes(treeNode) {
       return Motor.Project.getChildNodesFromTree(treeNode);
+    },
+    sing(params){
+      const that = this;
+      this.project.resetComponentsDefaultColor();
+      this.project.setComponentsColor(Motor.Color.GREEN.withAlpha(0.4), [
+        params
+      ]);
     }
   }
 };
 </script>
 <style lang="less" scoped>
-.moduleRe {
-  position: absolute;
-  width: calc((100% - 70px) / 2);
-  height: 50%;
-}
 #loading {
   display: block;
 }
