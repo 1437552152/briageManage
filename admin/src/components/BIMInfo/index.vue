@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: yfye
  * @Date: 2020-12-03 22:05:34
- * @LastEditTime: 2020-12-06 23:34:25
+ * @LastEditTime: 2020-12-07 00:08:31
  * @LastEditors: yfye
 -->
 <template>
@@ -479,5 +479,8 @@ export default {
 }
 .cesium-viewer-fullscreenContainer {
   display: none;
+}
+#container{
+  top:30px
 }
 </style>
