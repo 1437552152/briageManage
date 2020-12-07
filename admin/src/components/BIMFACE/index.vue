@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: yfye
  * @Date: 2020-12-02 20:35:02
- * @LastEditTime: 2020-12-06 23:22:10
+ * @LastEditTime: 2020-12-07 20:37:27
  * @LastEditors: yfye
 -->
 <template>
@@ -18,13 +18,14 @@ export default {
     return {
      viewer3D:null,
      app:null,
-     viewToken:localStorage.getItem("viewToken")||'9f8850874f5d4cada47e9700c4e0ad95',
+     viewToken:localStorage.getItem("viewToken")||'40a3dfe08363446e8251a797c4762857',
 
     };
   },
   props: {
     flag: {
-        default:1
+      type:String,
+        default:"1"
     }
 },
   mounted() {
@@ -55,7 +56,6 @@ export default {
                  that.viewer3D.setBackgroundColor(color1);
                 // 监听添加view完成的事件
                 that.viewer3D.addEventListener(Glodon.Bimface.Viewer.Viewer3DEvent.ViewAdded, function () {
-
                     // 调用viewer3D对象的Method，可以继续扩展功能
                     //自适应屏幕大小
                     window.onresize = function () {
@@ -64,7 +64,7 @@ export default {
                     }
                     // 渲染3D模型
                     that.viewer3D.render();
-                });
+                }); 
             }
   }
 }

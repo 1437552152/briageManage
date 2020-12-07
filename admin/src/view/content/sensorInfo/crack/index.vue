@@ -2,8 +2,8 @@
   <div class="tableBox">
       <div class="qiehuanPosition">
     <RadioGroup v-model="type"  @on-change="onChangeType">
-        <Radio label="2">广联达</Radio>
         <Radio label="1">鲁班</Radio>
+        <Radio label="2">广联达</Radio>
     </RadioGroup>
   </div>
     <BIMInfo v-if="type==1" />
@@ -82,7 +82,7 @@ export default {
       },
       columns:dataTotal.data1,
       data:dataTotal.data2,
-      type: localStorage.getItem('type')||"2"
+      type: localStorage.getItem('type')||"1"
     };
   },
   methods: {
@@ -91,7 +91,8 @@ export default {
     },
     IconClick() {},
         onChangeType(type){
-      localStorage.setItem('type',type)
+      localStorage.setItem('type',type);
+        this.type=type;
     }
   }
 };

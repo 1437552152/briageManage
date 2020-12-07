@@ -2,11 +2,11 @@
  * @Description: 
  * @Author: yfye
  * @Date: 2020-12-03 22:05:34
- * @LastEditTime: 2020-12-07 00:08:31
+ * @LastEditTime: 2020-12-07 21:36:38
  * @LastEditors: yfye
 -->
 <template>
-<div style="position: sticky;top: 0;z-index: 998;">
+<div style="position: sticky;top: 0;z-index: 101;">
  <img src="../../assets/images/big.png" class="fullscreenButton">
     <div id="infoBox" style="display: none;z-index:9999"></div>
     <div id="contextContainer">

@@ -142,7 +142,7 @@ export default {
     },
     goChildSystem(params) {
       window.localStorage.setItem("bridgeId", params.id);
-      window.localStorage.setItem("viewToken", params.viewToken||'9f8850874f5d4cada47e9700c4e0ad95');
+      window.localStorage.setItem("viewToken", params.viewToken||'40a3dfe08363446e8251a797c4762857');
     },
     newValue() {
       console.log(this.formLeft.input);

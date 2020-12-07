@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Author: yfye
+ * @Date: 2020-06-06 02:39:01
+ * @LastEditTime: 2020-12-07 20:32:37
+ * @LastEditors: yfye
+-->
 <style lang="less">
 @import "./login.less";
 </style>
@@ -35,6 +42,7 @@ export default {
             path:'/ParentSystem/home',
           });
           localStorage.setItem("token",res);
+          localStorage.setItem("type",1);
          }
       }
     ).catch(err => {

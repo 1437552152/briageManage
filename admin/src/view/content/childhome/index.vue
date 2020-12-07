@@ -3,12 +3,12 @@
     <div class="leftPart">
        <div class="qiehuanPosition">
     <RadioGroup v-model="type"  @on-change="onChangeType">
-        <Radio label="2">广联达</Radio>
         <Radio label="1">鲁班</Radio>
+        <Radio label="2">广联达</Radio>
     </RadioGroup>
   </div>
-       <BIMLUBAN v-if="type==1"/>
-       <BIMFACE  v-if="type==2"/>
+       <BIMLUBAN v-if="type=='1'"/>
+       <BIMFACE  v-if="type=='2'"/>
       <div class="moduleB">
         <div style="width:100%;height:100%">
           <Bar1 class="container1" type="InstrumentPanel" :dataObj="data1" v-if="data1.valueX" />
@@ -121,12 +121,13 @@ export default {
       data7: dataTotal.data7,
       data8: dataTotal.data8,
       ContentHeight: "100%",
-      type: localStorage.getItem('type')||"2"
+      type: localStorage.getItem('type')||"1"
     };
   },  
   methods: {
         onChangeType(type){
-      localStorage.setItem('type',type)
+        localStorage.setItem('type',type);
+        this.type=type;
     }
   }
 };
@@ -170,9 +171,11 @@ export default {
   height: 40%;
 }
 .qiehuanPosition{
-  position: absolute;
-    left: 0;
-    right: 0;
-    z-index: 999;
+     text-align: center;
+    margin-top: 10px;
+    top: 10px;
+    z-index: 998;
+    width: 100%;
+    position: absolute;
 }
 </style>
