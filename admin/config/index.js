@@ -20,9 +20,9 @@ module.exports = {
     assetsRoot: path.resolve(__dirname, "../dist"),
     assetsSubDirectory: "static",
     assetsPublicPath: "./",
-    productionSourceMap: true,
+    productionSourceMap: false,
     devtool: "#source-map",
-    productionGzip: false,
+    productionGzip: true,
     productionGzipExtensions: ["js", "css"],
     bundleAnalyzerReport: process.env.npm_config_report
   }
