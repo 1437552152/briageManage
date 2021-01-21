@@ -140,7 +140,6 @@ import { filterParams } from "@/util/commonFilter";
 import BIMInfo from "@/components/BIMInfo/index";
 import BIMFACE from "@/components/BIMFACE/index";
 import dataTotal from "./exportData";
-import moment from "moment";
 export default {
   components: {
     Circles,BIMInfo,BIMFACE

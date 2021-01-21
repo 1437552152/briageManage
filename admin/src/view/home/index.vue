@@ -1,3 +1,10 @@
+<!--
+ * @Author       : yfye
+ * @Date         : 2021-01-21 11:44:59
+ * @LastEditors  : yfye
+ * @LastEditTime : 2021-01-21 13:20:05
+ * @FilePath     : \admin\src\view\home\index.vue
+-->
 <template>
   <div class="contain">
     <vue-seamless-scroll
@@ -60,7 +67,7 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  background: url("../../assets/images/bg.png") no-repeat;
+  background: url("../../assets/images/bg.jpg") no-repeat;
   background-size: 100% 100%;
 }
 .seamless-warp2 {

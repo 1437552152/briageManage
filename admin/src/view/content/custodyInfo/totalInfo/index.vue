@@ -163,7 +163,6 @@ import BIMInfo from "@/components/BIMInfo/index";
 import BIMFACE from "@/components/BIMFACE/index";
 import dataTotal from "./exportData";
 import $ from 'jquery';
-import moment from "moment";
 export default {
   components: {
     Circles,

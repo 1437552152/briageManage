@@ -1,210 +1,177 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Login from "@/view/login/login";
-import Register from "@/view/register/register";
-import Home from "@/view/home/index";
-import ChildHome from "@/view/content/childhome/index";
-import DriveInfo from "@/view/content/driveInfo/index";
-import BrigetotalInfo from "@/view/content/brigeInfo/totalInfo/index";
-import BuildInfo from "@/view/content/brigeInfo/buildInfo/index";
-import Status from "@/view/content/sensorInfo/status/index";
-import Static from "@/view/content/sensorInfo/static/index";
-import Move from "@/view/content/sensorInfo/move/index";
-import Crack from "@/view/content/sensorInfo/crack/index";
-import TotalInfo from "@/view/content/custodyInfo/totalInfo/index";
-import PatrolCheckInfo from "@/view/content/custodyInfo/patrolCheckInfo/index";
-import PeriodicTestInfo from "@/view/content/custodyInfo/periodicTestInfo/index";
-import Disturbance from "@/view/content/analysis/disturbance/index";
-import VehicleLoad from "@/view/content/analysis/vehicleLoad/index";
-import StructuralStress from "@/view/content/analysis/structuralStress/index";
-import Development from "@/view/content/analysis/development/index";
-import Acceleration from "@/view/content/analysis/acceleration/index";
-import Displacement from "@/view/content/analysis/displacement/index";
-import Comprehensive from "@/view/content/analysis/comprehensive/index";
-import Evaluation from "@/view/content/assessment/evaluation/index";
-import Capacity from "@/view/content/assessment/capacity/index";
-import Structures from "@/view/content/assessment/structures/index";
-import Report from "@/view/content/assessment/report/index";
-
-import Staff from "@/view/content/systemInfo/staff/index";
-import Limit from "@/view/content/systemInfo/limit/index";
-import UserGroup from "@/view/content/systemInfo/userGroup/index";
-import Log from "@/view/content/systemInfo/log/index";
-import Main from "@/view/main/main";
-import ParentMain from "@/view/ParentMain/ParentMain";
 Vue.use(Router);
-
 export default new Router({
   routes: [
     {
       path: "/ParentSystem",
-      component: ParentMain,
+      component:(resolve)=>require(["@/view/ParentMain/ParentMain"],resolve),
       children: [
         {
           path: "home",
-          component: Home
+          component: (resolve)=>require(["@/view/home/index"],resolve),
         }
       ]
     },
     {
       path: "/",
-      component: Login,
+      component:(resolve)=>require(["@/view/login/login"],resolve),
       redirect: "/login",
       children: [
         {
           path: "/login",
-          component: Login
+          component: (resolve)=>require(["@/view/login/login"],resolve),
         },
         {
           path: "/register",
-          component: Register
+          component: (resolve)=>require(["@/view/register/register"],resolve),
         }, 
       ]
     },
     {
       path: "/user",
-      component: Register,
+      component:(resolve)=>require(["@/view/register/register"],resolve),
       children: [
         {
           path: "register/",
           name: "register",
-          component: Register
+          component:(resolve)=>require(["@/view/register/register"],resolve),
         }, 
       ]
     },
     {
       path: "/ChildSystem",
-      component: Main,
+      component: (resolve)=>require(["@/view/main/main"],resolve),
       children: [
         {
           path: 'driveInfo/',
           name: "driveInfo",
-          component: DriveInfo
+          component: (resolve)=>require(["@/view/content/driveInfo/index"],resolve)
         },
         {
           path: "childhome/",
           name: "childhome",
-          component: ChildHome
+          component: (resolve)=>require(["@/view/content/childhome/index"],resolve)
         },
         {
           path: "brigetotalInfo/",
           name: "brigetotalInfo",
-          component: BrigetotalInfo
+          component: (resolve)=>require(["@/view/content/brigeInfo/totalInfo/index"],resolve)
         },
         {
           path: "buildInfo/",
           name: "buildInfo",
-          component: BuildInfo
+          component: (resolve)=>require(["@/view/content/brigeInfo/buildInfo/index"],resolve)
         },
         {
           path: "status/",
           name: "status",
-          component: Status
+          component: (resolve)=>require(["@/view/content/sensorInfo/status/index"],resolve)
         },
         {
           path: "static/",
           name: "static",
-          component: Static
+          component:  (resolve)=>require(["@/view/content/sensorInfo/static/index"],resolve)
         },
         {
           path: "move/",
           name: "move",
-          component: Move
+          component: (resolve)=>require(["@/view/content/sensorInfo/move/index"],resolve)
         },
         {
           path: "crack/",
           name: "crack",
-          component: Crack
+          component:(resolve)=>require(["@/view/content/sensorInfo/crack/index"],resolve)
         },
         {
           path: "totalInfo/",
           name: "totalInfo",
-          component: TotalInfo
+          component: (resolve)=>require(["@/view/content/custodyInfo/totalInfo/index"],resolve)
         },
         {
           path: "patrolCheckInfo/",
           name: "patrolCheckInfo",
-          component: PatrolCheckInfo
+          component: (resolve)=>require(["@/view/content/custodyInfo/patrolCheckInfo/index"],resolve)
         },
         {
           path: "periodicTestInfo/",
           name: "periodicTestInfo",
-          component: PeriodicTestInfo
+          component: (resolve)=>require(["@/view/content/custodyInfo/periodicTestInfo/index"],resolve)
         },
         {
           path: "disturbance/",
           name: "disturbance",
-          component: Disturbance
+          component: (resolve)=>require(["@/view/content/analysis/disturbance/index"],resolve)
         },
         {
           path: "vehicleLoad/",
           name: "vehicleLoad",
-          component: VehicleLoad
+          component: (resolve)=>require(["@/view/content/analysis/vehicleLoad/index"],resolve)
         },
         {
           path: "structuralStress/",
           name: "structuralStress",
-          component: StructuralStress
+          component: (resolve)=>require(["@/view/content/analysis/structuralStress/index"],resolve)
         },
         {
           path: "development/",
           name: "development",
-          component: Development
+          component: (resolve)=>require(["@/view/content/analysis/development/index"],resolve)
         },
         {
           path: "acceleration/",
           name: "acceleration",
-          component: Acceleration
+          component: (resolve)=>require(["@/view/content/analysis/acceleration/index"],resolve)
         },
         {
           path: "displacement/",
           name: "displacement",
-          component: Displacement
+          component: (resolve)=>require(["@/view/content/analysis/displacement/index"],resolve)
         },
         {
           path: "comprehensive/",
           name: "comprehensive",
-          component: Comprehensive
+          component: (resolve)=>require(["@/view/content/analysis/comprehensive/index"],resolve)
         },
         {
           path: "evaluation/",
           name: "evaluation",
-          component: Evaluation
+          component: (resolve)=>require(["@/view/content/assessment/evaluation/index"],resolve)
         },
         {
           path: "capacity/",
           name: "capacity",
-          component: Capacity
+          component: (resolve)=>require(["@/view/content/assessment/capacity/index"],resolve)
         },
         {
           path: "structures/",
           name: "structures",
-          component: Structures
+          component: (resolve)=>require(["@/view/content/assessment/structures/index"],resolve)
         },
         {
           path: "report/",
           name: "report",
-          component: Report
+          component: (resolve)=>require(["@/view/content/assessment/report/index"],resolve)
         },
         {
           path: "staff/",
           name: "staff",
-          component: Staff
+          component: (resolve)=>require(["@/view/content/systemInfo/staff/index"],resolve)
         },
         {
           path: "limit/",
           name: "limit",
-          component: Limit
+          component: (resolve)=>require(["@/view/content/systemInfo/limit/index"],resolve)
         },
         {
           path: "userGroup/",
           name: "userGroup",
-          component: UserGroup
+          component: (resolve)=>require(["@/view/content/systemInfo/userGroup/index"],resolve)
         },
         {
           path: "log/",
           name: "log",
-          component: Log
+          component: (resolve)=>require(["@/view/content/systemInfo/log/index"],resolve)
         }
       ]
     }

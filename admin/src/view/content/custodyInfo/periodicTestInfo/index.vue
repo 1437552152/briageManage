@@ -130,7 +130,6 @@ import Circles from "@/view/components/Circles/Circles";
 import BIMInfo from "@/components/BIMInfo/index";
 import BIMFACE from "@/components/BIMFACE/index";
 import dataTotal from "./exportData";
-import moment from "moment";
 export default {
   components: {
     Circles,BIMInfo,BIMFACE

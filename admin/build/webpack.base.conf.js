@@ -1,3 +1,10 @@
+/*
+ * @Author       : yfye
+ * @Date         : 2021-01-21 11:44:59
+ * @LastEditors  : yfye
+ * @LastEditTime : 2021-01-21 15:00:13
+ * @FilePath     : \admin\build\webpack.base.conf.js
+ */
 'use strict'
 const path = require('path')
 const utils = require('./utils')
@@ -11,7 +18,14 @@ function resolve (dir) {
 module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
-    app: './src/main.js'
+    　app: ["babel-polyfill", "./src/main.js"],
+  },
+  externals:{
+     'vue':'Vue',
+     'vue-router':'VueRouter',
+     'axios':'axios',
+     'iview':'iview',
+     'moment':'moment'
   },
   output: {
     path: config.build.assetsRoot,

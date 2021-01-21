@@ -1,5 +1,5 @@
-import qs from "qs";
-import axios from "axios";
+// import qs from "qs";
+// import axios from "axios";
 export function postService(path, body, callback) {
   return new Promise((resolve, reject) => {
     axios
