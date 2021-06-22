@@ -1,9 +1,9 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/boots/boots",
     "pages/scansubmit/scansubmit",
     "pages/scanentry/scanentry",
-    "pages/boots/boots",
     "pages/home/home",
     "pages/scandetail/scandetail",
     "pages/scaning/scaning"

@@ -7,10 +7,10 @@ Page({
    */
   data: {
     path: '',
-    type:1
+    type: 1
   },
-  onPageScroll:function(e){
-    if(e.scrollTop<0){
+  onPageScroll: function (e) {
+    if (e.scrollTop < 0) {
       wx.pageScrollTo({
         scrollTop: 0
       })
@@ -22,33 +22,28 @@ Page({
   onLoad: function (options) {
     this.setData({
       path: options.path,
-      type:options.type||1
+      type: options.type || 1
     })
 
 
     wx.setNavigationBarColor({
-      backgroundColor:"#041B1e",
-      frontColor:'#ffffff'
+      backgroundColor: "#041B1e",
+      frontColor: '#ffffff'
     });
   },
 
   onGotUserInfo(e) {
-   
     var that = this
-    if (e.detail.errMsg ==='getUserInfo:ok'){
+    if (e.detail.errMsg === 'getUserInfo:ok') {
       wx.login({
         success: function (a) {
           wx.getUserInfo({
-            success: function (e) { 
-              wx.setStorageSync("userInfo", e.userInfo);    
-              if(that.data.type==1||!that.data.type){
+            success: function (e) {
+              wx.setStorageSync("userInfo", e.userInfo);
+              if (that.data.type == 1 || !that.data.type) {
                 wx.navigateTo({
-                  url: that.data.path,
+                  url: "/pages/home/home",
                 })
-              }else{
-               wx.switchTab({
-                 url: that.data.path
-               }) 
               }
             }
           })
@@ -62,7 +57,7 @@ Page({
   onReady: function () {
 
   },
-  refuse: function() {
+  refuse: function () {
     wx.navigateBack({})
   },
 
@@ -70,6 +65,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-   
+
   },
 })

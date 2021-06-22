@@ -1,7 +1,10 @@
 var app = getApp();
-var host = 'https://mobile.yyf2gml.site/restapi/data/bridge/';
+let host = 'https://mobile.yyf2gml.site/restapi/data/bridge/';
 
 var urlApi = (url, method, data={}) => {
+    if(data.systemType==1){
+       host = 'https://mobile.yyf2gml.site/restapi/data/system/';
+    }
   return new Promise((res, rej) => {
     wx.request({
       url: host + url,

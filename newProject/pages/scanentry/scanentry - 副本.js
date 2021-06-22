@@ -26,8 +26,10 @@ Page({
     componentIdY: '',
     componentListY: [],
     inspectStatue: '已完成',
-    bridgeList: '杨泗港大桥',
+    bridgeList: '',
     uploadimages: [],
+    // 桥梁列表
+    bridgeListData: []
   },
 
   /**
@@ -88,7 +90,15 @@ Page({
   // 桥梁选择
   bridgeList: function () {
     let that = this;
-    let arr = ['杨泗港大桥'];
+     let {bridgeListData} =this.data;
+     let arr=[];
+     bridgeListData.map(item=>{
+      //  item.info
+     })
+
+
+
+    // let arr = ['杨泗港大桥'];
     wx.showActionSheet({
       itemList: arr,
       success(res) {
@@ -174,8 +184,22 @@ Page({
   onShow: function () {
     // 先请求出桥梁的列表，然后再得到其对应的构件列表
     let that = this;
-    this.getData();
+    //  this.getData();
+
+    this.getBridgeList();
   },
+  // 得到桥梁id
+  getBridgeList: function () {
+    const that = this;
+    urlApi('project/list', 'post', {
+      systemType: 1
+    }).then(res => {
+      that.setData({
+        bridgeListData: res.data.data
+      })
+    })
+  },
+
   getData: function () {
     let that = this;
     // 杨四港大桥健康模型
@@ -284,7 +308,7 @@ Page({
       })
       return;
     }
-    
+
     wx.showLoading({
       title: "正在提交..."
     })

@@ -19,9 +19,9 @@
 			<text>病害描述:   {{objDta.diseaseDesc}}</text>
 		</view>
 		<view>
-			<text class="fontdesc">病害描述:</text>
+			<text class="fontdesc">病害展示:</text>
 			<view class="video" wx:for="{{objDta.picUrlList}}">
-				<image src="{{item}}"></image>
+				<image src="{{item}}" bindtap="imgYu" data-src="{{item}}"></image>
 			</view>
 		</view>
 	</view>

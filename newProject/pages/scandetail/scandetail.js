@@ -8,23 +8,34 @@ Page({
    * 页面的初始数据
    */
   data: {
-    status:'已完成',
-    number:"111",
-    component:"武汉长江大桥",
-    objDta:null,
-    componentChild:85,
-    pier:11,
-    id:0,
-    coordinate:11,
-    description:"",
-    imgData:[{url:'/static/image/demoimg.png'},{url:'/static/image/demoimg.png'},{url:'/static/image/demoimg.png'},{url:'/static/image/demoimg.png'}]
+    status: '已完成',
+    number: "111",
+    component: "武汉长江大桥",
+    objDta: null,
+    componentChild: 85,
+    pier: 11,
+    id: 0,
+    coordinate: 11,
+    description: "",
+    imgData: [{
+      url: '/static/image/demoimg.png'
+    }, {
+      url: '/static/image/demoimg.png'
+    }, {
+      url: '/static/image/demoimg.png'
+    }, {
+      url: '/static/image/demoimg.png'
+    }]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({status:options.qq,id:options.id})
+    this.setData({
+      status: options.qq,
+      id: options.id
+    })
     wx.setNavigationBarTitle({
       title: '上报记录详情'
     })
@@ -36,24 +47,37 @@ Page({
   onReady: function () {
 
   },
-  onPageScroll:function(e){
-    if(e.scrollTop<0){
+  onPageScroll: function (e) {
+    if (e.scrollTop < 0) {
       wx.pageScrollTo({
         scrollTop: 0
       })
     }
   },
+  //图片点击事件
+  imgYu: function (event) {
+    var src = event.currentTarget.dataset.src;
+    //图片预览
+    wx.previewImage({
+      current: src, // 当前显示图片的http链接
+      urls: [src] // 需要预览的图片http链接列表
+    })
+  },
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    const that=this;
+    const that = this;
     wx.showLoading({
       title: '加载中...'
     })
-    urlApi('inspect/detail','post',{id:this.data.id}).then(res=>{
+    urlApi('inspect/detail', 'post', {
+      id: this.data.id
+    }).then(res => {
       wx.hideLoading();
-       that.setData({objDta:res.data})
+      that.setData({
+        objDta: res.data
+      })
     })
   },
   /**
