@@ -15,6 +15,9 @@
 		<view>
 			<text>坐标:  {{objDta.diseaseCoordinate}}</text>
 		</view>
+			<view>
+			<text>病害类型:  {{objDta.diseaseType}}</text>
+		</view>
 		<view>
 			<text>病害描述:   {{objDta.diseaseDesc}}</text>
 		</view>

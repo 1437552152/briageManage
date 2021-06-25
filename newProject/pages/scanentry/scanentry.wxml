@@ -12,7 +12,11 @@
         <view class="page-section-title childComponent" bindtap="componentType">构件类型  <input disabled class="weui-input"  name="componentType" value="{{componentType}}" placeholder="请选择构件类型" /></view>
       </view>
 
-      <view class="page-section page-section-gap">
+       <view class="page-section1">
+            <view class="page-section-title" bindtap="diseaseType">病害类型   <input class="weui-input" value="{{diseaseType}}"  disabled name="diseaseType" placeholder="请选择病害类型" /></view>
+          </view>
+      <view class="page-section page-section-gap" >
+    
         <view class="page-section-title">病害描述</view>
         <textarea class="weui-input"   name="diseaseDesc"  placeholder="请输入病害描述" style="width: 100%;"></textarea>
       </view>

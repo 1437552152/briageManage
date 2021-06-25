@@ -39,8 +39,7 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-  },
+  onReady: function () {},
 
   /**
    * 生命周期函数--监听页面显示
@@ -52,10 +51,10 @@ Page({
     });
     urlApi('inspect/main', 'post', {}).then(res => {
       that.setData({
-       totalNum: res.data.data.sum,
-       MonthNum: res.data.data.countCurrentMonth
+        totalNum: res.data.data.sum,
+        MonthNum: res.data.data.countCurrentMonth
       })
-   })
+    })
   },
 
   /**
@@ -64,8 +63,8 @@ Page({
   onHide: function () {
 
   },
-  onPageScroll:function(e){
-    if(e.scrollTop<0){
+  onPageScroll: function (e) {
+    if (e.scrollTop < 0) {
       wx.pageScrollTo({
         scrollTop: 0
       })
@@ -99,34 +98,26 @@ Page({
 
   },
   // 页面跳转(需带巡检记录参数)
-  gotoScanentry: function() {
-        let userInfo = wx.getStorageSync("userInfo");
-        wx.getSetting({
-          success: function (respon) {
-            if (respon.authSetting['scope.userInfo'] && userInfo) {
-              wx.navigateTo({
-                url: '../scanentry/scanentry'
-              })
-            }else{
-              wx.navigateTo({
-                url: `/pages/boots/boots?path=/pages/scanentry/scanentry&type=1`
-              })
-            }
-          },
-          fail: function () {
-            wx.navigateTo({
-              url: `/pages/boots/boots?path=/pages/scanentry/scanentry&type=1`
-            })
-          }
-        })  
-  },
-  gotoCheckRecord: function() {
+  gotoScanentry: function () {
     let userInfo = wx.getStorageSync("userInfo");
-    if(userInfo){
+    if (!userInfo) {
+      wx.navigateTo({
+        url: `/pages/boots/boots`
+      })
+
+    } else {
+      wx.navigateTo({
+        url: '../scanentry/scanentry'
+      })
+    }
+  },
+  gotoCheckRecord: function () {
+    let userInfo = wx.getStorageSync("userInfo");
+    if (userInfo) {
       wx.navigateTo({
         url: '../scansubmit/scansubmit'
       })
-    }else{
+    } else {
       wx.navigateTo({
         url: `/pages/boots/boots`
       })

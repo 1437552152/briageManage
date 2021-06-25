@@ -28,6 +28,7 @@ Page({
     inspectStatue: '已完成',
     bridgeList: '杨泗港大桥',
     uploadimages: [],
+    diseaseType:''
   },
 
   /**
@@ -67,6 +68,23 @@ Page({
       }
     })
   },
+  diseaseType: function () {
+    let that = this;
+    let arr = ["破损","开裂","晃动","腐蚀","其它"];
+    wx.showActionSheet({
+      itemList: arr,
+      success(res) {
+        arr.map((item, index) => {
+          if (index === res.tapIndex) {
+            that.setData({
+              diseaseType: item
+            })
+          }
+        })
+      }
+    })
+  },
+
   // 完成状态
   inspectStatue: function () {
     let that = this;
@@ -226,6 +244,17 @@ Page({
       })
       return;
     }
+
+    if (!e.detail.value.diseaseType) {
+      wx.showToast({
+        title: '请选择病害类型',
+        icon: 'none'
+      })
+      return;
+    }
+    
+
+
 
     if (!e.detail.value.inspectStatue) {
       wx.showToast({
