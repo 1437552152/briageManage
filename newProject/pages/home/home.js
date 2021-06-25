@@ -1,5 +1,7 @@
 // pages/home/home.js
-
+import {
+  urlApi
+} from '../../utils/request';
 Page({
 
   /**
@@ -7,8 +9,8 @@ Page({
    */
   data: {
     location: "",
-    totalNum: 85,
-    MonthNum: 11,
+    totalNum: 0,
+    MonthNum: 0,
     objUserInfo: null
   },
 
@@ -38,7 +40,6 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
   },
 
   /**
@@ -48,7 +49,13 @@ Page({
     const that = this;
     this.setData({
       objUserInfo: wx.getStorageSync('userInfo')
-    })
+    });
+    urlApi('inspect/main', 'post', {}).then(res => {
+      that.setData({
+       totalNum: res.data.data.sum,
+       MonthNum: res.data.data.countCurrentMonth
+      })
+   })
   },
 
   /**
@@ -115,23 +122,14 @@ Page({
   },
   gotoCheckRecord: function() {
     let userInfo = wx.getStorageSync("userInfo");
-    wx.getSetting({
-      success: function (respon) {
-        if (respon.authSetting['scope.userInfo'] && userInfo) {
-          wx.navigateTo({
-            url: '../scansubmit/scansubmit'
-          })
-        }else{
-          wx.navigateTo({
-            url: `/pages/boots/boots?path=/scansubmit/scansubmit&type=1`
-          })
-        }
-      },
-      fail: function () {
-        wx.navigateTo({
-          url: `/pages/boots/boots?path=/scansubmit/scansubmit&type=1`
-        })
-      }
-    }) 
+    if(userInfo){
+      wx.navigateTo({
+        url: '../scansubmit/scansubmit'
+      })
+    }else{
+      wx.navigateTo({
+        url: `/pages/boots/boots`
+      })
+    }
   }
 })
